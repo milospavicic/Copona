@@ -47,13 +47,23 @@
     <Compile Include="model\Korisnik.cs" />
     <Compile Include="model\Namestaj.cs" />
     <Compile Include="model\ProdajaNamestaja.cs" />
+    <Compile Include="model\Projekat.cs" />
     <Compile Include="model\Salon.cs" />
     <Compile Include="model\TipNamestaja.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="util\GenericSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="data\korisnici.xml" />
+    <Content Include="data\namestaj.xml">
+      <SubType>Designer</SubType>
+    </Content>
+    <Content Include="data\tipnamestaja.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

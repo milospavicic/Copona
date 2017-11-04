@@ -1,0 +1,7 @@
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\obj\Debug\POP-SF39-2016.csprojResolveAssemblyReference.cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\obj\Debug\POP-SF39-2016.csproj.CoreCompileInputs.cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\bin\Debug\POP-SF39-2016.exe.config
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\bin\Debug\POP-SF39-2016.exe
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\bin\Debug\POP-SF39-2016.pdb
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\obj\Debug\POP-SF39-2016.exe
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016\obj\Debug\POP-SF39-2016.pdb

@@ -25,4 +25,3 @@ namespace POP_SF39_2016.model
         public double UkupnaCena { get; set; }
     }
 }
-}

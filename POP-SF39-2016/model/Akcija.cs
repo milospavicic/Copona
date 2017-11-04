@@ -9,6 +9,7 @@ namespace POP_SF39_2016.model
     public class Akcija
     {
         public int Id { get; set; }
+
         public DateTime PocetakAkcije { get; set; }
 
         public DateTime KrajAkcije { get; set; }
