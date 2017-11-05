@@ -15,9 +15,29 @@
     <Naziv>Krevet1</Naziv>
     <Sifra>krevet1</Sifra>
     <Cena>12000</Cena>
-    <BrKomada>0</BrKomada>
+    <BrKomada>5</BrKomada>
     <AkcijaId>2</AkcijaId>
+    <TipNamestajaId>2</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>3</Id>
+    <Naziv>aaa</Naziv>
+    <Sifra>aaa</Sifra>
+    <Cena>1414</Cena>
+    <BrKomada>0</BrKomada>
+    <AkcijaId xsi:nil="true" />
     <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>4</Id>
+    <Naziv>zzz</Naziv>
+    <Sifra>zzz</Sifra>
+    <Cena>525252</Cena>
+    <BrKomada>5</BrKomada>
+    <AkcijaId xsi:nil="true" />
+    <TipNamestajaId>2</TipNamestajaId>
+    <Obrisan>true</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

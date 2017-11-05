@@ -10,13 +10,13 @@ namespace POP_SF39_2016
 {
     class Program
     {
-        public static List<Namestaj> ListaNamestaja { get; set; }
-        public static List<TipNamestaja> ListaTipoviNamestaja { get; set; } 
-        public static List<Korisnik> ListaKorisnika { get; set; }
+        public static List<Namestaj> ListaNamestaja { get; set; } = Projekat.Instance.Namestaj;
+        public static List<TipNamestaja> ListaTipoviNamestaja { get; set; } = Projekat.Instance.TipNamestaja;
+        public static List<Korisnik> ListaKorisnika { get; set; } = Projekat.Instance.Korisnik;
         public static List<Akcija> ListaAkcija { get; set; } = new List<Akcija>();
         public static List<DodatnaUsluga> ListaUsluga { get; set; } = new List<DodatnaUsluga>();
         public static List<Salon> ListaSalona { get; set; } = new List<Salon>();
-        public List<Namestaj> newListNamestaja { get; set; } = new List<Namestaj>();
+        public static List<ProdajaNamestaja> ListaProdaja { get; set; } = new List<ProdajaNamestaja>();
         static void Main(string[] args)
         {
             var s1 = new Salon()
@@ -49,13 +49,16 @@ namespace POP_SF39_2016
                 Cena = 300,
             };
             ListaUsluga.Add(du1);
+            var p1 = new ProdajaNamestaja()
+            {
+
+            };
 
             //GenericSerializer.Serialize<Namestaj>("namestaj.xml", ListaNamestaja);
             //GenericSerializer.Serialize<TipNamestaja>("tipnamestaja.xml", ListaTipoviNamestaja);
             //GenericSerializer.Serialize<Korisnik>("korisnici.xml", ListaKorisnika);
-            ListaKorisnika = Projekat.Instance.Korisnik;
-            ListaNamestaja = Projekat.Instance.Namestaj;
-            ListaTipoviNamestaja = Projekat.Instance.TipNamestaja;
+            
+
 
             IspisGlavnogMenija();
         }
@@ -66,16 +69,17 @@ namespace POP_SF39_2016
             do
             {
                 Console.WriteLine("GLAVNI MENI");
-                Console.WriteLine("1.Rad sa namestajem");
-                Console.WriteLine("2.Rad sa tipom namestaja");
-                Console.WriteLine("3.Rad sa korisnicima");
-                Console.WriteLine("4.Rad sa akcijama");
-                Console.WriteLine("5.Rad sa dodatnim uslugama");
-                Console.WriteLine("6.Rad sa salonima namestaja");
-                Console.WriteLine("0.Izlaz");
+                Console.WriteLine("1. Rad sa namestajem");
+                Console.WriteLine("2. Rad sa tipom namestaja");
+                Console.WriteLine("3. Rad sa korisnicima");
+                Console.WriteLine("4. Rad sa akcijama");
+                Console.WriteLine("5. Rad sa dodatnim uslugama");
+                Console.WriteLine("6. Rad sa salonima namestaja");
+                Console.WriteLine("7. Rad sa prodajom");
+                Console.WriteLine("0. Izlaz");
                 izbor = int.Parse(Console.ReadLine());
                 // ZAVRSITI MENI
-            } while (izbor < 0 || izbor > 6);
+            } while (izbor < 0 || izbor > 7);
 
             switch (izbor)
             {
@@ -97,6 +101,9 @@ namespace POP_SF39_2016
                 case 6:
                     IspisMeniSalon();
                     break;
+                case 7:
+                    IspisMeniProdaja();
+                    break;
                 case 0:
                     Environment.Exit(0);
                     break;
@@ -113,24 +120,28 @@ namespace POP_SF39_2016
             {
                 Console.WriteLine("MENI NAMESTAJA");
                 Console.WriteLine("1. Izlistaj");
-                Console.WriteLine("2. Dodaj novi namestaj");
-                Console.WriteLine("3. Izmeni postojeci namestaj");
-                Console.WriteLine("4. Obrisi postojeci");
+                Console.WriteLine("2. Pretrazi namestaj");
+                Console.WriteLine("3. Dodaj novi namestaj");
+                Console.WriteLine("4. Izmeni postojeci namestaj");
+                Console.WriteLine("5. Obrisi postojeci");
                 Console.WriteLine("0. Povratak na glavni meni");
                 izbor = int.Parse(Console.ReadLine());
             } while (izbor < 0 || izbor > 4);
             switch (izbor)
             {
                 case 1:
-                    IzlistajNamestaj();
+                    IzlistajNamestaj(ListaNamestaja);
                     break;
                 case 2:
-                   DodajNoviNamestaj();
+                    PretragaNamestaja();
                     break;
                 case 3:
-                    IzmeniPostojeciNamestaj();
+                    DodajNoviNamestaj();
                     break;
                 case 4:
+                    IzmeniPostojeciNamestaj();
+                    break;
+                case 5:
                     ObrisiPostojeciNamestaj();
                     break;
                 case 0:
@@ -310,7 +321,39 @@ namespace POP_SF39_2016
                     break;
             }
         }
-        private static void IzlistajNamestaj()
+        private static void IspisMeniProdaja()
+        {
+
+            int izbor = 0;
+            do
+            {
+                Console.WriteLine("MENI SALONI NAMESTAJA");
+                Console.WriteLine("1. Prodaj");
+                Console.WriteLine("2. Izlistaj prodaje");
+                Console.WriteLine("3. Pretrazi prodaje");
+                Console.WriteLine("0. Povratak na glavni meni");
+                izbor = int.Parse(Console.ReadLine());
+            } while (izbor < 0 || izbor > 3);
+            switch (izbor)
+            {
+                case 1:
+                    Prodaj();
+                    break;
+                case 2:
+                    IzlistajProdaje();
+                    break;
+                case 3:
+                    PretraziProdaje();
+                    break;
+                case 0:
+                    IspisGlavnogMenija();
+                    break;
+                default:
+                    break;
+            }
+        }
+  
+        private static void IzlistajNamestaj(List<Namestaj> ListaNamestaja)
         {
             Console.WriteLine("Izlistavanje namestaja.. \n");
             for (int i = 0; i < ListaNamestaja.Count; i++)
@@ -326,7 +369,86 @@ namespace POP_SF39_2016
                 }
             }
             Console.WriteLine("\nGotovo izlistavanje \n");
+            SortiranjeNamestaja(ListaNamestaja);
             IspisiMeniNamestaja();
+        }
+        private static void SortiranjeNamestaja(List<Namestaj> ListaNamestaja)
+        {
+            //List<string> listaZaSort = new List<string>();
+            //List<Namestaj> sortiranaLista = new List<Namestaj>();
+            int izbor = 0;
+            do
+            {
+                Console.WriteLine("Sortiraj po :\n1. Id\n2. Naziv\n3. Sifra\n4. Cena \n5. Tip Namestaja\n0. Povratak na meni namestaja");
+                izbor = int.Parse(Console.ReadLine());
+            } while (izbor < 0 || izbor > 5);
+            switch (izbor)
+            {
+                case 1:
+                    IzlistajNamestaj(ListaNamestaja.OrderBy(x => x.Id).ToList());
+                    //foreach (Namestaj namestaj in ListaNamestaja)
+                    //    listaZaSort.Add(namestaj.Naziv);
+                    //listaZaSort.Sort();
+                    //foreach(string item in listaZaSort)
+                    //    foreach (Namestaj namestaj in ListaNamestaja)
+                    //        if (item == namestaj.Naziv)
+                    //            sortiranaLista.Add(namestaj);
+
+                    //IzlistajNamestaj(sortiranaLista);
+                    break;
+                case 2:
+                    IzlistajNamestaj(ListaNamestaja.OrderBy(x => x.Naziv).ToList());
+                    break;
+                case 3:
+                    IzlistajNamestaj(ListaNamestaja.OrderBy(x => x.Sifra).ToList());
+                    break;
+                case 4:
+                    IzlistajNamestaj(ListaNamestaja.OrderBy(x => x.Cena).ToList());
+                    break;
+                case 5:
+                    IzlistajNamestaj(ListaNamestaja.OrderBy(x => x.TipNamestajaId).ToList());
+                    break;
+                case 0:
+                    IspisiMeniNamestaja();
+                    break;     
+            }
+        }
+        public static void PretragaNamestaja()
+        {
+            int izbor = 0;
+            do
+            {
+                Console.WriteLine("Pretrazi po :\n1. Naziv\n3. Sifra\n3. Tip Namestaja\n0. Povratak na meni namestaja");
+                izbor = int.Parse(Console.ReadLine());
+            } while (izbor < 0 || izbor > 5);
+            switch (izbor)
+            {
+                case 1:
+                    Console.WriteLine("Unesite text za pretragu");
+                    string parametar1 = Console.ReadLine();
+                    IzlistajNamestaj(ListaNamestaja.Where(x => x.Naziv.ToUpper().Contains(parametar1.ToUpper())).ToList());
+                    break;
+                case 2:
+                    Console.WriteLine("Unesite text za pretragu");
+                    string parametar2 = Console.ReadLine();
+                    IzlistajNamestaj(ListaNamestaja.Where(x => x.Sifra.ToUpper().Contains(parametar2.ToUpper())).ToList());
+                    break;
+                case 3:
+                    List<Namestaj> pretrazenaLista = new List<Namestaj>();
+                    Console.WriteLine("Unesite ID tipa namestaja za pretragu");
+                    foreach(TipNamestaja tipNamestaja in ListaTipoviNamestaja)
+                        Console.WriteLine("Id: " + tipNamestaja.Id + ", Naziv: " + tipNamestaja.Naziv);
+                    int parametar3 = int.Parse(Console.ReadLine());
+                    foreach (Namestaj namestaj in ListaNamestaja)
+                        if (namestaj.TipNamestajaId == parametar3)
+                            pretrazenaLista.Add(namestaj);
+                    IzlistajNamestaj(pretrazenaLista);
+                    
+                    break;
+                case 0:
+                    IspisiMeniNamestaja();
+                    break;
+            }
         }
         private static void DodajNoviNamestaj()
         {
@@ -353,6 +475,8 @@ namespace POP_SF39_2016
                 }
             } while (TrazeniTipNamestaja == null);
             NoviNamestaj.TipNamestajaId = TrazeniTipNamestaja.Id;
+            Console.WriteLine("Unesite kolicinu namestaja");
+            NoviNamestaj.BrKomada = int.Parse(Console.ReadLine());
             ListaNamestaja.Add(NoviNamestaj);
             Projekat.Instance.Namestaj = ListaNamestaja;
             IspisiMeniNamestaja();
@@ -678,7 +802,7 @@ namespace POP_SF39_2016
         //==============================================================================
         private static void Login()
         {
-            bool korisnikLogin = false;
+            Korisnik korisnikLogin = null;
             int pokusaj = 0;
             do
             {
@@ -688,13 +812,13 @@ namespace POP_SF39_2016
                 string sifra = Console.ReadLine();
                 foreach (Korisnik trenutniKorisnik in ListaKorisnika)
                     if (trenutniKorisnik.KorisnickoIme == korisnickoIme & trenutniKorisnik.Lozinka == sifra && trenutniKorisnik.Obrisan != true)
-                        korisnikLogin = true;
+                        korisnikLogin = trenutniKorisnik;
                 pokusaj++;
                 if (pokusaj >= 3)
                     Environment.Exit(0);
 
 
-            } while (korisnikLogin == false);
+            } while (korisnikLogin == null);
             Console.WriteLine();
         }
         //==============================================================================
@@ -1099,5 +1223,46 @@ namespace POP_SF39_2016
             IspisMeniSalon();
         }
         //==============================================================================
+
+        private static void Prodaj()
+        {
+            List<Namestaj> namestajZaProdaju = new List<Namestaj>();
+            bool shooping = true;
+            while(shooping == true)
+            {
+                Console.WriteLine("Unesite naziv predmeta za prodaju, ili X za prekid unosa");
+                string nazivNamestaja = Console.ReadLine();
+                if (nazivNamestaja.ToUpper().Trim() == "X")
+                    break;
+                
+                foreach (Namestaj namestaj in ListaNamestaja)
+                    if (namestaj.Naziv == nazivNamestaja && !namestaj.Obrisan && namestaj.BrKomada > 0)
+                    {
+                        namestajZaProdaju.Add(namestaj);
+                        Console.WriteLine(namestaj.Naziv + ", je dodat u korpu");
+                    }
+                        
+            }
+            Console.WriteLine("Konacna lista stvari za prodaju");
+            double ukupnaCena = 0;
+            int index = 0;
+            foreach (Namestaj namestaj in namestajZaProdaju)
+            {
+                Console.WriteLine(index + ". " + namestaj.Naziv + " sa cenom od " + namestaj.Cena);
+                index++;
+            }
+                string nazivNamestaja1 = Console.ReadLine();
+
+        }
+
+        private static void IzlistajProdaje()
+        {
+            throw new NotImplementedException();
+        }
+
+        private static void PretraziProdaje()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
