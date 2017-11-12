@@ -1,0 +1,17 @@
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe.config
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.pdb
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csprojResolveAssemblyReference.cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\MainWindow.g.cs
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\App.g.cs
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI_MarkupCompile.cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI_MarkupCompile.lref
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\MainWindow.baml
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.g.resources
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP_SF39_2016_GUI.Properties.Resources.resources
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csproj.GenerateResource.Cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csproj.CoreCompileInputs.cache
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.exe
+D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.pdb
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\GlavniWindow.g.cs
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\GlavniWindow.baml

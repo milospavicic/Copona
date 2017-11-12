@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfSalon xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <Salon>
+    <Id>1</Id>
+    <Naziv>Forma FTNale</Naziv>
+    <Adresa>Trg Dositeja Obradovica 6</Adresa>
+    <BrojTelefona>1235415151</BrojTelefona>
+    <Email>123@ftn.com</Email>
+    <WebAdresa>http://TestSite.jeftino.com</WebAdresa>
+    <Pib>15151</Pib>
+    <MaticniBr>5125151</MaticniBr>
+    <BrRacuna>81515151-13141</BrRacuna>
+    <Obrisan>false</Obrisan>
+  </Salon>
+</ArrayOfSalon>

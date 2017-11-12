@@ -105,7 +105,6 @@ namespace POP_SF39_2016.model
                 GenericSerializer.Serialize<ProdajaNamestaja>("prodaje.xml", listaProdajaNamestaja);
             }
         }
-
         private List<Salon> listaSalona;
 
         public List<Salon> Salon
@@ -117,11 +116,10 @@ namespace POP_SF39_2016.model
             }
             set
             {
-               this.listaSalona = value;
+                this.listaSalona = value;
                 GenericSerializer.Serialize<Salon>("salon.xml", listaSalona);
 
             }
         }
-
     }
 }

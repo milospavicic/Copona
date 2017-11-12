@@ -59,10 +59,13 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Content Include="data\akcije.xml" />
+    <Content Include="data\dodatneusluge.xml" />
     <Content Include="data\korisnici.xml" />
     <Content Include="data\namestaj.xml">
       <SubType>Designer</SubType>
     </Content>
+    <Content Include="data\salon.xml" />
     <Content Include="data\tipnamestaja.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

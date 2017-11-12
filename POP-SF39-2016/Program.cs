@@ -51,14 +51,16 @@ namespace POP_SF39_2016
             ListaUsluga.Add(du1);
             var p1 = new ProdajaNamestaja()
             {
-
+                
             };
 
             //GenericSerializer.Serialize<Namestaj>("namestaj.xml", ListaNamestaja);
             //GenericSerializer.Serialize<TipNamestaja>("tipnamestaja.xml", ListaTipoviNamestaja);
             //GenericSerializer.Serialize<Korisnik>("korisnici.xml", ListaKorisnika);
-            
-
+            GenericSerializer.Serialize<Akcija>("akcije.xml", ListaAkcija);
+            GenericSerializer.Serialize<DodatnaUsluga>("dodatneusluge.xml", ListaUsluga);
+            //GenericSerializer.Serialize<ProdajaNamestaja>("prodaje.xml", ListaProdaja);
+            GenericSerializer.Serialize<Salon>("salon.xml", ListaSalona);
 
             IspisGlavnogMenija();
         }
