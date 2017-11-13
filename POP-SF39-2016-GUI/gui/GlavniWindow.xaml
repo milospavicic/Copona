@@ -27,18 +27,30 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
-                    <RowDefinition Height="420*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="170*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
                 <Button Content="Prodaja" Grid.Row="0" Grid.Column="1"/>
-                <Button Content="Prikaz Namestaja" Grid.Row="1" Grid.Column="1" Click="PrikazNamestaja"/>
+                <Button Content="Prikaz Namestaja" Grid.Row="1" Grid.Column="1" Click="PrikazNamestajaBasic"/>
                 <Button Content="O Salonu" Grid.Row="2" Grid.Column="1" Click="IspisInformmacija"/>
-                <Button Name="btnAdmin" Content="Administratorske opcije" Grid.Row="3" Grid.Column="1"/>
-                <Button Content="Izmena naloga" Grid.Row="5" Grid.Column="1" Click="IzmenaPodataka"/>
-                <Button Content="Logout " Grid.Row="6" Grid.Column="1" Click="Logout"/>
-                <Button Content="Izlaz" Grid.Row="7" Grid.Column="1" Click="Izlaz"/>
+                <!-- ADMIN OPCIJE-->
+                <Button Name="btnAdmin" Content="Administratorske opcije" Grid.Row="3" Grid.Column="1" Click="PrikaziSakrij"/>
+                <Button Name="btnNamestaj" Content="Rad sa namestajem" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja"/>
+                <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <!-- ADMIN OPCIJE-->
+                <Button Content="Izmena naloga" Grid.Row="10" Grid.Column="1" Click="IzmenaPodataka"/>
+                <Button Content="Logout " Grid.Row="11" Grid.Column="1" Click="Logout"/>
+                <Button Content="Izlaz" Grid.Row="12" Grid.Column="1" Click="Izlaz"/>
             </Grid>
         </Border>
         <Border Name="glavniBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -85,8 +97,24 @@
                         <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="1" FontSize="20" Margin="1,1,15,1"/>
                         <PasswordBox Name="pbSifra" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="1,1,15,1"/>
                         <TextBox Name="tbPozicija" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="1" FontSize="20" Margin="1,1,15,1"/>
-                        <Button Content="Snimi" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" FontSize="20" Margin="60,34,52,46" Height="40" Width="100"/>
+                        <Button Content="Snimi" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="0" FontSize="20" Margin="60,34,52,46" Height="40" Width="100" Click="SnimiPodatkeKorisnika"/>
                         <Button Content="Izadji" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="6" Grid.Column="1" FontSize="20" Margin="60,34,52,46" Height="40" Width="100" Click="IzadjiEdit"/>
+                    </Grid>
+                </Border>
+                <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100*"/>
+                            <ColumnDefinition Width="370*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                        </Grid.RowDefinitions>
+                        <Button Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5"/>
+                        <Button Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="5,5,5,5"/>
+                        <Button Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="5,5,5,5"/>
                     </Grid>
                 </Border>
             </Grid>

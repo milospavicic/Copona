@@ -23,34 +23,55 @@ namespace POP_SF39_2016_GUI.gui
         public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
         public GlavniWindow(Korisnik logovaniKorisnik)
         {
-            this.logovaniKorisnik = logovaniKorisnik;
             InitializeComponent();
+            this.logovaniKorisnik = logovaniKorisnik;
             if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac)
-            {
                 btnAdmin.Visibility = Visibility.Hidden;
-            }
         }
-          private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-
             MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
             if (r == MessageBoxResult.Yes)
             {
+                // PROBLEM - ZATVARA I KAD KLIKNES NE/ NACI ALTERNATIVU ZA WINDOW_CLOSING
                 Environment.Exit(0);
             };
         }
-
-        private void PrikazNamestaja(object sender, RoutedEventArgs e)
+        //-------------------------------------------------------------------
+        private void SkloniSve()
         {
             borderCentarInfo.Visibility = Visibility.Hidden;
             borderCentarEdit.Visibility = Visibility.Hidden;
-            lbNamestaj.Visibility = Visibility.Visible;
+            borderAddEditDelItem.Visibility = Visibility.Hidden;
+            lbNamestaj.Visibility = Visibility.Hidden;
             lbNamestaj.Items.Clear();
+        }
+        private void AdminEdit()
+        {
+            lbNamestaj.Margin = new Thickness(10, 10, 10, 155);
+            lbNamestaj.Visibility = Visibility.Visible;
+            borderAddEditDelItem.Visibility = Visibility.Visible;
+        }
+        //-------------------------------------------------------------------
+        private void PrikazNamestajaBasic(object sender, RoutedEventArgs e)
+        {
+            SkloniSve();
+            lbNamestaj.Visibility = Visibility.Visible;
             List<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
             foreach (Namestaj namestaj in listaNamestaja)
                 lbNamestaj.Items.Add(namestaj.Naziv);
         }
 
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.Yes)
+            {
+                var MainWindow = new MainWindow();
+                MainWindow.Show();
+                this.Hide();
+            };
+        }
         private void Izlaz(object sender, RoutedEventArgs e)
         {
             MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
@@ -60,22 +81,10 @@ namespace POP_SF39_2016_GUI.gui
             };
         }
 
-        private void Logout(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
-            {
-                var MainWindow = new MainWindow();
-                MainWindow.Show();  
-                this.Hide();
-            };
-        }
-
         private void IspisInformmacija(object sender, RoutedEventArgs e)
         {
-            
-            lbNamestaj.Visibility = Visibility.Hidden;
-            borderCentarEdit.Visibility = Visibility.Hidden;
+
+            SkloniSve();
             borderCentarInfo.Visibility = Visibility.Visible;
             string ispis = "";
             string pocetniRazmak = String.Concat(Enumerable.Repeat("\n", 5));
@@ -93,30 +102,90 @@ namespace POP_SF39_2016_GUI.gui
             tbOSalonu.Text = pocetniRazmak + ispis;
         }
 
-        private void IzmenaPodataka(object sender, RoutedEventArgs e)
+        private void PrikaziSakrij(object sender, RoutedEventArgs e)
         {
-            lbNamestaj.Visibility = Visibility.Hidden;
-            borderCentarInfo.Visibility = Visibility.Hidden;
-            borderCentarEdit.Visibility = Visibility.Visible;
-            tbIme.Text = logovaniKorisnik.Ime;
-            tbPrezime.Text = logovaniKorisnik.Prezime;
-            tbKorisnickoIme.Text = logovaniKorisnik.KorisnickoIme;
-            tbKorisnickoIme.IsReadOnly = true;
-            pbSifra.Password = logovaniKorisnik.Lozinka;
-            if (logovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
+
+            if (btnNamestaj.Visibility == Visibility.Hidden)
             {
-                tbPozicija.Text = "Administrator";
+                btnNamestaj.Visibility = Visibility.Visible;
+                btnTipNamestaj.Visibility = Visibility.Visible;
+                btnKorisnici.Visibility = Visibility.Visible;
+                btnAkcije.Visibility = Visibility.Visible;
+                btnDodatneUsluge.Visibility = Visibility.Visible;
             }
             else
             {
-                tbPozicija.Text = "Prodavac";
+                btnNamestaj.Visibility = Visibility.Hidden;
+                btnTipNamestaj.Visibility = Visibility.Hidden;
+                btnKorisnici.Visibility = Visibility.Hidden;
+                btnAkcije.Visibility = Visibility.Hidden;
+                btnDodatneUsluge.Visibility = Visibility.Hidden;
             }
-            tbPozicija.IsReadOnly = true;
         }
 
+        private void IzmenaPodataka(object sender, RoutedEventArgs e)
+        {
+            SkloniSve();
+            borderCentarEdit.Visibility = Visibility.Visible;
+            List<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+            foreach (Korisnik korisnik in listaKorisnika)
+            {
+                if (korisnik.Id == logovaniKorisnik.Id)
+                {
+                    tbIme.Text = korisnik.Ime;
+                    tbPrezime.Text = korisnik.Prezime;
+                    tbKorisnickoIme.Text = korisnik.KorisnickoIme;
+                    tbKorisnickoIme.IsReadOnly = true;
+                    pbSifra.Password = korisnik.Lozinka;
+                    if (korisnik.TipKorisnika == TipKorisnika.Administrator)
+                    {
+                        tbPozicija.Text = "Administrator";
+                    }
+                    else
+                    {
+                        tbPozicija.Text = "Prodavac";
+                    }
+                    tbPozicija.IsReadOnly = true;
+                }
+            }
+        }
+
+        private void SnimiPodatkeKorisnika(object sender, RoutedEventArgs e)
+        {
+            if (tbIme.Text == "" || tbPrezime.Text == "" || pbSifra.Password == "")
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+
+            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.Yes)
+            {
+                List<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+                foreach (Korisnik korisnik in listaKorisnika)
+                {
+                    if (korisnik.Id == logovaniKorisnik.Id)
+                    {
+                        korisnik.Ime = tbIme.Text;
+                        korisnik.Prezime = tbPrezime.Text;
+                        korisnik.Lozinka = pbSifra.Password;
+                    }
+                }
+                Projekat.Instance.Korisnik = listaKorisnika;
+                borderCentarEdit.Visibility = Visibility.Hidden;
+            };
+        }
         private void IzadjiEdit(object sender, RoutedEventArgs e)
         {
             borderCentarEdit.Visibility = Visibility.Hidden;
+        }
+        public void PrikazNamestaja(object sender, RoutedEventArgs e)
+        {
+            SkloniSve();
+            AdminEdit();
+            List<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
+            foreach (Namestaj namestaj in listaNamestaja)
+                lbNamestaj.Items.Add(namestaj.Naziv);
         }
     }
 }
