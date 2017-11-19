@@ -2,7 +2,7 @@
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
     <Id>1</Id>
-    <Naziv>Krevet</Naziv>
+    <Naziv>Krevet1</Naziv>
     <Sifra>55</Sifra>
     <Cena>236</Cena>
     <BrKomada>1</BrKomada>
@@ -17,14 +17,14 @@
     <Cena>12000</Cena>
     <BrKomada>5</BrKomada>
     <AkcijaId>2</AkcijaId>
-    <TipNamestajaId>2</TipNamestajaId>
+    <TipNamestajaId>0</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>3</Id>
     <Naziv>aaa</Naziv>
     <Sifra>aaa</Sifra>
-    <Cena>1414</Cena>
+    <Cena>213</Cena>
     <BrKomada>0</BrKomada>
     <AkcijaId xsi:nil="true" />
     <TipNamestajaId>1</TipNamestajaId>
@@ -37,7 +37,37 @@
     <Cena>525252</Cena>
     <BrKomada>5</BrKomada>
     <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>2</TipNamestajaId>
+    <TipNamestajaId>0</TipNamestajaId>
+    <Obrisan>true</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>5</Id>
+    <Naziv>ZZQQ114</Naziv>
+    <Sifra>afafa</Sifra>
+    <Cena>1515</Cena>
+    <BrKomada>15141</BrKomada>
+    <AkcijaId xsi:nil="true" />
+    <TipNamestajaId>0</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>6</Id>
+    <Naziv>15</Naziv>
+    <Sifra>14</Sifra>
+    <Cena>51</Cena>
+    <BrKomada>51</BrKomada>
+    <AkcijaId xsi:nil="true" />
+    <TipNamestajaId>1</TipNamestajaId>
+    <Obrisan>true</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Id>7</Id>
+    <Naziv>ZCAFA</Naziv>
+    <Sifra>FAFA</Sifra>
+    <Cena>13</Cena>
+    <BrKomada>51</BrKomada>
+    <AkcijaId xsi:nil="true" />
+    <TipNamestajaId>0</TipNamestajaId>
     <Obrisan>true</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

@@ -22,5 +22,10 @@ namespace POP_SF39_2016.model
         public int? TipNamestajaId { get; set; }
 
         public bool Obrisan { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Naziv},{Cena},{TipNamestajaId}";
+        }
     }
 }

@@ -21,6 +21,7 @@ namespace POP_SF39_2016_GUI.gui
     public partial class GlavniWindow : Window
     {
         public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
+        public int Opcija { get; set; } = 0;
         public GlavniWindow(Korisnik logovaniKorisnik)
         {
             InitializeComponent();
@@ -53,13 +54,28 @@ namespace POP_SF39_2016_GUI.gui
             borderAddEditDelItem.Visibility = Visibility.Visible;
         }
         //-------------------------------------------------------------------
+        public void OsveziPrikazNamestaja()
+        {
+            lbNamestaj.Items.Clear();
+            List<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
+            foreach (Namestaj namestaj in listaNamestaja)
+                if (namestaj.Obrisan == false)
+                    lbNamestaj.Items.Add(namestaj);
+        }
+        public void OsveziPrikazTipaNamestaja()
+        {
+            lbNamestaj.Items.Clear();
+            List<TipNamestaja> listaTipaNamestaja = Projekat.Instance.TipNamestaja;
+            foreach (TipNamestaja tipNamestaj in listaTipaNamestaja)
+                if (tipNamestaj.Obrisan == false)
+                    lbNamestaj.Items.Add(tipNamestaj);
+        }
         private void PrikazNamestajaBasic(object sender, RoutedEventArgs e)
         {
             SkloniSve();
             lbNamestaj.Visibility = Visibility.Visible;
-            List<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
-            foreach (Namestaj namestaj in listaNamestaja)
-                lbNamestaj.Items.Add(namestaj.Naziv);
+            lbNamestaj.Margin = new Thickness(10, 10, 10, 10);
+            OsveziPrikazNamestaja();
         }
 
         private void Logout(object sender, RoutedEventArgs e)
@@ -83,11 +99,9 @@ namespace POP_SF39_2016_GUI.gui
 
         private void IspisInformmacija(object sender, RoutedEventArgs e)
         {
-
             SkloniSve();
             borderCentarInfo.Visibility = Visibility.Visible;
             string ispis = "";
-            string pocetniRazmak = String.Concat(Enumerable.Repeat("\n", 5));
             List<Salon> listaSalona = Projekat.Instance.Salon;
             Salon mojSalon = listaSalona[0];
             ispis += "Naziv: " + mojSalon.Naziv + "\n";
@@ -99,7 +113,7 @@ namespace POP_SF39_2016_GUI.gui
             ispis += "Broj Racuna: " + mojSalon.BrRacuna + "\n";
             ispis += "Pib: " + mojSalon.Pib + "\n";
 
-            tbOSalonu.Text = pocetniRazmak + ispis;
+            tbOSalonu.Text = ispis;
         }
 
         private void PrikaziSakrij(object sender, RoutedEventArgs e)
@@ -181,11 +195,86 @@ namespace POP_SF39_2016_GUI.gui
         }
         public void PrikazNamestaja(object sender, RoutedEventArgs e)
         {
+            Opcija = 1;
             SkloniSve();
             AdminEdit();
-            List<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
-            foreach (Namestaj namestaj in listaNamestaja)
-                lbNamestaj.Items.Add(namestaj.Naziv);
+            OsveziPrikazNamestaja();
+        }
+        public void PrikazTipovaNamestaja(object sender, RoutedEventArgs e)
+        {
+            Opcija = 2;
+            SkloniSve();
+            AdminEdit();
+            OsveziPrikazTipaNamestaja();
+        }
+
+        private void DodajItem(object sender, RoutedEventArgs e)
+        {
+            switch (Opcija)
+            {
+                case 1:
+                    var noviNamestaj = new Namestaj()
+                    {
+                        Naziv = ""
+                    };
+
+                    var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.DODAVANJE);
+                    namestajProzor.ShowDialog();
+                    OsveziPrikazNamestaja();
+                    break;
+                case 2:
+                    var noviTipNamestaja = new TipNamestaja()
+                    {
+                        Naziv = ""
+                    };
+                    //var tipNamestajaProzor = new TipNamestaja(noviTipNamestaja, TipNamestajaWindow.Operacija.DODAVANJE);
+                    //tipNamestajaProzor.showDialog();
+                    OsveziPrikazTipaNamestaja();
+                    break;
+            }
+        }
+        private void IzmeniItem(object sender, RoutedEventArgs e)
+        {
+            if (lbNamestaj.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            switch (Opcija)
+            {
+                case 1:
+                    var noviNamestaj = (Namestaj)lbNamestaj.SelectedItem;
+
+                    var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.IZMENA);
+                    namestajProzor.ShowDialog();
+                    OsveziPrikazNamestaja();
+                    break;
+            }
+        }
+        private void ObrisiItem(object sender, RoutedEventArgs e)
+        {
+            if (lbNamestaj.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            switch (Opcija)
+            {
+                case 1:
+                    var izabraniNamestaj = (Namestaj)lbNamestaj.SelectedItem;
+
+                    List<Namestaj> ListaNamestaja = Projekat.Instance.Namestaj;
+                    MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    if (r == MessageBoxResult.Yes)
+                    {
+                        foreach (Namestaj namestaj in ListaNamestaja)
+                            if (namestaj.Id == izabraniNamestaj.Id)
+                                namestaj.Obrisan = true;
+                        Projekat.Instance.Namestaj = ListaNamestaja;
+                        OsveziPrikazNamestaja();
+                    };
+                    break;
+            }
         }
     }
 }

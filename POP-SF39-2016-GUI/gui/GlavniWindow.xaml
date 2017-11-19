@@ -43,7 +43,7 @@
                 <!-- ADMIN OPCIJE-->
                 <Button Name="btnAdmin" Content="Administratorske opcije" Grid.Row="3" Grid.Column="1" Click="PrikaziSakrij"/>
                 <Button Name="btnNamestaj" Content="Rad sa namestajem" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja"/>
-                <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja"/>
                 <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
                 <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
                 <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
@@ -68,7 +68,21 @@
                 </Grid.RowDefinitions>
                 <ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" />
                 <Border Name="borderCentarInfo" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden" >
-                    <TextBlock Name="tbOSalonu" Grid.Column="3" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch"  TextAlignment="Center" FontSize="15"/>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="110*"/>
+                            <ColumnDefinition Width="210*"/>
+                            <ColumnDefinition Width="110*"/>
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="90*"/>
+                            <RowDefinition Height="250*"/>
+                            <RowDefinition Height="80*"/>
+                        </Grid.RowDefinitions>
+
+                        <TextBlock Name="tbOSalonu" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch"  TextAlignment="Center" FontSize="15"/>
+
+                    </Grid>
                 </Border>
                 <Border Name="borderCentarEdit" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden">
                     <Grid>
@@ -78,13 +92,13 @@
                             <ColumnDefinition Width="215*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="50"/>
-                            <RowDefinition Height="120"/>
+                            <RowDefinition Height="60*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="50*"/>
+                            <RowDefinition Height="120*"/>
                         </Grid.RowDefinitions>
                         <Label Content="Podaci o korisniku:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" FontSize="20"/>
                         <Label Content="Ime" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" FontSize="20"/>
@@ -112,9 +126,9 @@
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        <Button Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5"/>
-                        <Button Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="5,5,5,5"/>
-                        <Button Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="5,5,5,5"/>
+                        <Button Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Click="DodajItem"/>
+                        <Button Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="5,5,5,5" Click="IzmeniItem"/>
+                        <Button Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Click="ObrisiItem"/>
                     </Grid>
                 </Border>
             </Grid>

@@ -15,3 +15,5 @@ D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.pdb
 D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\GlavniWindow.g.cs
 D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\GlavniWindow.baml
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\NamestajWindow.g.cs
+D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\NamestajWindow.baml

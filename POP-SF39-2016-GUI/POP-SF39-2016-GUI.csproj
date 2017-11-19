@@ -57,6 +57,9 @@
     <Compile Include="gui\GlavniWindow.xaml.cs">
       <DependentUpon>GlavniWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="gui\NamestajWindow.xaml.cs">
+      <DependentUpon>NamestajWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\Akcija.cs" />
     <Compile Include="model\DodatnaUsluga.cs" />
     <Compile Include="model\Korisnik.cs" />
@@ -67,6 +70,10 @@
     <Compile Include="model\TipNamestaja.cs" />
     <Compile Include="util\GenericSerializer.cs" />
     <Page Include="gui\GlavniWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="gui\NamestajWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

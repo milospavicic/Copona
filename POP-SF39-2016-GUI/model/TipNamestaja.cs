@@ -13,5 +13,10 @@ namespace POP_SF39_2016.model
         public string Naziv { get; set; }
 
         public bool Obrisan { get; set; }
+
+        public override string ToString()
+        {
+            return $"{Naziv}";
+        }
     }
 }
