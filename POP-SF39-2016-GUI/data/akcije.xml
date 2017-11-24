@@ -8,4 +8,12 @@
     <Popust>10</Popust>
     <Obrisan>false</Obrisan>
   </Akcija>
+  <Akcija>
+    <Id>2</Id>
+    <PocetakAkcije>2017-12-01T00:00:00</PocetakAkcije>
+    <KrajAkcije>2017-12-03T00:00:00</KrajAkcije>
+    <NamestajId>4</NamestajId>
+    <Popust>25</Popust>
+    <Obrisan>false</Obrisan>
+  </Akcija>
 </ArrayOfAkcija>

@@ -60,23 +60,23 @@ namespace POP_SF39_2016_GUI.gui
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
 
-            var ListaNamestaja = Projekat.Instance.Namestaj;
+            var listaNamestaja = Projekat.Instance.Namestaj;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
                     var noviNamestaj = new Namestaj()
                     {
-                        Id = ListaNamestaja.Count + 1,
+                        Id = listaNamestaja.Count + 1,
                         Naziv = this.tbNaziv.Text,
                         Sifra = this.tbSifra.Text,
                         Cena = double.Parse(this.tbCena.Text),
                         BrKomada = int.Parse(this.tbBrojKomada.Text),
                         TipNamestajaId = cbTipNamestaja.SelectedIndex
                     };
-                    ListaNamestaja.Add(noviNamestaj);
+                    listaNamestaja.Add(noviNamestaj);
                     break;
                 case Operacija.IZMENA:
-                    foreach (Namestaj n in ListaNamestaja)
+                    foreach (Namestaj n in listaNamestaja)
                     {
                         if (n.Id == namestaj.Id)
                         {
@@ -92,7 +92,7 @@ namespace POP_SF39_2016_GUI.gui
                 default:
                     break;
             }
-            Projekat.Instance.Namestaj = ListaNamestaja;
+            Projekat.Instance.Namestaj = listaNamestaja;
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

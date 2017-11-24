@@ -44,8 +44,8 @@
                 <Button Name="btnAdmin" Content="Administratorske opcije" Grid.Row="3" Grid.Column="1" Click="PrikaziSakrij"/>
                 <Button Name="btnNamestaj" Content="Rad sa namestajem" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja"/>
                 <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja"/>
-                <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
-                <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika"/>
+                <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija"/>
                 <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
                 <!-- ADMIN OPCIJE-->
                 <Button Content="Izmena naloga" Grid.Row="10" Grid.Column="1" Click="IzmenaPodataka"/>
@@ -66,7 +66,8 @@
                     <RowDefinition Height="420*"/>
                     <RowDefinition Height="150*"/>
                 </Grid.RowDefinitions>
-                <ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" />
+                <DataGrid Name="dgTabela" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
+                <ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15"  Visibility="Hidden"/>
                 <Border Name="borderCentarInfo" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden" >
                     <Grid>
                         <Grid.ColumnDefinitions>

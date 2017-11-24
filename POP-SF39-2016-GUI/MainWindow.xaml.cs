@@ -55,6 +55,7 @@ namespace POP_SF39_2016_GUI
                     logovaniKorisnik = korisnik;
                     GlavniWindow noviGlavniWindow = new GlavniWindow(logovaniKorisnik);
                     noviGlavniWindow.Show();
+                    break;
                 }
             }
         }

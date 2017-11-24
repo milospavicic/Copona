@@ -27,5 +27,10 @@ namespace POP_SF39_2016.model
 
         public bool Obrisan { get; set; }
 
+        public override string ToString()
+        {
+            return $"{Ime},{Prezime},{KorisnickoIme}";
+        }
+
     }
 }

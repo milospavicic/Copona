@@ -1,11 +1,11 @@
-﻿<Window x:Class="POP_SF39_2016_GUI.gui.NamestajWindow"
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.TipNamestajaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="NamestajWindow" Height="400" Width="400">
+        Title="TipNamestajaWindow" Height="200" Width="400">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -14,10 +14,10 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="170*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="1" Grid.Row="1">
+        <Border Grid.Row="1" Grid.Column="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
@@ -26,21 +26,9 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Naziv:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Sifra:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Cena:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Tip namestaja:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Broj komada:" Grid.Column="0" Grid.Row="4" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <TextBox Name="tbNaziv" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Name="tbSifra" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Name="tbCena" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
-                <ComboBox Name="cbTipNamestaja" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
-                <TextBox Name="tbBrojKomada" Grid.Column="1" Grid.Row="4" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
                 <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
                 <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>
             </Grid>

@@ -18,4 +18,22 @@
     <TipKorisnika>Administrator</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>
+  <Korisnik>
+    <Id>3</Id>
+    <Ime>Pera</Ime>
+    <Prezime>Peric</Prezime>
+    <KorisnickoIme>perap</KorisnickoIme>
+    <Lozinka>123</Lozinka>
+    <TipKorisnika>Prodavac</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
+  <Korisnik>
+    <Id>4</Id>
+    <Ime>afafa</Ime>
+    <Prezime>fafafaf</Prezime>
+    <KorisnickoIme>aaa</KorisnickoIme>
+    <Lozinka>aaa</Lozinka>
+    <TipKorisnika>Prodavac</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
 </ArrayOfKorisnik>

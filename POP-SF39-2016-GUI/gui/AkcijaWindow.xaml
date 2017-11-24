@@ -1,0 +1,46 @@
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.AkcijaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        mc:Ignorable="d"
+        Title="AkcijaWindow" Height="400" Width="400">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="370*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="370*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Column="1" Grid.Row="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Pocetni datum:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="Krajni datum:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="Popust:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <Label Content="Namestaj na popustu:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                <DatePicker  Name="dpPocetniDatum" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
+                <DatePicker  Name="dpKrajnjiDatum" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <TextBox Name="tbPopust" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
+                <ComboBox Name="cbNamestaj" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
+                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
