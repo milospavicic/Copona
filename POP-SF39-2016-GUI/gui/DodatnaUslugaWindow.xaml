@@ -1,0 +1,41 @@
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.DodatnaUslugaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        mc:Ignorable="d"
+        Title="DodatnaUslugaWindow" Height="200" Width="300">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="270*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="170*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Naziv:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Content="Cena:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="tbNaziv" Text="{Binding Path=Naziv}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <TextBox Name="tbCena" Text="{Binding Path=Cena}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="2" Margin="25,10,25,10" Click="SacuvajIzmene" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="2" Margin="25,10,25,10" Click="ZatvoriWindow" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

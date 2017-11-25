@@ -1,6 +1,8 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,88 +18,65 @@ using System.Windows.Shapes;
 namespace POP_SF39_2016_GUI.gui
 {
     public partial class NamestajWindow : Window
-    {
+    { 
         public enum Operacija
-        {
-            DODAVANJE,
-            IZMENA
-        };
+    {
+        DODAVANJE,
+        IZMENA
+    };
 
-        private Namestaj namestaj;
-        private Operacija operacija;
+    private Namestaj namestaj;
+    private Operacija operacija;
 
-        public NamestajWindow(Namestaj namestaj, Operacija operacija)
-        {
-            InitializeComponent();
-            this.namestaj = namestaj;
-            this.operacija = operacija;
-            PopunjavanjePolja(namestaj);
-        }
-        public void PopunjavanjePolja(Namestaj namestaj)
-        {
-            List<TipNamestaja> listaTipaNamestaja = Projekat.Instance.TipNamestaja;
-            foreach(TipNamestaja tipNamestaja in listaTipaNamestaja)
-            {
-                cbTipNamestaja.Items.Add(tipNamestaja);
-            }
-            if (namestaj.Naziv != "")
-            {
-                tbNaziv.Text = namestaj.Naziv;
-                tbSifra.Text = namestaj.Sifra;
-                tbCena.Text = namestaj.Cena.ToString();
-                tbBrojKomada.Text = namestaj.BrKomada.ToString();
-                cbTipNamestaja.SelectedIndex = (int)namestaj.TipNamestajaId;
-            }
-            else
-            {
-                tbNaziv.Text = "";
-                tbSifra.Text = "";
-                tbCena.Text = "0";
-                tbBrojKomada.Text = "0";
-                cbTipNamestaja.SelectedIndex = 0;
-            }         
-        }
-        private void SacuvajIzmene(object sender, RoutedEventArgs e)
-        {
-
-            var listaNamestaja = Projekat.Instance.Namestaj;
-            switch (operacija)
-            {
-                case Operacija.DODAVANJE:
-                    var noviNamestaj = new Namestaj()
-                    {
-                        Id = listaNamestaja.Count + 1,
-                        Naziv = this.tbNaziv.Text,
-                        Sifra = this.tbSifra.Text,
-                        Cena = double.Parse(this.tbCena.Text),
-                        BrKomada = int.Parse(this.tbBrojKomada.Text),
-                        TipNamestajaId = cbTipNamestaja.SelectedIndex
-                    };
-                    listaNamestaja.Add(noviNamestaj);
-                    break;
-                case Operacija.IZMENA:
-                    foreach (Namestaj n in listaNamestaja)
-                    {
-                        if (n.Id == namestaj.Id)
-                        {
-                            n.Naziv = this.tbNaziv.Text;
-                            n.Sifra = this.tbSifra.Text;
-                            n.Cena = double.Parse(this.tbCena.Text);
-                            n.BrKomada = int.Parse(this.tbBrojKomada.Text);
-                            n.TipNamestajaId = cbTipNamestaja.SelectedIndex;
-                            break;
-                        }
-                    }
-                    break;
-                default:
-                    break;
-            }
-            Projekat.Instance.Namestaj = listaNamestaja;
-            this.Close();
-        }
-        private void ZatvoriWindow(object sender, RoutedEventArgs e)
-        {
-            this.Close();
-        }
+    public NamestajWindow(Namestaj namestaj, Operacija operacija)
+    {
+        InitializeComponent();
+        this.namestaj = namestaj;
+        this.operacija = operacija;
+        PopunjavanjePolja(namestaj);
     }
+    public void PopunjavanjePolja(Namestaj namestaj)
+    {
+        cbTipNamestaja.ItemsSource = Projekat.Instance.TipNamestaja;
+        //cbTipNamestaja.SelectedIndex = 0;
+        tbNaziv.DataContext = namestaj;
+        tbSifra.DataContext = namestaj;
+        tbCena.DataContext = namestaj;
+        tbBrojKomada.DataContext = namestaj;
+        cbTipNamestaja.DataContext = namestaj;
+       
+    }
+    private void SacuvajIzmene(object sender, RoutedEventArgs e)
+    {
+            try
+            {
+                int.Parse(tbBrojKomada.Text);
+                int.Parse(tbCena.Text);
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            if (cbTipNamestaja.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+        var listaNamestaja = Projekat.Instance.Namestaj;
+        switch (operacija)
+        {
+            case Operacija.DODAVANJE:
+                namestaj.Id = listaNamestaja.Count() + 1;
+                listaNamestaja.Add(namestaj);
+                break;
+        }
+        GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
+        this.Close();
+    }
+    private void ZatvoriWindow(object sender, RoutedEventArgs e)
+    {
+        this.Close();
+    }
+}
 }

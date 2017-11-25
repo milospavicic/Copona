@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,6 +38,12 @@ namespace POP_SF39_2016_GUI.gui
 
         private void PopunjavanjePolja()
         {
+            dpPocetniDatum.DataContext = akcija;
+            dpKrajnjiDatum.DataContext = akcija;
+            tbPopust.DataContext = akcija;
+            cbNamestaj.ItemsSource = Projekat.Instance.Namestaj;
+            cbNamestaj.DataContext = akcija;
+            /***
             foreach(Namestaj namestaj in Projekat.Instance.Namestaj)
             {
                 cbNamestaj.Items.Add(namestaj.Naziv);
@@ -55,6 +62,7 @@ namespace POP_SF39_2016_GUI.gui
                 tbPopust.Text = "0";
                 cbNamestaj.SelectedIndex = 0;
             }
+            ***/
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -64,38 +72,21 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-
+            if (cbNamestaj.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    var novAkcija = new Akcija()
-                    {
-                        Id = listaAkcija.Count + 1,
-                        PocetakAkcije = (DateTime)dpPocetniDatum.SelectedDate,
-                        KrajAkcije = (DateTime)dpKrajnjiDatum.SelectedDate,
-                        Popust = double.Parse(tbPopust.Text),
-                        NamestajId = cbNamestaj.SelectedIndex +1
-                    };
-                    listaAkcija.Add(novAkcija);
+                    akcija.Id = listaAkcija.Count + 1;
+                    listaAkcija.Add(akcija);
                     break;
-                case Operacija.IZMENA:
-                    foreach (Akcija a in listaAkcija)
-                    {
-                        if (a.Id == akcija.Id)
-                        {
-                            a.PocetakAkcije = (DateTime)this.dpPocetniDatum.SelectedDate;
-                            a.KrajAkcije = (DateTime)this.dpKrajnjiDatum.SelectedDate;
-                            a.Popust = double.Parse(this.tbPopust.Text);
-                            a.NamestajId = cbNamestaj.SelectedIndex + 1;
-                            break;
-                        }
-                    }
-                    break;
-                default:
-                    break;
+
             }
-            Projekat.Instance.Akcija = listaAkcija;
+            GenericSerializer.Serialize("akcije.xml",listaAkcija);
             this.Close();
             
         }

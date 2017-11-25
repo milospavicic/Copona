@@ -2,72 +2,56 @@
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
     <Id>1</Id>
-    <Naziv>Krevet1</Naziv>
-    <Sifra>55</Sifra>
-    <Cena>236</Cena>
-    <BrKomada>1</BrKomada>
-    <AkcijaId>1</AkcijaId>
+    <Naziv>Ikea Krever</Naziv>
+    <Cena>5000</Cena>
+    <Sifra>ikkrevet</Sifra>
+    <BrKomada>20</BrKomada>
     <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>2</Id>
-    <Naziv>Krevet2</Naziv>
-    <Sifra>krevet1</Sifra>
-    <Cena>12000</Cena>
-    <BrKomada>5</BrKomada>
-    <AkcijaId>2</AkcijaId>
-    <TipNamestajaId>0</TipNamestajaId>
+    <Naziv>Sofa 007</Naziv>
+    <Cena>2200</Cena>
+    <Sifra>bsofa</Sifra>
+    <BrKomada>15</BrKomada>
+    <TipNamestajaId>3</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>3</Id>
-    <Naziv>aaa</Naziv>
-    <Sifra>aaa</Sifra>
-    <Cena>213</Cena>
-    <BrKomada>0</BrKomada>
-    <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>1</TipNamestajaId>
+    <Naziv>Drvena polica</Naziv>
+    <Cena>1100</Cena>
+    <Sifra>dpolica</Sifra>
+    <BrKomada>5</BrKomada>
+    <TipNamestajaId>7</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>4</Id>
-    <Naziv>zzz</Naziv>
-    <Sifra>zzz</Sifra>
-    <Cena>525252</Cena>
-    <BrKomada>5</BrKomada>
-    <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>0</TipNamestajaId>
-    <Obrisan>true</Obrisan>
+    <Naziv>Barski sto</Naziv>
+    <Cena>45000</Cena>
+    <Sifra>bsto</Sifra>
+    <BrKomada>27</BrKomada>
+    <TipNamestajaId>8</TipNamestajaId>
+    <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>5</Id>
-    <Naziv>ZZQQ114</Naziv>
-    <Sifra>afafa</Sifra>
-    <Cena>1515</Cena>
-    <BrKomada>15141</BrKomada>
-    <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>0</TipNamestajaId>
+    <Naziv>Test</Naziv>
+    <Cena>1441</Cena>
+    <Sifra>Test</Sifra>
+    <BrKomada>4141</BrKomada>
+    <TipNamestajaId>6</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
     <Id>6</Id>
-    <Naziv>15</Naziv>
+    <Naziv>41</Naziv>
+    <Cena>0</Cena>
     <Sifra>14</Sifra>
-    <Cena>51</Cena>
-    <BrKomada>51</BrKomada>
-    <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>1</TipNamestajaId>
-    <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>7</Id>
-    <Naziv>ZCAFA</Naziv>
-    <Sifra>FAFA</Sifra>
-    <Cena>13</Cena>
-    <BrKomada>51</BrKomada>
-    <AkcijaId xsi:nil="true" />
-    <TipNamestajaId>0</TipNamestajaId>
-    <Obrisan>true</Obrisan>
+    <BrKomada>14</BrKomada>
+    <TipNamestajaId>5</TipNamestajaId>
+    <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

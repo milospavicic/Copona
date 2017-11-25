@@ -29,10 +29,19 @@
   </Korisnik>
   <Korisnik>
     <Id>4</Id>
-    <Ime>afafa</Ime>
+    <Ime>John</Ime>
     <Prezime>fafafaf</Prezime>
     <KorisnickoIme>aaa</KorisnickoIme>
     <Lozinka>aaa</Lozinka>
+    <TipKorisnika>Prodavac</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
+  <Korisnik>
+    <Id>5</Id>
+    <Ime>Imee</Ime>
+    <Prezime>Prezimee</Prezime>
+    <KorisnickoIme>1234</KorisnickoIme>
+    <Lozinka>111234</Lozinka>
     <TipKorisnika>Prodavac</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>

@@ -46,7 +46,7 @@
                 <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja"/>
                 <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika"/>
                 <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija"/>
-                <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden"/>
+                <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazDodatnihUsluga"/>
                 <!-- ADMIN OPCIJE-->
                 <Button Content="Izmena naloga" Grid.Row="10" Grid.Column="1" Click="IzmenaPodataka"/>
                 <Button Content="Logout " Grid.Row="11" Grid.Column="1" Click="Logout"/>

@@ -28,7 +28,7 @@
                     <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Naziv:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <TextBox Name="tbNaziv" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Name="tbNaziv" Text="{Binding Path=Naziv}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
                 <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
                 <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>
             </Grid>

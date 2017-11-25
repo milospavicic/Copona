@@ -2,6 +2,7 @@
 using POP_SF39_2016_GUI.gui;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace POP_SF39_2016_GUI
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
         {
-            List<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+            ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
             if (tbKorisnickoIme.Text.Equals("") || passboxSifra.Password.Equals(""))
             {
 

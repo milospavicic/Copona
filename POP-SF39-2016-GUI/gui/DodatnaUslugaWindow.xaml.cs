@@ -17,9 +17,9 @@ using System.Windows.Shapes;
 namespace POP_SF39_2016_GUI.gui
 {
     /// <summary>
-    /// Interaction logic for TipNamestajaWindow.xaml
+    /// Interaction logic for DodatnaUslugaWindow.xaml
     /// </summary>
-    public partial class TipNamestajaWindow : Window
+    public partial class DodatnaUslugaWindow : Window
     {
         public enum Operacija
         {
@@ -27,32 +27,42 @@ namespace POP_SF39_2016_GUI.gui
             IZMENA
         };
 
-        private TipNamestaja tipNamestaja;
+        private DodatnaUsluga dodatnaUsluga;
         private Operacija operacija;
 
-        public TipNamestajaWindow(TipNamestaja tipNamestaja, Operacija operacija)
+        public DodatnaUslugaWindow(DodatnaUsluga dodatnaUsluga, Operacija operacija)
         {
             InitializeComponent();
-            this.tipNamestaja = tipNamestaja;
+            this.dodatnaUsluga = dodatnaUsluga;
             this.operacija = operacija;
-            PopunjavanjePolja(tipNamestaja);
+            PopunjavanjePolja(dodatnaUsluga);
         }
-        public void PopunjavanjePolja(TipNamestaja tipNamestaja)
+
+        private void PopunjavanjePolja(DodatnaUsluga dodatnaUsluga)
         {
-            tbNaziv.DataContext = tipNamestaja;
+            tbNaziv.DataContext = dodatnaUsluga;
+            tbCena.DataContext = dodatnaUsluga;
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-
-            var listaTipaNamestaja = Projekat.Instance.TipNamestaja;
+            try
+            {
+                int.Parse(tbCena.Text);
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            var listaDodatnihUsluga = Projekat.Instance.DodatnaUsluga;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    tipNamestaja.Id = listaTipaNamestaja.Count + 1;
-                    listaTipaNamestaja.Add(tipNamestaja);
+                    dodatnaUsluga.Id = listaDodatnihUsluga.Count + 1;
+                    listaDodatnihUsluga.Add(dodatnaUsluga);
                     break;
             }
-            GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);
+            GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

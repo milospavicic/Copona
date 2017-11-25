@@ -1,6 +1,7 @@
 ﻿using POP_SF39_2016.util;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,26 +10,27 @@ namespace POP_SF39_2016.model
 {
     public class Projekat
     {
-        public static Projekat Instance { get; } = new Projekat();
-
-        private List<Namestaj> listaNamestaja;
-
-        public List<Namestaj> Namestaj
+        public static Projekat Instance { get; private set; } = new Projekat();
+        public ObservableCollection<TipNamestaja> TipNamestaja { get; set; }
+        public ObservableCollection<Namestaj> Namestaj { get; set; }
+        public ObservableCollection<Korisnik> Korisnik { get; set; }
+        public ObservableCollection<Salon> Salon { get; set; }
+        public ObservableCollection<Akcija> Akcija { get; set; }
+        public ObservableCollection<DodatnaUsluga> DodatnaUsluga { get; set; }
+        private Projekat()
         {
-            get
-            {
-                this.listaNamestaja = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
-                return this.listaNamestaja;
-            }
-            set
-            {
-                this.listaNamestaja = value;
-                GenericSerializer.Serialize<Namestaj>("namestaj.xml", listaNamestaja);
-            }
+            Namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
+            TipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipnamestaja.xml");
+            Korisnik = GenericSerializer.Deserialize<Korisnik>("korisnici.xml");
+            Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
+            DodatnaUsluga = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
+            Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
         }
 
-        private List<TipNamestaja> listaTipNamestaja;
 
+        /***
+        private List<TipNamestaja> listaTipNamestaja;
+        
         public List<TipNamestaja> TipNamestaja
         {
             get
@@ -42,6 +44,7 @@ namespace POP_SF39_2016.model
                 GenericSerializer.Serialize<TipNamestaja>("tipnamestaja.xml", listaTipNamestaja);
             }
         }
+        
         private List<Korisnik> listaKorisnika;
 
         public List<Korisnik> Korisnik
@@ -121,5 +124,6 @@ namespace POP_SF39_2016.model
 
             }
         }
+       ***/
     }
 }

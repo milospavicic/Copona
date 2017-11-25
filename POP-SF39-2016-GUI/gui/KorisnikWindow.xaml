@@ -36,11 +36,11 @@
                 <Label Content="Korisnicko ime" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" FontSize="20"/>
                 <Label Content="Sifra" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" FontSize="20"/>
                 <Label Content="Pozicija" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" FontSize="20"/>
-                <TextBox Name="tbIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Name="tbPrezime" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=Ime}" Name="tbIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=Prezime}" Name="tbPrezime" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=KorisnickoIme}" Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
                 <PasswordBox Name="pbSifra" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <ComboBox Name="cbPozicija" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="12" VerticalContentAlignment="Center"/>
+                <ComboBox Text="{Binding Path=TipKorisnika}" SelectedValue="{Binding Path=TipKorisnika}" Name="cbPozicija" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="12" VerticalContentAlignment="Center"/>
 
                 <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
                 <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>

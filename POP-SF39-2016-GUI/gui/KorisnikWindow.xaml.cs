@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -33,75 +34,43 @@ namespace POP_SF39_2016_GUI.gui
             this.operacija = operacija;
             PopunjavanjePolja(korisnik);
             
-            if (operacija == Operacija.IZMENA) { 
-                pbSifra.Focusable = false;
+            if (operacija == Operacija.IZMENA) {
+                tbKorisnickoIme.Focusable = false;
+                tbKorisnickoIme.IsHitTestVisible = false;
+                pbSifra.Focusable = false; // Nema bindinga = nema promene?
                 pbSifra.IsHitTestVisible = false;
-            }
-            
+            }  
         }
 
         private void PopunjavanjePolja(Korisnik korisnik)
         {
             cbPozicija.Items.Add(TipKorisnika.Prodavac);
             cbPozicija.Items.Add(TipKorisnika.Administrator);
-            if (korisnik.Ime != "")
-            {
-                tbIme.Text = korisnik.Ime;
-                tbPrezime.Text = korisnik.Prezime;
-                tbKorisnickoIme.Text = korisnik.KorisnickoIme;
-                pbSifra.Password = korisnik.Lozinka;
-                cbPozicija.SelectedItem = korisnik.TipKorisnika;
-            }
-            else
-            {
-                tbIme.Text = "";
-                tbPrezime.Text = "";
-                tbKorisnickoIme.Text = "";
-                pbSifra.Password = "";
 
-                cbPozicija.SelectedItem = TipKorisnika.Prodavac;
-            }
+            tbIme.DataContext = korisnik;
+            tbPrezime.DataContext = korisnik;
+            tbKorisnickoIme.DataContext = korisnik;
+            cbPozicija.DataContext = korisnik;
+
+            pbSifra.Password = korisnik.Lozinka;
+
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-
             var listaKorisnika = Projekat.Instance.Korisnik;
+            korisnik.Lozinka = this.pbSifra.Password; // NEMA BINDINGA ZA PWBOX
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    var noviKorisnik = new Korisnik()
-                    {
-                        Id = listaKorisnika.Count + 1,
-                        Ime = this.tbIme.Text,
-                        Prezime = this.tbPrezime.Text,
-                        KorisnickoIme = this.tbKorisnickoIme.Text,
-                        Lozinka = this.pbSifra.Password,
-                        TipKorisnika = (TipKorisnika)this.cbPozicija.SelectedItem,
-                    };
-                    listaKorisnika.Add(noviKorisnik);
-                    break;
-                case Operacija.IZMENA:
-                    foreach (Korisnik k in listaKorisnika)
-                    {
-                        if (k.Id == korisnik.Id)
-                        {
-                            k.Ime = this.tbIme.Text;
-                            k.Prezime = this.tbPrezime.Text;
-                            k.KorisnickoIme = this.tbKorisnickoIme.Text;
-                            k.Lozinka = this.pbSifra.Password;
-                            k.TipKorisnika = (TipKorisnika)this.cbPozicija.SelectedItem;
-                            break;
-                        }
-                    }
-                    break;
-                default:
+                    korisnik.Id = listaKorisnika.Count + 1;
+                    listaKorisnika.Add(korisnik);
                     break;
             }
-            Projekat.Instance.Korisnik = listaKorisnika;
+            GenericSerializer.Serialize("korisnici.xml", listaKorisnika);
             this.Close();
         }
-            private void ZatvoriWindow(object sender, RoutedEventArgs e)
+        private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }

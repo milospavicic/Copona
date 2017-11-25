@@ -6,4 +6,16 @@
     <Cena>300</Cena>
     <Obrisan>false</Obrisan>
   </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>2</Id>
+    <Naziv>Pakovanje</Naziv>
+    <Cena>50</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
+  <DodatnaUsluga>
+    <Id>3</Id>
+    <Naziv>Sastavljanje</Naziv>
+    <Cena>800</Cena>
+    <Obrisan>false</Obrisan>
+  </DodatnaUsluga>
 </ArrayOfDodatnaUsluga>
