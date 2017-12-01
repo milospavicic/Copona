@@ -32,7 +32,8 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
-                    <RowDefinition Height="170*"/>
+                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="120*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
@@ -47,10 +48,11 @@
                 <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika"/>
                 <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija"/>
                 <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazDodatnihUsluga"/>
+                <Button Name="btnProdaje" Content="Rad sa prodajama" Grid.Row="9" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazProdaja"/>
                 <!-- ADMIN OPCIJE-->
-                <Button Content="Izmena naloga" Grid.Row="10" Grid.Column="1" Click="IzmenaPodataka"/>
-                <Button Content="Logout " Grid.Row="11" Grid.Column="1" Click="Logout"/>
-                <Button Content="Izlaz" Grid.Row="12" Grid.Column="1" Click="Izlaz"/>
+                <Button Content="Izmena naloga" Grid.Row="11" Grid.Column="1" Click="IzmenaPodataka"/>
+                <Button Content="Logout " Grid.Row="12" Grid.Column="1" Click="Logout"/>
+                <Button Content="Izlaz" Grid.Row="13" Grid.Column="1" Click="Izlaz"/>
             </Grid>
         </Border>
         <Border Name="glavniBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
@@ -66,7 +68,7 @@
                     <RowDefinition Height="420*"/>
                     <RowDefinition Height="150*"/>
                 </Grid.RowDefinitions>
-                <DataGrid Name="dgTabela" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
+                <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
                 <ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15"  Visibility="Hidden"/>
                 <Border Name="borderCentarInfo" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden" >
                     <Grid>

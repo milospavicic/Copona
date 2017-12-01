@@ -3,6 +3,7 @@ using POP_SF39_2016.util;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -19,6 +20,7 @@ namespace POP_SF39_2016_GUI.gui
 {
     public partial class GlavniWindow : Window
     {
+        ICollectionView view;
         public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
 
         public enum Opcija
@@ -27,17 +29,43 @@ namespace POP_SF39_2016_GUI.gui
             TIPNAMESTAJA,
             AKCIJA,
             DODATNAUSLUGA,
-            KORISNIK
+            KORISNIK,
+            PRODAJA
         }
         public Opcija izabranaOpcija;
         public GlavniWindow(Korisnik logovaniKorisnik)
         {
-
+            
             InitializeComponent();
+
             this.logovaniKorisnik = logovaniKorisnik;
             if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac)
                 btnAdmin.Visibility = Visibility.Hidden;
+            dgTabela.IsSynchronizedWithCurrentItem = true;
+            dgTabela.IsReadOnly=true;
+            dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
         }
+
+        private bool obrisanFilter(object obj)
+        {
+            switch (izabranaOpcija)
+            {
+                case Opcija.NAMESTAJ:
+                    return !((Namestaj)obj).Obrisan;
+                case Opcija.TIPNAMESTAJA:
+                    return !((TipNamestaja)obj).Obrisan;
+                case Opcija.KORISNIK:
+                    return !((Korisnik)obj).Obrisan;
+                case Opcija.AKCIJA:
+                    return !((Akcija)obj).Obrisan;
+                case Opcija.DODATNAUSLUGA:
+                    return !((DodatnaUsluga)obj).Obrisan;
+                case Opcija.PRODAJA:
+                    return !((ProdajaNamestaja)obj).Obrisan;
+            }
+            return false;
+        }
+
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
@@ -68,19 +96,35 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    dgTabela.ItemsSource = Projekat.Instance.Namestaj;
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    //dgTabela.ItemsSource = Projekat.Instance.Namestaj;
                     break;
                 case Opcija.TIPNAMESTAJA:
-                    dgTabela.ItemsSource = Projekat.Instance.TipNamestaja;
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipNamestaja);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
                     break;
                 case Opcija.KORISNIK:
-                    dgTabela.ItemsSource = Projekat.Instance.Korisnik;
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnik);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
                     break;
                 case Opcija.AKCIJA:
-                    dgTabela.ItemsSource = Projekat.Instance.Akcija;
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Akcija);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
                     break;
                 case Opcija.DODATNAUSLUGA:
-                    dgTabela.ItemsSource = Projekat.Instance.DodatnaUsluga;
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatnaUsluga);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.PRODAJA:
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Prodaja);
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
                     break;
             }
         }
@@ -140,6 +184,7 @@ namespace POP_SF39_2016_GUI.gui
                 btnKorisnici.Visibility = Visibility.Visible;
                 btnAkcije.Visibility = Visibility.Visible;
                 btnDodatneUsluge.Visibility = Visibility.Visible;
+                btnProdaje.Visibility = Visibility.Visible;
             }
             else
             {
@@ -148,6 +193,7 @@ namespace POP_SF39_2016_GUI.gui
                 btnKorisnici.Visibility = Visibility.Hidden;
                 btnAkcije.Visibility = Visibility.Hidden;
                 btnDodatneUsluge.Visibility = Visibility.Hidden;
+                btnProdaje.Visibility = Visibility.Hidden;
             }
         }
 
@@ -242,6 +288,13 @@ namespace POP_SF39_2016_GUI.gui
             AdminEdit();
             OsnovniPrikaz();
         }
+        private void PrikazProdaja(object sender, RoutedEventArgs e)
+        {
+            izabranaOpcija = Opcija.PRODAJA;
+            SkloniSve();
+            AdminEdit();
+            OsnovniPrikaz();
+        }
 
         private void DodajItem(object sender, RoutedEventArgs e)
         {
@@ -301,7 +354,7 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.NAMESTAJ:
                     var noviNamestaj = (Namestaj)dgTabela.SelectedItem;
-
+                    //(Namestaj)noviNamestaj.Clone()
                     var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.IZMENA);
                     namestajProzor.ShowDialog();
                     break;
@@ -346,7 +399,7 @@ namespace POP_SF39_2016_GUI.gui
                         foreach (Namestaj namestaj in listaNamestaja)
                             if (namestaj.Id == izabraniNamestaj.Id)
                                 namestaj.Obrisan = true;
-                        GenericSerializer.Serialize("tipnamestaja.xml", listaNamestaja);
+                        GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
                     };
                     break;
                 case Opcija.TIPNAMESTAJA:
@@ -372,7 +425,7 @@ namespace POP_SF39_2016_GUI.gui
                         foreach (Korisnik korisnik in listaKorisnika)
                             if (korisnik.Id == izabraniKorisnik.Id)
                                 korisnik.Obrisan = true;
-                        GenericSerializer.Serialize("tipnamestaja.xml", listaKorisnika);
+                        GenericSerializer.Serialize("korisnici.xml", listaKorisnika);
                     };
                     break;
                 case Opcija.AKCIJA:
@@ -385,7 +438,7 @@ namespace POP_SF39_2016_GUI.gui
                         foreach (Akcija akcija in listaAkcija)
                             if (akcija.Id == izabranaAkcija.Id)
                                 akcija.Obrisan = true;
-                        GenericSerializer.Serialize("tipnamestaja.xml", listaAkcija);
+                        GenericSerializer.Serialize("akcije.xml", listaAkcija);
                     };
                     break;
                 case Opcija.DODATNAUSLUGA:
@@ -400,6 +453,36 @@ namespace POP_SF39_2016_GUI.gui
                                 dodatnaUsluga.Obrisan = true;
                         GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);
                     };
+                    break;
+            }
+            view.Refresh();
+        }
+
+        private void dgTabela_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            {
+                e.Cancel = true;
+            }
+            switch (izabranaOpcija)
+            {
+                case Opcija.NAMESTAJ:
+                    if ( (string)e.Column.Header == "TipNamestajaId")
+                    {
+                        e.Cancel = "";
+                    }
+                    break;
+                case Opcija.KORISNIK:
+                    if ((string)e.Column.Header == "Lozinka")
+                    {
+                        e.Cancel = true;
+                    }
+                    break;
+                case Opcija.AKCIJA:
+                    if ((string)e.Column.Header == "NamestajId")
+                    {
+                        e.Cancel = true;
+                    }
                     break;
             }
         }

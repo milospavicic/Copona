@@ -43,6 +43,13 @@ namespace POP_SF39_2016_GUI.gui
             tbPopust.DataContext = akcija;
             cbNamestaj.ItemsSource = Projekat.Instance.Namestaj;
             cbNamestaj.DataContext = akcija;
+            if(operacija == Operacija.DODAVANJE)
+            {
+                dpPocetniDatum.DisplayDateStart = DateTime.Now;
+                dpKrajnjiDatum.DisplayDateStart = DateTime.Now;
+                //dpPocetniDatum.SelectedDate = DateTime.Now;
+                dpKrajnjiDatum.SelectedDate = DateTime.Now;
+            }
             /***
             foreach(Namestaj namestaj in Projekat.Instance.Namestaj)
             {
@@ -84,7 +91,6 @@ namespace POP_SF39_2016_GUI.gui
                     akcija.Id = listaAkcija.Count + 1;
                     listaAkcija.Add(akcija);
                     break;
-
             }
             GenericSerializer.Serialize("akcije.xml",listaAkcija);
             this.Close();

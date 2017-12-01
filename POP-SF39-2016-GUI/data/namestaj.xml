@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
+    <Naziv>Ikea Krevet</Naziv>
     <Id>1</Id>
-    <Naziv>Ikea Krever</Naziv>
     <Cena>5000</Cena>
     <Sifra>ikkrevet</Sifra>
     <BrKomada>20</BrKomada>
@@ -10,8 +10,8 @@
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Id>2</Id>
     <Naziv>Sofa 007</Naziv>
+    <Id>2</Id>
     <Cena>2200</Cena>
     <Sifra>bsofa</Sifra>
     <BrKomada>15</BrKomada>
@@ -19,8 +19,8 @@
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Id>3</Id>
     <Naziv>Drvena polica</Naziv>
+    <Id>3</Id>
     <Cena>1100</Cena>
     <Sifra>dpolica</Sifra>
     <BrKomada>5</BrKomada>
@@ -28,30 +28,21 @@
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Id>4</Id>
     <Naziv>Barski sto</Naziv>
+    <Id>4</Id>
     <Cena>45000</Cena>
     <Sifra>bsto</Sifra>
     <BrKomada>27</BrKomada>
     <TipNamestajaId>8</TipNamestajaId>
-    <Obrisan>false</Obrisan>
+    <Obrisan>true</Obrisan>
   </Namestaj>
   <Namestaj>
+    <Naziv>Krevet Test</Naziv>
     <Id>5</Id>
-    <Naziv>Test</Naziv>
-    <Cena>1441</Cena>
-    <Sifra>Test</Sifra>
-    <BrKomada>4141</BrKomada>
-    <TipNamestajaId>6</TipNamestajaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Id>6</Id>
-    <Naziv>41</Naziv>
-    <Cena>0</Cena>
-    <Sifra>14</Sifra>
-    <BrKomada>14</BrKomada>
-    <TipNamestajaId>5</TipNamestajaId>
+    <Cena>2500</Cena>
+    <Sifra>krevett</Sifra>
+    <BrKomada>30</BrKomada>
+    <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="model\Akcija.cs" />
     <Compile Include="model\DodatnaUsluga.cs" />
+    <Compile Include="model\JedinicaProdaje.cs" />
     <Compile Include="model\Korisnik.cs" />
     <Compile Include="model\Namestaj.cs" />
     <Compile Include="model\ProdajaNamestaja.cs" />
@@ -149,7 +150,6 @@
     <Resource Include="data\namestaj.xml">
       <SubType>Designer</SubType>
     </Resource>
-    <Resource Include="data\tipnamestaja.xml" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\akcije.xml" />
@@ -157,6 +157,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="data\salon.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\tipnamestaja.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\jediniceprodaje.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="data\prodajenamestaja.xml" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

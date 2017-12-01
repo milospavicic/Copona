@@ -20,6 +20,15 @@ namespace POP_SF39_2016.model
         private TipNamestaja tipNamestaja;
         public event PropertyChangedEventHandler PropertyChanged;
 
+        public string Naziv
+        {
+            get { return naziv; }
+            set
+            {
+                naziv = value;
+                OnPropertyChanged("Naziv");
+            }
+        }
         [XmlIgnore]
         public TipNamestaja TipNamestaja
         {
@@ -34,7 +43,6 @@ namespace POP_SF39_2016.model
             set
             {
                 tipNamestaja = value;
-                Console.WriteLine(tipNamestaja);
                 TipNamestajaId = tipNamestaja.Id;
                 OnPropertyChanged("TipNamestaja");
             }
@@ -47,16 +55,6 @@ namespace POP_SF39_2016.model
             {
                 id = value;
                 OnPropertyChanged("Id");
-            }
-        }
-
-        public string Naziv
-        {
-            get { return naziv; }
-            set
-            {
-                naziv = value;
-                OnPropertyChanged("Naziv");
             }
         }
 

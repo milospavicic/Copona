@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ArrayOfJedinicaProdaje xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <JedinicaProdaje>
+    <Id>1</Id>
+    <NamestajId>1</NamestajId>
+    <Kolicina>2</Kolicina>
+    <AkcijaId>1</AkcijaId>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
+</ArrayOfJedinicaProdaje>

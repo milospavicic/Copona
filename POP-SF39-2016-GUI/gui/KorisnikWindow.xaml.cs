@@ -44,8 +44,9 @@ namespace POP_SF39_2016_GUI.gui
 
         private void PopunjavanjePolja(Korisnik korisnik)
         {
-            cbPozicija.Items.Add(TipKorisnika.Prodavac);
-            cbPozicija.Items.Add(TipKorisnika.Administrator);
+            cbPozicija.ItemsSource = Enum.GetValues(typeof(TipKorisnika)).Cast<TipKorisnika>();
+            //cbPozicija.Items.Add(TipKorisnika.Prodavac);
+            //cbPozicija.Items.Add(TipKorisnika.Administrator);
 
             tbIme.DataContext = korisnik;
             tbPrezime.DataContext = korisnik;

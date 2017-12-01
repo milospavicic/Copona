@@ -38,12 +38,13 @@ namespace POP_SF39_2016_GUI.gui
     public void PopunjavanjePolja(Namestaj namestaj)
     {
         cbTipNamestaja.ItemsSource = Projekat.Instance.TipNamestaja;
-        //cbTipNamestaja.SelectedIndex = 0;
         tbNaziv.DataContext = namestaj;
         tbSifra.DataContext = namestaj;
         tbCena.DataContext = namestaj;
         tbBrojKomada.DataContext = namestaj;
         cbTipNamestaja.DataContext = namestaj;
+            if (operacija == Operacija.DODAVANJE)
+                cbTipNamestaja.SelectedIndex = 1;
        
     }
     private void SacuvajIzmene(object sender, RoutedEventArgs e)

@@ -27,7 +27,7 @@
   </TipNamestaja>
   <TipNamestaja>
     <Id>6</Id>
-    <Naziv>Lampa</Naziv>
+    <Naziv>Sto</Naziv>
     <Obrisan>false</Obrisan>
   </TipNamestaja>
   <TipNamestaja>
@@ -37,7 +37,17 @@
   </TipNamestaja>
   <TipNamestaja>
     <Id>8</Id>
-    <Naziv>Sto</Naziv>
+    <Naziv>Plakar</Naziv>
     <Obrisan>false</Obrisan>
+  </TipNamestaja>
+  <TipNamestaja>
+    <Id>9</Id>
+    <Naziv>Orman</Naziv>
+    <Obrisan>false</Obrisan>
+  </TipNamestaja>
+  <TipNamestaja>
+    <Id>10</Id>
+    <Naziv>Nocni ormaric</Naziv>
+    <Obrisan>true</Obrisan>
   </TipNamestaja>
 </ArrayOfTipNamestaja>
