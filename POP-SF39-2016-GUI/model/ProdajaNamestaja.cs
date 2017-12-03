@@ -18,7 +18,7 @@ namespace POP_SF39_2016.model
         private DateTime datumProdaje;
         private string kupac;
         private string brRacuna;
-        private List<DodatnaUsluga> dodatneUsluge;
+        private List<int> dodatneUslugeId;
         private double ukupnaCena;
         public event PropertyChangedEventHandler PropertyChanged;
         public int Id
@@ -69,12 +69,12 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("BrRacuna");
             }
         }
-        public List<DodatnaUsluga> DodatneUsluge
+        public List<int> DodatneUslugeId
         {
-            get { return dodatneUsluge; }
+            get { return dodatneUslugeId; }
             set
             {
-                dodatneUsluge = value;
+                dodatneUslugeId = value;
                 OnPropertyChanged("DodatneUsluge");
             }
         }
@@ -113,7 +113,7 @@ namespace POP_SF39_2016.model
                 Kupac = kupac,
                 DatumProdaje = datumProdaje,
                 BrRacuna = brRacuna,
-                DodatneUsluge = dodatneUsluge,
+                DodatneUslugeId = dodatneUslugeId,
                 ListaJedinicaProdajeId = listaJedinicaProdajeId,
                 UkupnaCena = ukupnaCena,
                 Obrisan = obrisan

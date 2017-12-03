@@ -35,10 +35,11 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" />
-                            <DataGrid Name="dgProdatoN" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" ItemsSource="{Binding Path=listaNamestajaZaProdaju}" AutoGenerateColumns = "True" AutoGeneratingColumn="dgProdatoN_AutoGeneratingColumn"/>
+                            <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdajaN_AutoGeneratingColumn" />
+                            <!-- ItemsSource="{Binding Path=listaNamestajaZaProdaju}" -->
+                            <DataGrid Name="dgProdatoN" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdatoN_AutoGeneratingColumn"/>
                             <Button Name="btnDodajN" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="ProdajNOnClick"/>
-                            <Button Name="btnIzbaciN" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch"/>
+                            <Button Name="btnIzbaciN" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Click="IzbaciNOnClick"/>
                             <Label Grid.Row="2" Grid.Column="1" Content="Kolicina:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                             <TextBox Name="tbKolicina" Grid.Row="3" Grid.Column="1" Margin="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Grid>
@@ -57,15 +58,50 @@
                                 <ColumnDefinition Width="1*"/>
                                 <ColumnDefinition Width="4*"/>
                             </Grid.ColumnDefinitions>
-                            <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" />
-                            <ListBox Name="lbProdajaDU" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5"/>
-                            <Button Name="btnDodajDU" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch"/>
-                            <Button Name="btnIzbaciDU" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch"/>
+                            <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdajaDU_AutoGeneratingColumn" />
+                            <!-- ItemsSource="{Binding Path=listaDUZaProdaju}" -->
+                            <DataGrid Name="dgProdatoDU" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdatoDU_AutoGeneratingColumn"/>
+                            <Button Name="btnDodajDU" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="ProdajDUOnClick"/>
+                            <Button Name="btnIzbaciDU" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Click="IzbaciDUOnClick"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Zakljucivanje prodaje">
+                    <TabItem Header="Zakljucivanje prodaje" Selector.Selected="OnTabSelected">
                         <Grid>
-                            
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="1*"/>
+                                <RowDefinition Height="4*"/>
+                                <RowDefinition Height="1*"/>
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="1*"/>
+                            </Grid.ColumnDefinitions>
+                            <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="Black" BorderThickness="1" >
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="1*"/>
+                                        <ColumnDefinition Width="1*"/>
+                                    </Grid.ColumnDefinitions>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
+                                    </Grid.RowDefinitions>
+                                    <Label Content="Kupac" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                                    <Label Content="Broj racuna" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                                    <Label Content="Datum kupovine" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                                    <Label Content="Ukupna cena" Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
+                                    <TextBox Name="tbKupac" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
+                                    <TextBox Name="tbBrojRacuna" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbDatum" Grid.Column="1" Grid.Row="2"  Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbUkupnaCena" Grid.Column="1" Grid.Row="3"  Margin="25" FontSize="14"/>
+                                    <Button Name="btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="4"  Margin="25" Click="btnIzadji_Click"/>
+                                    <Button Name="btnProdajFinal" Content="Prodaj" Grid.Column="0" Grid.Row="4"  Margin="25" Click="btnProdajFinal_Click"/>
+                                </Grid>
+                            </Border>
                         </Grid>
                     </TabItem>
                 </TabControl>

@@ -340,6 +340,9 @@ namespace POP_SF39_2016_GUI.gui
                     var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, 0, DodatnaUslugaWindow.Operacija.DODAVANJE);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
+                case Opcija.PRODAJA:
+                    ProdajaProzor();
+                    break;
             }
         }
         private void IzmeniItem(object sender, RoutedEventArgs e)

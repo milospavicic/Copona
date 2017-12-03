@@ -1,9 +1,11 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016.util;
 using POP_SF39_2016_GUI.model;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -22,8 +24,9 @@ namespace POP_SF39_2016_GUI.gui
     public partial class ProdajaWindow : Window
     {
         public ObservableCollection<JedinicaProdaje> listaNamestajaZaProdaju { get; set; } = new ObservableCollection<JedinicaProdaje>();
-        //visual uvek trazi save?! wtf
-        public List<DodatnaUsluga> listaDUZaProdaju { get; set; } = new List<DodatnaUsluga>();
+        public ObservableCollection<DodatnaUsluga> listaDUZaProdaju { get; set; } = new ObservableCollection<DodatnaUsluga>();
+        public ObservableCollection<JedinicaProdaje> listaJedProdaje { get; set; } = Projekat.Instance.JedinicaProdaje;
+        public double ukupnaCena { get; set; } 
         ICollectionView view;
         public enum Operacija
         {
@@ -43,44 +46,149 @@ namespace POP_SF39_2016_GUI.gui
             this.index = index;
             dgProdajaN.IsReadOnly = true;
             dgProdajaN.IsSynchronizedWithCurrentItem = true;
+            dgProdajaN.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgProdajaDU.IsReadOnly = true;
             dgProdajaDU.IsSynchronizedWithCurrentItem = true;
+            dgProdajaDU.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgProdatoN.IsReadOnly = true;
             dgProdatoN.IsSynchronizedWithCurrentItem = true;
             dgProdatoN.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dgProdatoDU.IsReadOnly = true;
+            dgProdatoDU.IsSynchronizedWithCurrentItem = true;
+            dgProdatoDU.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             PopuniTabele();
         }
-        private bool obrisanFilter(object obj)
+        private void OnTabSelected(object sender, RoutedEventArgs e)
+        {
+            var tab = sender as TabItem;
+            if (tab != null)
+            {
+                tbUkupnaCena.Text = ukupnaCena.ToString();
+                tbDatum.Text = DateTime.Now.ToShortDateString();
+            }
+        }
+        private bool obrisanFilterN(object obj)
         {
             return !((Namestaj)obj).Obrisan;
         }
+        private bool obrisanFilterDU(object obj)
+        {
+            return !((DodatnaUsluga)obj).Obrisan;
+        }
         private void PopuniTabele()
-        {   //view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
-            //view.Filter = obrisanFilter;
-            //dgProdajaN.ItemsSource = view;
-            dgProdajaN.ItemsSource = Projekat.Instance.Namestaj;
+        {   view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+            view.Filter = obrisanFilterN;
+            dgProdajaN.ItemsSource = view;
             dgProdajaN.SelectedIndex = 0;
-            dgProdajaDU.ItemsSource = Projekat.Instance.DodatnaUsluga;
+            view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatnaUsluga);
+            view.Filter = obrisanFilterDU;
+            dgProdajaDU.ItemsSource = view;
             dgProdajaDU.SelectedIndex = 0;
             dgProdatoN.ItemsSource = listaNamestajaZaProdaju;
-            dgProdatoN.DataContext = listaNamestajaZaProdaju;
+            dgProdatoDU.ItemsSource = listaDUZaProdaju;
+            tbUkupnaCena.Text = ukupnaCena.ToString();
         }
         private void ProdajNOnClick(object sender, RoutedEventArgs e)
         {
-            Console.WriteLine(dgProdajaN.SelectedItem);
-            if(dgProdajaN.SelectedItem == null)
+            if (dgProdajaN.SelectedItem == null)
             {
                 MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
             Namestaj selektovaniNamestaj = (Namestaj)dgProdajaN.SelectedItem;
+            int kolicina = 0;
+            try
+            {
+                if(tbKolicina.Text=="")
+                    throw new Exception("Morate uneti pozitivan broj!");
+                kolicina =Int32.Parse(tbKolicina.Text);
+                if (kolicina <= 0)
+                    throw new Exception("Morate uneti pozitivan broj!");
+                if (kolicina > selektovaniNamestaj.BrKomada)
+                    throw new Exception("Nema dovoljno komada!");
+            }
+            catch (Exception ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show(ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
             JedinicaProdaje jd = new JedinicaProdaje
             {
+                Id = listaJedProdaje.Count()+1,
                 NamestajId = selektovaniNamestaj.Id,
-                Kolicina = 1,
+                Kolicina = kolicina,
             };
+            listaJedProdaje.Add(jd);
+            ukupnaCena += (selektovaniNamestaj.Cena*kolicina);
             listaNamestajaZaProdaju.Add(jd);
-            return;
+        }
+
+        private void ProdajDUOnClick(object sender, RoutedEventArgs e)
+        {
+            if (dgProdajaDU.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            DodatnaUsluga selektovanaDodatnaUsluga = (DodatnaUsluga)dgProdajaDU.SelectedItem;
+            ukupnaCena += selektovanaDodatnaUsluga.Cena;
+            listaDUZaProdaju.Add(selektovanaDodatnaUsluga);
+        }
+
+        private void IzbaciNOnClick(object sender, RoutedEventArgs e)
+        {
+            if (dgProdatoN.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            JedinicaProdaje namestajZaIzbaciti =(JedinicaProdaje) dgProdatoN.SelectedItem;
+            int kolicina = 0;
+            try
+            {
+                if (tbKolicina.Text == "")
+                    throw new Exception("Morate uneti pozitivan broj!");
+                kolicina = Int32.Parse(tbKolicina.Text);
+                if (kolicina <= 0)
+                    throw new Exception("Morate uneti pozitivan broj!");
+                if (kolicina > namestajZaIzbaciti.Kolicina)
+                    throw new Exception("Nema dovoljno komada!");
+            }
+            catch (Exception ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show(ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            if(kolicina == namestajZaIzbaciti.Kolicina)
+            {
+                listaNamestajaZaProdaju.Remove(namestajZaIzbaciti);
+                
+            }
+            else
+            {
+                namestajZaIzbaciti.Kolicina = namestajZaIzbaciti.Kolicina - kolicina;
+            }
+            ukupnaCena -= (kolicina * namestajZaIzbaciti.Namestaj.Cena);
+        }
+        private void IzbaciDUOnClick(object sender, RoutedEventArgs e)
+        {
+            if (dgProdatoDU.SelectedItem == null)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            DodatnaUsluga duZaIzbaciti = (DodatnaUsluga)dgProdatoDU.SelectedItem;
+            listaDUZaProdaju.RemoveAt(dgProdatoDU.SelectedIndex);
+            ukupnaCena -= duZaIzbaciti.Cena;
+
+
+        }
+        private void dgProdajaN_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id" || (string)e.Column.Header == "TipNamestajaId")
+            {
+                e.Cancel = true;
+            }
         }
 
         private void dgProdatoN_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -90,6 +198,85 @@ namespace POP_SF39_2016_GUI.gui
                 e.Cancel = true;
             }
         }
+        private void dgProdajaDU_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            {
+                e.Cancel = true;
+            }
+        }
+        private void dgProdatoDU_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
+            {
+                e.Cancel = true;
+            }
+        }
 
+        private void btnIzadji_Click(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+
+        private void btnProdajFinal_Click(object sender, RoutedEventArgs e)
+        {
+            if (tbKupac.Text=="" || tbBrojRacuna.Text=="")
+            {
+                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti popunjena. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            if (listaNamestajaZaProdaju.Count()==0)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Korpa je prazna.", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            
+            List<int> listaJedId = new List<int>();
+            foreach (JedinicaProdaje jedProdaje in listaNamestajaZaProdaju)
+            {
+                listaJedId.Add(jedProdaje.Id);
+            }
+            List<int> listaDUId = new List<int>();
+            if (listaDUZaProdaju.Count!=0)
+            {
+                
+                foreach (DodatnaUsluga dodatnaUsluga in listaDUZaProdaju)
+                {
+                    listaDUId.Add(dodatnaUsluga.Id);
+                }
+            }
+            var novaProdaja = new ProdajaNamestaja
+            {
+                BrRacuna = tbBrojRacuna.Text,
+                Kupac = tbKupac.Text,
+                DatumProdaje = DateTime.Today,
+                ListaJedinicaProdajeId = listaJedId,
+                DodatneUslugeId = listaDUId,
+                Id = Projekat.Instance.Prodaja.Count() + 1,
+                UkupnaCena = ukupnaCena
+            };
+            var listaProdaja = Projekat.Instance.Prodaja;
+            listaProdaja.Add(novaProdaja);
+            GenericSerializer.Serialize("prodajenamestaja.xml", listaProdaja);
+            GenericSerializer.Serialize("jediniceprodaje.xml", listaJedProdaje);
+            var listaNamestajaZaOduzeti = Projekat.Instance.Namestaj;
+
+            foreach (JedinicaProdaje jedProdaje in listaNamestajaZaProdaju)
+            {
+                Console.WriteLine("test");
+                //ovaj deo ne radi kako treba.. pise manje u fajl
+                foreach (Namestaj namestaj in listaNamestajaZaOduzeti)
+                {
+                    if (namestaj.Id == jedProdaje.NamestajId)
+                    {
+                        namestaj.BrKomada -= jedProdaje.Kolicina;
+                    }
+                }
+            }
+
+            GenericSerializer.Serialize("namestaj.xml", listaNamestajaZaOduzeti);
+            this.Close(); 
+
+        }
     }
 }
