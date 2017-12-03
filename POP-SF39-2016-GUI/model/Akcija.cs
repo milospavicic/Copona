@@ -112,7 +112,17 @@ namespace POP_SF39_2016.model
         }
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new Akcija()
+            {
+                Id = id,
+                PocetakAkcije = pocetakAkcije,
+                KrajAkcije = krajAkcije,
+                NamestajId = namestajId,
+                Namestaj = namestaj,
+                Popust = popust,
+                Obrisan = obrisan,
+            };
+            
         }
 
         public override string ToString()

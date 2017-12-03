@@ -26,12 +26,14 @@ namespace POP_SF39_2016_GUI.gui
 
         private Akcija akcija;
         private Operacija operacija;
+        private int index;
 
-        public AkcijaWindow(Akcija akcija, Operacija operacija)
+        public AkcijaWindow(Akcija akcija, int index, Operacija operacija)
         {
             InitializeComponent();
             this.akcija = akcija;
             this.operacija = operacija;
+            this.index = index;
             
             PopunjavanjePolja();
         }
@@ -43,33 +45,6 @@ namespace POP_SF39_2016_GUI.gui
             tbPopust.DataContext = akcija;
             cbNamestaj.ItemsSource = Projekat.Instance.Namestaj;
             cbNamestaj.DataContext = akcija;
-            if(operacija == Operacija.DODAVANJE)
-            {
-                dpPocetniDatum.DisplayDateStart = DateTime.Now;
-                dpKrajnjiDatum.DisplayDateStart = DateTime.Now;
-                //dpPocetniDatum.SelectedDate = DateTime.Now;
-                dpKrajnjiDatum.SelectedDate = DateTime.Now;
-            }
-            /***
-            foreach(Namestaj namestaj in Projekat.Instance.Namestaj)
-            {
-                cbNamestaj.Items.Add(namestaj.Naziv);
-            }
-            if (operacija == Operacija.IZMENA)
-            {
-                dpPocetniDatum.Text = akcija.PocetakAkcije.ToString();
-                dpKrajnjiDatum.Text = akcija.KrajAkcije.ToString();
-                tbPopust.Text =  akcija.Popust.ToString();
-                cbNamestaj.SelectedIndex = ((int)akcija.NamestajId-1);
-            }
-            else
-            {
-                dpPocetniDatum.DisplayDateStart = DateTime.Now.Date;
-                dpKrajnjiDatum.DisplayDateStart = DateTime.Now.Date;
-                tbPopust.Text = "0";
-                cbNamestaj.SelectedIndex = 0;
-            }
-            ***/
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -90,6 +65,9 @@ namespace POP_SF39_2016_GUI.gui
                 case Operacija.DODAVANJE:
                     akcija.Id = listaAkcija.Count + 1;
                     listaAkcija.Add(akcija);
+                    break;
+                case Operacija.IZMENA:
+                    Projekat.Instance.Akcija[index] = akcija;
                     break;
             }
             GenericSerializer.Serialize("akcije.xml",listaAkcija);

@@ -26,12 +26,14 @@ namespace POP_SF39_2016_GUI.gui
 
         private Korisnik korisnik;
         private Operacija operacija;
+        private int index;
 
-        public KorisnikWindow(Korisnik korisnik, Operacija operacija)
+        public KorisnikWindow(Korisnik korisnik, int index, Operacija operacija)
         {
             InitializeComponent();
             this.korisnik = korisnik;
             this.operacija = operacija;
+            this.index = index;
             PopunjavanjePolja(korisnik);
             
             if (operacija == Operacija.IZMENA) {
@@ -66,6 +68,9 @@ namespace POP_SF39_2016_GUI.gui
                 case Operacija.DODAVANJE:
                     korisnik.Id = listaKorisnika.Count + 1;
                     listaKorisnika.Add(korisnik);
+                    break;
+                case Operacija.IZMENA:
+                    Projekat.Instance.Korisnik[index] = korisnik;
                     break;
             }
             GenericSerializer.Serialize("korisnici.xml", listaKorisnika);

@@ -15,7 +15,6 @@ namespace POP_SF39_2016_GUI.model
         private int? namestajId;
         private bool obrisan;
         private int kolicina;
-        private int? akcijaId;
         private Namestaj namestaj;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -62,16 +61,6 @@ namespace POP_SF39_2016_GUI.model
             {
                 kolicina = value;
                 OnPropertyChanged("Kolicina");
-            }
-        }
-
-        public int? AkcijaId
-        {
-            get { return akcijaId; }
-            set
-            {
-                akcijaId = value;
-                OnPropertyChanged("AkcijaId");
             }
         }
         public bool Obrisan

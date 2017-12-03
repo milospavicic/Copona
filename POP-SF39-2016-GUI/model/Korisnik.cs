@@ -102,7 +102,16 @@ namespace POP_SF39_2016.model
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new Korisnik
+            {
+                Id = id,
+                Ime = ime,
+                Prezime=prezime,
+                KorisnickoIme = korisnickoIme,
+                Lozinka = lozinka,
+                Obrisan = obrisan,
+                TipKorisnika = tipKorisnika        
+            };
         }
 
         public override string ToString()

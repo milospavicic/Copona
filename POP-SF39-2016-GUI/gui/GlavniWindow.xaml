@@ -38,7 +38,7 @@
                     <RowDefinition Height="50*"/>
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
-                <Button Content="Prodaja" Grid.Row="0" Grid.Column="1"/>
+                <Button Content="Prodaja" Grid.Row="0" Grid.Column="1" Click="ProdajaBtnOnClick"/>
                 <Button Content="Prikaz Namestaja" Grid.Row="1" Grid.Column="1" Click="PrikazNamestajaBasic"/>
                 <Button Content="O Salonu" Grid.Row="2" Grid.Column="1" Click="IspisInformmacija"/>
                 <!-- ADMIN OPCIJE-->
@@ -68,8 +68,8 @@
                     <RowDefinition Height="420*"/>
                     <RowDefinition Height="150*"/>
                 </Grid.RowDefinitions>
-                <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
-                <ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15"  Visibility="Hidden"/>
+                <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
+                <!--<ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15"  Visibility="Hidden"/>-->
                 <Border Name="borderCentarInfo" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden" >
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -82,9 +82,7 @@
                             <RowDefinition Height="250*"/>
                             <RowDefinition Height="80*"/>
                         </Grid.RowDefinitions>
-
                         <TextBlock Name="tbOSalonu" Grid.Column="1" HorizontalAlignment="Stretch" Margin="10,10,10,10" Grid.Row="1" TextWrapping="Wrap" VerticalAlignment="Stretch"  TextAlignment="Center" FontSize="15"/>
-
                     </Grid>
                 </Border>
                 <Border Name="borderCentarEdit" BorderBrush="Black" BorderThickness="1" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Visibility="Hidden">

@@ -27,12 +27,15 @@ namespace POP_SF39_2016_GUI.gui
 
     private Namestaj namestaj;
     private Operacija operacija;
+    private int index;
 
-    public NamestajWindow(Namestaj namestaj, Operacija operacija)
+
+    public NamestajWindow(Namestaj namestaj, int index, Operacija operacija)
     {
         InitializeComponent();
         this.namestaj = namestaj;
         this.operacija = operacija;
+        this.index = index;
         PopunjavanjePolja(namestaj);
     }
     public void PopunjavanjePolja(Namestaj namestaj)
@@ -71,6 +74,11 @@ namespace POP_SF39_2016_GUI.gui
                 namestaj.Id = listaNamestaja.Count() + 1;
                 listaNamestaja.Add(namestaj);
                 break;
+                 
+            case Operacija.IZMENA:
+                Projekat.Instance.Namestaj[index] = namestaj;
+                break;
+               
         }
         GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
         this.Close();

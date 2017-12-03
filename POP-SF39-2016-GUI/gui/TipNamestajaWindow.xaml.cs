@@ -29,12 +29,14 @@ namespace POP_SF39_2016_GUI.gui
 
         private TipNamestaja tipNamestaja;
         private Operacija operacija;
+        private int index;
 
-        public TipNamestajaWindow(TipNamestaja tipNamestaja, Operacija operacija)
+        public TipNamestajaWindow(TipNamestaja tipNamestaja, int index, Operacija operacija)
         {
             InitializeComponent();
             this.tipNamestaja = tipNamestaja;
             this.operacija = operacija;
+            this.index = index;
             PopunjavanjePolja(tipNamestaja);
         }
         public void PopunjavanjePolja(TipNamestaja tipNamestaja)
@@ -50,6 +52,9 @@ namespace POP_SF39_2016_GUI.gui
                 case Operacija.DODAVANJE:
                     tipNamestaja.Id = listaTipaNamestaja.Count + 1;
                     listaTipaNamestaja.Add(tipNamestaja);
+                    break;
+                case Operacija.IZMENA:
+                    Projekat.Instance.TipNamestaja[index] = tipNamestaja;
                     break;
             }
             GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);

@@ -107,7 +107,17 @@ namespace POP_SF39_2016.model
 
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new ProdajaNamestaja
+            {
+                Id = id,
+                Kupac = kupac,
+                DatumProdaje = datumProdaje,
+                BrRacuna = brRacuna,
+                DodatneUsluge = dodatneUsluge,
+                ListaJedinicaProdajeId = listaJedinicaProdajeId,
+                UkupnaCena = ukupnaCena,
+                Obrisan = obrisan
+            };
         }
     }
 }

@@ -44,6 +44,7 @@ namespace POP_SF39_2016_GUI.gui
             dgTabela.IsSynchronizedWithCurrentItem = true;
             dgTabela.IsReadOnly=true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+
         }
 
         private bool obrisanFilter(object obj)
@@ -82,7 +83,6 @@ namespace POP_SF39_2016_GUI.gui
             borderCentarEdit.Visibility = Visibility.Hidden;
             borderAddEditDelItem.Visibility = Visibility.Hidden;
             dgTabela.Visibility = Visibility.Hidden;
-            //dgTabela.Items.Clear();
         }
         private void AdminEdit()
         {
@@ -305,7 +305,7 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         Naziv = ""
                     };
-                    var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.DODAVANJE);
+                    var namestajProzor = new NamestajWindow(noviNamestaj, 0, NamestajWindow.Operacija.DODAVANJE);
                     namestajProzor.ShowDialog();
                     break;
                 case Opcija.TIPNAMESTAJA:
@@ -313,7 +313,7 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         Naziv = ""
                     };
-                    var tipNamestajaProzor = new TipNamestajaWindow(noviTipNamestaja, TipNamestajaWindow.Operacija.DODAVANJE);
+                    var tipNamestajaProzor = new TipNamestajaWindow(noviTipNamestaja, 0, TipNamestajaWindow.Operacija.DODAVANJE);
                     tipNamestajaProzor.ShowDialog();
                     break;
                 case Opcija.KORISNIK:
@@ -321,7 +321,7 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         Ime = ""
                     };
-                    var korisnikProzor = new KorisnikWindow(noviKorisnik, KorisnikWindow.Operacija.DODAVANJE);
+                    var korisnikProzor = new KorisnikWindow(noviKorisnik, 0, KorisnikWindow.Operacija.DODAVANJE);
                     korisnikProzor.ShowDialog();
                     break;
                 case Opcija.AKCIJA:
@@ -329,7 +329,7 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         Popust = 0
                     };
-                    var akcijaProzor = new AkcijaWindow(novaAkcija, AkcijaWindow.Operacija.DODAVANJE);
+                    var akcijaProzor = new AkcijaWindow(novaAkcija, 0, AkcijaWindow.Operacija.DODAVANJE);
                     akcijaProzor.ShowDialog();
                     break;
                 case Opcija.DODATNAUSLUGA:
@@ -337,10 +337,9 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         Naziv = ""
                     };
-                    var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, DodatnaUslugaWindow.Operacija.DODAVANJE);
+                    var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, 0, DodatnaUslugaWindow.Operacija.DODAVANJE);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
-
             }
         }
         private void IzmeniItem(object sender, RoutedEventArgs e)
@@ -354,28 +353,27 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.NAMESTAJ:
                     var noviNamestaj = (Namestaj)dgTabela.SelectedItem;
-                    //(Namestaj)noviNamestaj.Clone()
-                    var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.IZMENA);
+                    var namestajProzor = new NamestajWindow((Namestaj)noviNamestaj.Clone(),Projekat.Instance.Namestaj.IndexOf(noviNamestaj), NamestajWindow.Operacija.IZMENA);
                     namestajProzor.ShowDialog();
                     break;
                 case Opcija.TIPNAMESTAJA:
                     var noviTipNamestaja = (TipNamestaja)dgTabela.SelectedItem;
-                    var tipNamestajaProzor = new TipNamestajaWindow(noviTipNamestaja, TipNamestajaWindow.Operacija.IZMENA);
+                    var tipNamestajaProzor = new TipNamestajaWindow((TipNamestaja)noviTipNamestaja.Clone(), Projekat.Instance.TipNamestaja.IndexOf(noviTipNamestaja), TipNamestajaWindow.Operacija.IZMENA);
                     tipNamestajaProzor.ShowDialog();
                     break;
                 case Opcija.KORISNIK:
                     var noviKorisnik = (Korisnik)dgTabela.SelectedItem;
-                    var korisnikProzor = new KorisnikWindow(noviKorisnik, KorisnikWindow.Operacija.IZMENA);
+                    var korisnikProzor = new KorisnikWindow((Korisnik)noviKorisnik.Clone(),Projekat.Instance.Korisnik.IndexOf(noviKorisnik), KorisnikWindow.Operacija.IZMENA);
                     korisnikProzor.ShowDialog();
                     break;
                 case Opcija.AKCIJA:
                     var novaAkcija = (Akcija)dgTabela.SelectedItem;
-                    var akcijaProzor = new AkcijaWindow(novaAkcija, AkcijaWindow.Operacija.IZMENA);
+                    var akcijaProzor = new AkcijaWindow((Akcija)novaAkcija.Clone(),Projekat.Instance.Akcija.IndexOf(novaAkcija), AkcijaWindow.Operacija.IZMENA);
                     akcijaProzor.ShowDialog();
                     break;
                 case Opcija.DODATNAUSLUGA:
                     var novaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
-                    var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, DodatnaUslugaWindow.Operacija.IZMENA);
+                    var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(),Projekat.Instance.DodatnaUsluga.IndexOf(novaDodatnaUsluga), DodatnaUslugaWindow.Operacija.IZMENA);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
             }
@@ -469,7 +467,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.NAMESTAJ:
                     if ( (string)e.Column.Header == "TipNamestajaId")
                     {
-                        e.Cancel = "";
+                        e.Cancel = true;
                     }
                     break;
                 case Opcija.KORISNIK:
@@ -485,6 +483,17 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     break;
             }
+        }
+
+        private void ProdajaBtnOnClick(object sender, RoutedEventArgs e)
+        {
+            ProdajaProzor();
+        }
+        private void ProdajaProzor()
+        {
+            var novaProdaja = new ProdajaNamestaja();
+            var prodajaProzor = new ProdajaWindow(novaProdaja, 0, ProdajaWindow.Operacija.DODAVANJE);
+            prodajaProzor.ShowDialog();
         }
     }
 }

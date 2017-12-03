@@ -29,12 +29,14 @@ namespace POP_SF39_2016_GUI.gui
 
         private DodatnaUsluga dodatnaUsluga;
         private Operacija operacija;
+        private int index;
 
-        public DodatnaUslugaWindow(DodatnaUsluga dodatnaUsluga, Operacija operacija)
+        public DodatnaUslugaWindow(DodatnaUsluga dodatnaUsluga, int index, Operacija operacija)
         {
             InitializeComponent();
             this.dodatnaUsluga = dodatnaUsluga;
             this.operacija = operacija;
+            this.index = index;
             PopunjavanjePolja(dodatnaUsluga);
         }
 
@@ -60,6 +62,9 @@ namespace POP_SF39_2016_GUI.gui
                 case Operacija.DODAVANJE:
                     dodatnaUsluga.Id = listaDodatnihUsluga.Count + 1;
                     listaDodatnihUsluga.Add(dodatnaUsluga);
+                    break;
+                case Operacija.IZMENA:
+                    Projekat.Instance.DodatnaUsluga[index] = dodatnaUsluga;
                     break;
             }
             GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);

@@ -62,7 +62,13 @@ namespace POP_SF39_2016.model
         }
         public object Clone()
         {
-            throw new NotImplementedException();
+            return new DodatnaUsluga
+            {
+                Id = id,
+                Naziv = naziv,
+                Cena = cena,
+                Obrisan = obrisan
+            };
         }
     }
 }

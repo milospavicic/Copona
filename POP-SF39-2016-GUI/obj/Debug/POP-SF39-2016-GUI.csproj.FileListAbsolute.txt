@@ -44,3 +44,5 @@ D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\AkcijaW
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\AkcijaWindow.baml
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\DodatnaUslugaWindow.g.cs
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\DodatnaUslugaWindow.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\ProdajaWindow.g.cs
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\ProdajaWindow.baml
