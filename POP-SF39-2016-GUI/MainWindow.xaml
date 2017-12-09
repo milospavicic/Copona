@@ -5,14 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
-        Title="MainWindow" Height="300" Width="400">
+        Title="MainWindow" Height="300" Width="400"
+        ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="70*"/>
             <ColumnDefinition Width="260*"/>
             <ColumnDefinition Width="70*"/>
         </Grid.ColumnDefinitions>
-        <Label Name="lblSalon" Content="OVAJ SALON OVDE GORE" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" Height="46" Width="290" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" FontSize="20"/>
+        <Label Name="lblSalon" Content="~ SALON NAMESTAJA ~" HorizontalAlignment="Left" Margin="50,10,0,0" VerticalAlignment="Top" Height="46" Width="290" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" FontSize="20"/>
         <Label Name="lblKorisnickoIme" Content="Korisnicko ime:" HorizontalAlignment="Left" Margin="9.4,61,0,0" VerticalAlignment="Top" HorizontalContentAlignment="Center" Height="25" Width="235" Grid.Column="1"/>
         <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Left" Margin="10.4,91,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Height="25" Width="235" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Grid.Column="1"/>
         <Label Name="lblSifra" Content="Sifra:" HorizontalAlignment="Left" Margin="10.4,121,0,0" VerticalAlignment="Top" Height="25" Width="235" HorizontalContentAlignment="Center" RenderTransformOrigin="1.833,-0.731" Grid.Column="1" />

@@ -39,16 +39,15 @@
                     <RowDefinition Height="50*"/>
                 </Grid.RowDefinitions>
                 <Button Content="Prodaja" Grid.Row="0" Grid.Column="1" Click="ProdajaBtnOnClick"/>
-                <Button Content="Prikaz Namestaja" Grid.Row="1" Grid.Column="1" Click="PrikazNamestajaBasic"/>
-                <Button Content="O Salonu" Grid.Row="2" Grid.Column="1" Click="IspisInformmacija"/>
+                <Button Content="O Salonu" Grid.Row="1" Grid.Column="1" Click="IspisInformmacija"/>
                 <!-- ADMIN OPCIJE-->
-                <Button Name="btnAdmin" Content="Administratorske opcije" Grid.Row="3" Grid.Column="1" Click="PrikaziSakrij"/>
-                <Button Name="btnNamestaj" Content="Rad sa namestajem" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja"/>
-                <Button Name="btnTipNamestaj" Content="Rad sa tipom namestajem" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja"/>
-                <Button Name="btnKorisnici" Content="Rad sa korisnicima" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika"/>
-                <Button Name="btnAkcije" Content="Rad sa akcijama" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija"/>
-                <Button Name="btnDodatneUsluge" Content="Rad sa dodatnim uslugama" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazDodatnihUsluga"/>
-                <Button Name="btnProdaje" Content="Rad sa prodajama" Grid.Row="9" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazProdaja"/>
+                <Button Name="btnAdmin" Content="Pregled" Grid.Row="2" Grid.Column="1" Click="PrikaziSakrij"/>
+                <Button Name="btnNamestaj" Content="Namestaj" Grid.Row="3" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja"/>
+                <Button Name="btnTipNamestaj" Content="Tip namestaja" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja"/>
+                <Button Name="btnKorisnici" Content="Korisnici" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika"/>
+                <Button Name="btnAkcije" Content="Akcije" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija"/>
+                <Button Name="btnDodatneUsluge" Content="Dodatna usluge" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazDodatnihUsluga"/>
+                <Button Name="btnProdaje" Content="Prodaje" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazProdaja"/>
                 <!-- ADMIN OPCIJE-->
                 <Button Content="Izmena naloga" Grid.Row="11" Grid.Column="1" Click="IzmenaPodataka"/>
                 <Button Content="Logout " Grid.Row="12" Grid.Column="1" Click="Logout"/>

@@ -45,9 +45,4 @@
     <Naziv>Orman</Naziv>
     <Obrisan>false</Obrisan>
   </TipNamestaja>
-  <TipNamestaja>
-    <Id>10</Id>
-    <Naziv>Nocni ormaric</Naziv>
-    <Obrisan>true</Obrisan>
-  </TipNamestaja>
 </ArrayOfTipNamestaja>

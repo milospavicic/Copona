@@ -37,10 +37,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             
             InitializeComponent();
-
             this.logovaniKorisnik = logovaniKorisnik;
-            if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac)
-                btnAdmin.Visibility = Visibility.Hidden;
             dgTabela.IsSynchronizedWithCurrentItem = true;
             dgTabela.IsReadOnly=true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -84,14 +81,21 @@ namespace POP_SF39_2016_GUI.gui
             borderAddEditDelItem.Visibility = Visibility.Hidden;
             dgTabela.Visibility = Visibility.Hidden;
         }
-        private void AdminEdit()
+        private void Prikaz()
         {
-            dgTabela.Margin = new Thickness(10, 10, 10, 145);
-            dgTabela.Visibility = Visibility.Visible;
-            borderAddEditDelItem.Visibility = Visibility.Visible;
+            if(logovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
+            {
+                dgTabela.Margin = new Thickness(10, 10, 10, 145);
+                dgTabela.Visibility = Visibility.Visible;
+                borderAddEditDelItem.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                dgTabela.Visibility = Visibility.Visible;
+            }
         }
         //-------------------------------------------------------------------
-        public void OsnovniPrikaz()
+        public void OsnovniPrikazTabela()
         {
             switch (izabranaOpcija)
             {
@@ -127,13 +131,6 @@ namespace POP_SF39_2016_GUI.gui
                     dgTabela.ItemsSource = view;
                     break;
             }
-        }
-        private void PrikazNamestajaBasic(object sender, RoutedEventArgs e)
-        {
-            SkloniSve();
-            dgTabela.Visibility = Visibility.Visible;
-            dgTabela.Margin = new Thickness(10, 10, 10, 10);
-            OsnovniPrikaz();
         }
         //-------------------------------------------------------------------
         private void Logout(object sender, RoutedEventArgs e)
@@ -257,43 +254,43 @@ namespace POP_SF39_2016_GUI.gui
         {
             izabranaOpcija = Opcija.NAMESTAJ;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
         public void PrikazTipovaNamestaja(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.TIPNAMESTAJA;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
         public void PrikazKorisnika(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.KORISNIK;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
         private void PrikazAkcija(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.AKCIJA;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
         private void PrikazDodatnihUsluga(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.DODATNAUSLUGA;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
         private void PrikazProdaja(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.PRODAJA;
             SkloniSve();
-            AdminEdit();
-            OsnovniPrikaz();
+            Prikaz();
+            OsnovniPrikazTabela();
         }
 
         private void DodajItem(object sender, RoutedEventArgs e)

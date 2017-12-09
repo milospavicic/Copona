@@ -45,4 +45,13 @@
     <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
+  <Namestaj>
+    <Naziv>51</Naziv>
+    <Id>6</Id>
+    <Cena>51</Cena>
+    <Sifra>51</Sifra>
+    <BrKomada>15151</BrKomada>
+    <TipNamestajaId>6</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
 </ArrayOfNamestaj>

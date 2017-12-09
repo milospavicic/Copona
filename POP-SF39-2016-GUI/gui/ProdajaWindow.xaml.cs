@@ -26,7 +26,10 @@ namespace POP_SF39_2016_GUI.gui
         public ObservableCollection<JedinicaProdaje> listaNamestajaZaProdaju { get; set; } = new ObservableCollection<JedinicaProdaje>();
         public ObservableCollection<DodatnaUsluga> listaDUZaProdaju { get; set; } = new ObservableCollection<DodatnaUsluga>();
         public ObservableCollection<JedinicaProdaje> listaJedProdaje { get; set; } = Projekat.Instance.JedinicaProdaje;
-        public double ukupnaCena { get; set; } 
+        // lista za indexiranje jedProdaje..
+        //public List<Object> korpa { get; set; } = new List<object>();
+        public double ukupnaCena { get; set; }
+        //public double ukupnaCenaSaPDV { get; set; }
         ICollectionView view;
         public enum Operacija
         {
