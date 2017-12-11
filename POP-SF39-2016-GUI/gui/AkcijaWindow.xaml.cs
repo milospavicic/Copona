@@ -43,7 +43,7 @@ namespace POP_SF39_2016_GUI.gui
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
             tbPopust.DataContext = akcija;
-            cbNamestaj.ItemsSource = Projekat.Instance.Namestaj;
+            cbNamestaj.ItemsSource = Projekat.Instance.Namestaji;
             cbNamestaj.DataContext = akcija;
         }
 

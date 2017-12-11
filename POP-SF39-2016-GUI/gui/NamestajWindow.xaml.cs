@@ -40,7 +40,7 @@ namespace POP_SF39_2016_GUI.gui
     }
     public void PopunjavanjePolja(Namestaj namestaj)
     {
-        cbTipNamestaja.ItemsSource = Projekat.Instance.TipNamestaja;
+        cbTipNamestaja.ItemsSource = Projekat.Instance.TipoviNamestaja;
         tbNaziv.DataContext = namestaj;
         tbSifra.DataContext = namestaj;
         tbCena.DataContext = namestaj;
@@ -67,7 +67,7 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-        var listaNamestaja = Projekat.Instance.Namestaj;
+        var listaNamestaja = Projekat.Instance.Namestaji;
         switch (operacija)
         {
             case Operacija.DODAVANJE:
@@ -76,7 +76,7 @@ namespace POP_SF39_2016_GUI.gui
                 break;
                  
             case Operacija.IZMENA:
-                Projekat.Instance.Namestaj[index] = namestaj;
+                Projekat.Instance.Namestaji[index] = namestaj;
                 break;
                
         }

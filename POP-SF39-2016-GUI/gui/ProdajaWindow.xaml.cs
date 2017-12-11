@@ -79,7 +79,7 @@ namespace POP_SF39_2016_GUI.gui
             return !((DodatnaUsluga)obj).Obrisan;
         }
         private void PopuniTabele()
-        {   view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+        {   view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
             view.Filter = obrisanFilterN;
             dgProdajaN.ItemsSource = view;
             dgProdajaN.SelectedIndex = 0;
@@ -262,7 +262,7 @@ namespace POP_SF39_2016_GUI.gui
             listaProdaja.Add(novaProdaja);
             GenericSerializer.Serialize("prodajenamestaja.xml", listaProdaja);
             GenericSerializer.Serialize("jediniceprodaje.xml", listaJedProdaje);
-            var listaNamestajaZaOduzeti = Projekat.Instance.Namestaj;
+            var listaNamestajaZaOduzeti = Projekat.Instance.Namestaji;
 
             foreach (JedinicaProdaje jedProdaje in listaNamestajaZaProdaju)
             {

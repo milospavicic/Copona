@@ -46,7 +46,7 @@ namespace POP_SF39_2016_GUI.gui
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
 
-            var listaTipaNamestaja = Projekat.Instance.TipNamestaja;
+            var listaTipaNamestaja = Projekat.Instance.TipoviNamestaja;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
@@ -54,7 +54,7 @@ namespace POP_SF39_2016_GUI.gui
                     listaTipaNamestaja.Add(tipNamestaja);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.TipNamestaja[index] = tipNamestaja;
+                    Projekat.Instance.TipoviNamestaja[index] = tipNamestaja;
                     break;
             }
             GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);

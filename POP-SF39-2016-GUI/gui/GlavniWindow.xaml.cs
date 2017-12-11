@@ -100,13 +100,13 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaj);
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     //dgTabela.ItemsSource = Projekat.Instance.Namestaj;
                     break;
                 case Opcija.TIPNAMESTAJA:
-                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipNamestaja);
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
@@ -353,12 +353,12 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.NAMESTAJ:
                     var noviNamestaj = (Namestaj)dgTabela.SelectedItem;
-                    var namestajProzor = new NamestajWindow((Namestaj)noviNamestaj.Clone(),Projekat.Instance.Namestaj.IndexOf(noviNamestaj), NamestajWindow.Operacija.IZMENA);
+                    var namestajProzor = new NamestajWindow((Namestaj)noviNamestaj.Clone(),Projekat.Instance.Namestaji.IndexOf(noviNamestaj), NamestajWindow.Operacija.IZMENA);
                     namestajProzor.ShowDialog();
                     break;
                 case Opcija.TIPNAMESTAJA:
                     var noviTipNamestaja = (TipNamestaja)dgTabela.SelectedItem;
-                    var tipNamestajaProzor = new TipNamestajaWindow((TipNamestaja)noviTipNamestaja.Clone(), Projekat.Instance.TipNamestaja.IndexOf(noviTipNamestaja), TipNamestajaWindow.Operacija.IZMENA);
+                    var tipNamestajaProzor = new TipNamestajaWindow((TipNamestaja)noviTipNamestaja.Clone(), Projekat.Instance.TipoviNamestaja.IndexOf(noviTipNamestaja), TipNamestajaWindow.Operacija.IZMENA);
                     tipNamestajaProzor.ShowDialog();
                     break;
                 case Opcija.KORISNIK:
@@ -390,7 +390,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.NAMESTAJ:
                     var izabraniNamestaj = (Namestaj)dgTabela.SelectedItem;
 
-                    ObservableCollection<Namestaj> listaNamestaja = Projekat.Instance.Namestaj;
+                    ObservableCollection<Namestaj> listaNamestaja = Projekat.Instance.Namestaji;
                     MessageBoxResult namestajMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (namestajMessage == MessageBoxResult.Yes)
                     {
@@ -403,7 +403,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.TIPNAMESTAJA:
                     var izabraniTipNamestaja = (TipNamestaja)dgTabela.SelectedItem;
 
-                    ObservableCollection<TipNamestaja> listaTipaNamestaja = Projekat.Instance.TipNamestaja;
+                    ObservableCollection<TipNamestaja> listaTipaNamestaja = Projekat.Instance.TipoviNamestaja;
                     MessageBoxResult tipNamestajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (tipNamestajaMessage == MessageBoxResult.Yes)
                     {

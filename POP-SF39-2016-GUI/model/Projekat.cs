@@ -12,8 +12,8 @@ namespace POP_SF39_2016.model
     public class Projekat
     {
         public static Projekat Instance { get; private set; } = new Projekat();
-        public ObservableCollection<TipNamestaja> TipNamestaja { get; set; }
-        public ObservableCollection<Namestaj> Namestaj { get; set; }
+        public ObservableCollection<TipNamestaja> TipoviNamestaja { get; set; }
+        public ObservableCollection<Namestaj> Namestaji { get; set; }
         public ObservableCollection<Korisnik> Korisnik { get; set; }
         public ObservableCollection<Salon> Salon { get; set; }
         public ObservableCollection<Akcija> Akcija { get; set; }
@@ -22,14 +22,17 @@ namespace POP_SF39_2016.model
         public ObservableCollection<JedinicaProdaje> JedinicaProdaje { get; set; }
         private Projekat()
         {
-            Namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
-            TipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipnamestaja.xml");
+            
+            //Namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
+            //TipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipnamestaja.xml");
             Korisnik = GenericSerializer.Deserialize<Korisnik>("korisnici.xml");
             Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
             DodatnaUsluga = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
             Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
             JedinicaProdaje = GenericSerializer.Deserialize<JedinicaProdaje>("jediniceprodaje.xml");
             Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
+            TipoviNamestaja = TipNamestaja.GetAll();
+            Namestaji = Namestaj.GetAll();
         }
 
 
