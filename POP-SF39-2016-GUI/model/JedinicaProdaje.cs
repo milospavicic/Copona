@@ -18,6 +18,8 @@ namespace POP_SF39_2016_GUI.model
         private Namestaj namestaj;
         public event PropertyChangedEventHandler PropertyChanged;
 
+
+
         [XmlIgnore]
         public Namestaj Namestaj
         {
@@ -92,6 +94,23 @@ namespace POP_SF39_2016_GUI.model
                     return jedProdaje;
             }
             return null;
+        }
+
+        [XmlIgnore]
+        public string Naziv
+        {
+            get
+            {
+                return Namestaj.Naziv;
+            }
+        }
+        [XmlIgnore]
+        public double Cena
+        {
+            get
+            {
+                return Namestaj.Cena;
+            }
         }
     }
 }

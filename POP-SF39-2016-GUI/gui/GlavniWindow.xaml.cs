@@ -111,7 +111,7 @@ namespace POP_SF39_2016_GUI.gui
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.KORISNIK:
-                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnik);
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnici);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
@@ -121,7 +121,7 @@ namespace POP_SF39_2016_GUI.gui
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.DODATNAUSLUGA:
-                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatnaUsluga);
+                    view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatneUsluge);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
@@ -198,7 +198,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             SkloniSve();
             borderCentarEdit.Visibility = Visibility.Visible;
-            ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+            ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
             foreach (Korisnik korisnik in listaKorisnika)
             {
                 if (korisnik.Id == logovaniKorisnik.Id)
@@ -232,7 +232,7 @@ namespace POP_SF39_2016_GUI.gui
             MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
             if (r == MessageBoxResult.Yes)
             {
-                ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+                ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
                 foreach (Korisnik korisnik in listaKorisnika)
                 {
                     if (korisnik.Id == logovaniKorisnik.Id)
@@ -242,7 +242,7 @@ namespace POP_SF39_2016_GUI.gui
                         korisnik.Lozinka = pbSifra.Password;
                     }
                 }
-                Projekat.Instance.Korisnik = listaKorisnika;
+                Projekat.Instance.Korisnici = listaKorisnika;
                 borderCentarEdit.Visibility = Visibility.Hidden;
             };
         }
@@ -363,7 +363,7 @@ namespace POP_SF39_2016_GUI.gui
                     break;
                 case Opcija.KORISNIK:
                     var noviKorisnik = (Korisnik)dgTabela.SelectedItem;
-                    var korisnikProzor = new KorisnikWindow((Korisnik)noviKorisnik.Clone(),Projekat.Instance.Korisnik.IndexOf(noviKorisnik), KorisnikWindow.Operacija.IZMENA);
+                    var korisnikProzor = new KorisnikWindow((Korisnik)noviKorisnik.Clone(),Projekat.Instance.Korisnici.IndexOf(noviKorisnik), KorisnikWindow.Operacija.IZMENA);
                     korisnikProzor.ShowDialog();
                     break;
                 case Opcija.AKCIJA:
@@ -373,7 +373,7 @@ namespace POP_SF39_2016_GUI.gui
                     break;
                 case Opcija.DODATNAUSLUGA:
                     var novaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
-                    var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(),Projekat.Instance.DodatnaUsluga.IndexOf(novaDodatnaUsluga), DodatnaUslugaWindow.Operacija.IZMENA);
+                    var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(),Projekat.Instance.DodatneUsluge.IndexOf(novaDodatnaUsluga), DodatnaUslugaWindow.Operacija.IZMENA);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
             }
@@ -416,7 +416,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.KORISNIK:
                     var izabraniKorisnik = (Korisnik)dgTabela.SelectedItem;
 
-                    ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnik;
+                    ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
                     MessageBoxResult korisnikMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (korisnikMessage == MessageBoxResult.Yes)
                     {
@@ -442,7 +442,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.DODATNAUSLUGA:
                     var izabranaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
 
-                    ObservableCollection<DodatnaUsluga> listaDodatnihUsluga = Projekat.Instance.DodatnaUsluga;
+                    ObservableCollection<DodatnaUsluga> listaDodatnihUsluga = Projekat.Instance.DodatneUsluge;
                     MessageBoxResult dodatnaUslugaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (dodatnaUslugaMessage == MessageBoxResult.Yes)
                     {

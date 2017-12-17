@@ -56,7 +56,7 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            var listaDodatnihUsluga = Projekat.Instance.DodatnaUsluga;
+            var listaDodatnihUsluga = Projekat.Instance.DodatneUsluge;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
@@ -64,7 +64,7 @@ namespace POP_SF39_2016_GUI.gui
                     listaDodatnihUsluga.Add(dodatnaUsluga);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.DodatnaUsluga[index] = dodatnaUsluga;
+                    Projekat.Instance.DodatneUsluge[index] = dodatnaUsluga;
                     break;
             }
             GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);

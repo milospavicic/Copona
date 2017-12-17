@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace POP_SF39_2016.model
 {
@@ -69,6 +70,14 @@ namespace POP_SF39_2016.model
                 Cena = cena,
                 Obrisan = obrisan
             };
+        }
+        [XmlIgnore]
+        public int Kolicina
+        {
+            get
+            {
+                return 1;
+            }
         }
     }
 }

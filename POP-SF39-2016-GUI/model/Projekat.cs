@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using POP_SF39_2016_GUI.model;
 using System;
 using System.Collections.Generic;
@@ -14,25 +15,27 @@ namespace POP_SF39_2016.model
         public static Projekat Instance { get; private set; } = new Projekat();
         public ObservableCollection<TipNamestaja> TipoviNamestaja { get; set; }
         public ObservableCollection<Namestaj> Namestaji { get; set; }
-        public ObservableCollection<Korisnik> Korisnik { get; set; }
+        public ObservableCollection<Korisnik> Korisnici { get; set; }
         public ObservableCollection<Salon> Salon { get; set; }
         public ObservableCollection<Akcija> Akcija { get; set; }
-        public ObservableCollection<DodatnaUsluga> DodatnaUsluga { get; set; }
+        public ObservableCollection<DodatnaUsluga> DodatneUsluge { get; set; }
         public ObservableCollection<ProdajaNamestaja> Prodaja { get; set; }
         public ObservableCollection<JedinicaProdaje> JedinicaProdaje { get; set; }
         private Projekat()
         {
-            
+
             //Namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
             //TipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipnamestaja.xml");
-            Korisnik = GenericSerializer.Deserialize<Korisnik>("korisnici.xml");
+            Korisnici = GenericSerializer.Deserialize<Korisnik>("korisnici.xml");
             Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
-            DodatnaUsluga = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
+            //DodatneUsluge = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
             Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
             JedinicaProdaje = GenericSerializer.Deserialize<JedinicaProdaje>("jediniceprodaje.xml");
             Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
-            TipoviNamestaja = TipNamestaja.GetAll();
-            Namestaji = Namestaj.GetAll();
+            //Korisnici = KorisnikDAO.GetAll();
+            DodatneUsluge = DodatnaUslugaDAO.GetAll();
+            TipoviNamestaja = TipNamestajaDAO.GetAll();
+            Namestaji = NamestajDAO.GetAll();
         }
 
 

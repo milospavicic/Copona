@@ -61,7 +61,7 @@ namespace POP_SF39_2016_GUI.gui
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-            var listaKorisnika = Projekat.Instance.Korisnik;
+            var listaKorisnika = Projekat.Instance.Korisnici;
             korisnik.Lozinka = this.pbSifra.Password; // NEMA BINDINGA ZA PWBOX
             switch (operacija)
             {
@@ -70,7 +70,7 @@ namespace POP_SF39_2016_GUI.gui
                     listaKorisnika.Add(korisnik);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.Korisnik[index] = korisnik;
+                    Projekat.Instance.Korisnici[index] = korisnik;
                     break;
             }
             GenericSerializer.Serialize("korisnici.xml", listaKorisnika);

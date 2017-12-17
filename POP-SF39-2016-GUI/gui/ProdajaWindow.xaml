@@ -9,7 +9,9 @@
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="1170*"/>
+            <ColumnDefinition Width="570*"/>
+            <ColumnDefinition Width="100*"/>
+            <ColumnDefinition Width="500*"/>
             <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -17,55 +19,20 @@
             <RowDefinition Height="770*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="1" Grid.Column="1">
+        <Border Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="1">
             <Grid>
-                <TabControl Grid.Column="0"  Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" Name="tcProdaja">
-                    <TabItem Header="Namestaj" >
+                <TabControl Name="tcProdaja" TabStripPlacement="left">
+                    <TabItem Header="Namestaj" Selector.Selected="NamestajSelected">
                         <Grid Background="#FFE5E5E5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="8*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="8*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="4*"/>
-                            </Grid.ColumnDefinitions>
                             <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdajaN_AutoGeneratingColumn" />
-                            <!-- ItemsSource="{Binding Path=listaNamestajaZaProdaju}" -->
-                            <DataGrid Name="dgProdatoN" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdatoN_AutoGeneratingColumn"/>
-                            <Button Name="btnDodajN" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="ProdajNOnClick"/>
-                            <Button Name="btnIzbaciN" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Click="IzbaciNOnClick"/>
-                            <Label Grid.Row="2" Grid.Column="1" Content="Kolicina:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
-                            <TextBox Name="tbKolicina" Grid.Row="3" Grid.Column="1" Margin="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Dodatne usluge">
+                    <TabItem Header="Dodatne U." Selector.Selected="DodatnaUslugaSelected">
                         <Grid Background="#FFE5E5E5">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="8*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="1*"/>
-                                <RowDefinition Height="8*"/>
-                            </Grid.RowDefinitions>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="5*"/>
-                                <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="4*"/>
-                            </Grid.ColumnDefinitions>
                             <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdajaDU_AutoGeneratingColumn" />
-                            <!-- ItemsSource="{Binding Path=listaDUZaProdaju}" -->
-                            <DataGrid Name="dgProdatoDU" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdatoDU_AutoGeneratingColumn"/>
-                            <Button Name="btnDodajDU" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="ProdajDUOnClick"/>
-                            <Button Name="btnIzbaciDU" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Click="IzbaciDUOnClick"/>
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Zakljucivanje prodaje" Selector.Selected="OnTabSelected">
+                    <TabItem Header="Podaci.." Selector.Selected="PodaciSelected">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -105,6 +72,33 @@
                         </Grid>
                     </TabItem>
                 </TabControl>
+            </Grid>
+        </Border>
+        <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <DataGrid Name="dgRacun" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGenerateColumns="False" MinColumnWidth="150" MaxColumnWidth="200">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}"/>
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"/>
+                        <DataGridTextColumn Header="Kolicina" Binding="{Binding Kolicina}"/>
+                    </DataGrid.Columns>
+                </DataGrid>
+            </Grid>
+        </Border>
+        <Border Grid.Column="2" Grid.Row="1">
+            <Grid Background="#FFE5E5E5">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="8*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="8*"/>
+                </Grid.RowDefinitions>
+                <Button Name="btnDodaj" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="btnDodaj_Click" />
+                <Button Name="btnIzbaci" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Click="btnIzbaci_Click" />
+                <Label Grid.Row="2" Grid.Column="1" Content="Kolicina:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <TextBox Name="tbKolicina" Grid.Row="3" Grid.Column="1" Margin="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Border>
     </Grid>
