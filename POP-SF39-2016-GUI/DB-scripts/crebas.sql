@@ -30,6 +30,12 @@ CREATE TABLE Korisnik(
 	Prezime VARCHAR(30),
 	KorisnickoIme VARCHAR(30),
 	Lozinka VARCHAR(30),
-	TipKorisnika VARCHAR(15),
+	TipKorisnika VARCHAR(20) check (TipKorisnika in('Administrator','Prodavac')),
 	Obrisan BIT,
+);
+CREATE TABLE JedinicaProdaje(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	NamestajId INT,
+	Kolicina INT,
+	Obrisan BIT
 );

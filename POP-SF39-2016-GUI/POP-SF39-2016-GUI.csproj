@@ -56,6 +56,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="DAO\DodatnaUslugaDAO.cs" />
+    <Compile Include="DAO\JedinicaProdajeDAO.cs" />
     <Compile Include="DAO\KorisnikDAO.cs" />
     <Compile Include="DAO\NamestajDAO.cs" />
     <Compile Include="DAO\TipNamestajaDAO.cs" />

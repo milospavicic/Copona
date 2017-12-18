@@ -30,6 +30,24 @@ namespace POP_SF39_2016_GUI
         public MainWindow()
         {
             InitializeComponent();
+
+            var korisnik = KorisnikDAO.GetById(2);
+            korisnik.Ime = "Dragan";
+            KorisnikDAO.Update(korisnik);
+
+            /***
+            var noviKorisnik = new Korisnik
+            {
+                Id = 4,
+                Ime = "Dragan",
+                Prezime = "Jovanovic",
+                KorisnickoIme = "12345",
+                Lozinka = "12345",
+                TipKorisnika = TipKorisnika.Prodavac,
+                Obrisan = false,
+            };
+            KorisnikDAO.Create(noviKorisnik);
+            ***/
             /***
             var du = DodatnaUslugaDAO.GetById(2);
             Console.WriteLine(du.Naziv);

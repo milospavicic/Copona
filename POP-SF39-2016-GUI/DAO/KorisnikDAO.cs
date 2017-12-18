@@ -36,8 +36,7 @@ namespace POP_SF39_2016_GUI.DAO
                     nk.Prezime = row["Prezime"].ToString();
                     nk.KorisnickoIme = row["KorisnickoIme"].ToString();
                     nk.Lozinka = row["Lozinka"].ToString();
-                    //cast problem za TipKorisnika
-                    //nk.TipKorisnika = Enum.Parse((row["TipKorisnika"]),Korisnik.TipKorisnika);
+                    nk.TipKorisnika =(TipKorisnika)Enum.Parse(typeof(TipKorisnika),row["TipKorisnika"].ToString());
                     nk.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
                     korisnici.Add(nk);
@@ -45,35 +44,38 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return korisnici;
         }
-        /***
-        public static DodatnaUsluga GetById(int Id)
+        
+        public static Korisnik GetById(int Id)
         {
-            var dodatnaUsluga = new DodatnaUsluga();
+            var korisnik = new Korisnik();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM DodatnaUsluga WHERE Id=@Id";
+                cmd.CommandText = "SELECT * FROM Korisnik WHERE Id=@Id";
                 cmd.Parameters.AddWithValue("Id", Id);
                 da.SelectCommand = cmd;
-                da.Fill(ds, "DodatnaUsluga"); //izvrsavanje upita
+                da.Fill(ds, "Korisnik"); //izvrsavanje upita
 
-                foreach (DataRow row in ds.Tables["DodatnaUsluga"].Rows)
+                foreach (DataRow row in ds.Tables["Korisnik"].Rows)
                 {
 
-                    dodatnaUsluga.Id = (int)row["Id"];
-                    dodatnaUsluga.Naziv = row["Naziv"].ToString();
-                    dodatnaUsluga.Cena = double.Parse(row["Cena"].ToString());
-                    dodatnaUsluga.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    korisnik.Id = (int)row["Id"];
+                    korisnik.Ime = row["Ime"].ToString();
+                    korisnik.Prezime = row["Prezime"].ToString();
+                    korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    korisnik.Lozinka = row["Lozinka"].ToString();
+                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), row["TipKorisnika"].ToString());
+                    korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
                 }
 
             }
-            return dodatnaUsluga;
+            return korisnik;
         }
-
-        public static DodatnaUsluga Create(DodatnaUsluga du)
+        
+        public static Korisnik Create(Korisnik nk)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -81,20 +83,23 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO DodatnaUsluga(Naziv,Cena,Obrisan) VALUES (@Naziv,@Cena,@Obrisan)";
+                cmd.CommandText = "INSERT INTO Korisnik(Ime,Prezime,KorisnickoIme,Lozinka,TipKorisnika,Obrisan) VALUES (@Ime,@Prezime,@KorisnickoIme,@Lozinka,@TipKorisnika,@Obrisan)";
                 cmd.CommandText += "Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("Naziv", du.Naziv);
-                cmd.Parameters.AddWithValue("Cena", du.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", du.Obrisan);
+                cmd.Parameters.AddWithValue("Ime", nk.Ime);
+                cmd.Parameters.AddWithValue("Prezime", nk.Prezime);
+                cmd.Parameters.AddWithValue("KorisnickoIme", nk.KorisnickoIme);
+                cmd.Parameters.AddWithValue("Lozinka", nk.Lozinka);
+                cmd.Parameters.AddWithValue("TipKorisnika", nk.TipKorisnika.ToString());
+                cmd.Parameters.AddWithValue("Obrisan", nk.Obrisan);
 
-                du.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                nk.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
             }
-            Projekat.Instance.DodatneUsluge.Add(du);
-            return du;
+            Projekat.Instance.Korisnici.Add(nk);
+            return nk;
         }
-
-        public static void Update(DodatnaUsluga du)
+        
+        public static void Update(Korisnik kzu)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -103,31 +108,38 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "UPDATE DodatnaUsluga SET Naziv=@Naziv,Cena=@Cena,Obrisan=@Obrisan WHERE Id = @Id";
+                cmd.CommandText = "UPDATE Korisnik SET Ime=@Ime,Prezime=@Prezime,KorisnickoIme=@KorisnickoIme,Lozinka=@Lozinka,TipKorisnika=@TipKorisnika,Obrisan=@Obrisan WHERE Id = @Id";
                 cmd.CommandText += " SELECT SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("Id", du.Id);
-                cmd.Parameters.AddWithValue("Naziv", du.Naziv);
-                cmd.Parameters.AddWithValue("Cena", du.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", du.Obrisan);
+                cmd.Parameters.AddWithValue("Id", kzu.Id);
+                cmd.Parameters.AddWithValue("Ime", kzu.Ime);
+                cmd.Parameters.AddWithValue("Prezime", kzu.Prezime);
+                cmd.Parameters.AddWithValue("KorisnickoIme", kzu.KorisnickoIme);
+                cmd.Parameters.AddWithValue("Lozinka", kzu.Lozinka);
+                cmd.Parameters.AddWithValue("TipKorisnika", kzu.TipKorisnika.ToString());
+                cmd.Parameters.AddWithValue("Obrisan", kzu.Obrisan);
 
                 cmd.ExecuteNonQuery();
             }
-            foreach (var dodatnaUsluga in Projekat.Instance.DodatneUsluge)
+            foreach (var korisnik in Projekat.Instance.Korisnici)
             {
-                if (dodatnaUsluga.Id == du.Id)
+                if (korisnik.Id == kzu.Id)
                 {
-                    dodatnaUsluga.Naziv = du.Naziv;
-                    dodatnaUsluga.Obrisan = du.Obrisan;
+                    korisnik.Ime = kzu.Ime;
+                    korisnik.Prezime = kzu.Prezime;
+                    korisnik.KorisnickoIme = kzu.KorisnickoIme;
+                    korisnik.Lozinka = kzu.Lozinka;
+                    korisnik.TipKorisnika = kzu.TipKorisnika;
+                    korisnik.Obrisan = kzu.Obrisan;
                 }
             }
         }
 
-        public static void Delete(DodatnaUsluga du)
+        public static void Delete(Korisnik nk)
         {
-            du.Obrisan = true;
-            Update(du);
+            nk.Obrisan = true;
+            Update(nk);
         }
-        ***/
+        
     }
 }

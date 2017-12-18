@@ -86,15 +86,6 @@ namespace POP_SF39_2016_GUI.model
         {
             throw new NotImplementedException();
         }
-        public static JedinicaProdaje GetById(int? idProsledjen)
-        {
-            foreach (JedinicaProdaje jedProdaje in Projekat.Instance.JedinicaProdaje)
-            {
-                if (jedProdaje.id == idProsledjen)
-                    return jedProdaje;
-            }
-            return null;
-        }
 
         [XmlIgnore]
         public string Naziv

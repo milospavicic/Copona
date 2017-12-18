@@ -84,4 +84,34 @@
     <Kolicina>2</Kolicina>
     <Obrisan>false</Obrisan>
   </JedinicaProdaje>
+  <JedinicaProdaje>
+    <Id>15</Id>
+    <NamestajId>2</NamestajId>
+    <Kolicina>2</Kolicina>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
+  <JedinicaProdaje>
+    <Id>16</Id>
+    <NamestajId>4</NamestajId>
+    <Kolicina>2</Kolicina>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
+  <JedinicaProdaje>
+    <Id>17</Id>
+    <NamestajId>2</NamestajId>
+    <Kolicina>2</Kolicina>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
+  <JedinicaProdaje>
+    <Id>18</Id>
+    <NamestajId>4</NamestajId>
+    <Kolicina>2</Kolicina>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
+  <JedinicaProdaje>
+    <Id>19</Id>
+    <NamestajId>5</NamestajId>
+    <Kolicina>2</Kolicina>
+    <Obrisan>false</Obrisan>
+  </JedinicaProdaje>
 </ArrayOfJedinicaProdaje>

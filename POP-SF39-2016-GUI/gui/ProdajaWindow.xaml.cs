@@ -23,13 +23,11 @@ namespace POP_SF39_2016_GUI.gui
    
     public partial class ProdajaWindow : Window
     {
-        public ObservableCollection<JedinicaProdaje> listaNamestajaZaProdaju { get; set; } = new ObservableCollection<JedinicaProdaje>();
-        public ObservableCollection<DodatnaUsluga> listaDUZaProdaju { get; set; } = new ObservableCollection<DodatnaUsluga>();
-        public ObservableCollection<JedinicaProdaje> listaJedProdaje { get; set; } = Projekat.Instance.JedinicaProdaje;
+        public ObservableCollection<JedinicaProdaje> ListaJedProdaje { get; set; } = Projekat.Instance.JediniceProdaje;
         // lista za indexiranje jedProdaje..
-        public ObservableCollection<Object> korpa { get; set; } = new ObservableCollection<object>();
-        public double ukupnaCena { get; set; }
-        public double ukupnaCenaSaPDV { get; set; }
+        public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<object>();
+        public double UkupnaCena { get; set; }
+        public double UkupnaCenaSaPDV { get; set; }
         ICollectionView view;
         public enum Operacija
         {
@@ -68,7 +66,7 @@ namespace POP_SF39_2016_GUI.gui
             var tab = sender as TabItem;
             if (tab != null)
             {
-                tbUkupnaCena.Text = ukupnaCena.ToString();
+                tbUkupnaCena.Text = UkupnaCena.ToString();
                 tbDatum.Text = DateTime.Now.ToShortDateString();
             }
         }
@@ -89,7 +87,6 @@ namespace POP_SF39_2016_GUI.gui
             {
                 radSa = RadSa.DODATNAUSLUGA;
                 tbKolicina.Text = "";
-                tbKolicina.IsReadOnly = true;
                 Console.WriteLine("DU");
             }
         }
@@ -111,10 +108,8 @@ namespace POP_SF39_2016_GUI.gui
             view.Filter = obrisanFilterDU;
             dgProdajaDU.ItemsSource = view;
             dgProdajaDU.SelectedIndex = 0;
-            //dgProdatoN.ItemsSource = listaNamestajaZaProdaju;
-            //dgProdatoDU.ItemsSource = listaDUZaProdaju;
-            tbUkupnaCena.Text = ukupnaCena.ToString();
-            dgRacun.ItemsSource = korpa;
+            tbUkupnaCena.Text = UkupnaCena.ToString();
+            dgRacun.ItemsSource = Korpa;
         }
         private void dgProdajaN_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -143,26 +138,38 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Polja moraju biti popunjena. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            if (korpa.Count()==0)
+            if (Korpa.Count()==0)
             {
                 MessageBoxResult poruka = MessageBox.Show("Korpa je prazna.", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
             
             List<int> listaJedId = new List<int>();
-            foreach (JedinicaProdaje jedProdaje in listaNamestajaZaProdaju)
-            {
-                listaJedId.Add(jedProdaje.Id);
-            }
             List<int> listaDUId = new List<int>();
-            if (listaDUZaProdaju.Count!=0)
+            var listaNamestaja = Projekat.Instance.Namestaji;
+            foreach (var item in Korpa)
             {
-                
-                foreach (DodatnaUsluga dodatnaUsluga in listaDUZaProdaju)
+                if (item.GetType() == typeof(JedinicaProdaje))
                 {
-                    listaDUId.Add(dodatnaUsluga.Id);
+                    var tempItem = (JedinicaProdaje)item;
+                    listaJedId.Add(tempItem.Id);
+                    foreach (Namestaj namestaj in listaNamestaja)
+                    {
+                        if (namestaj.Id == tempItem.NamestajId)
+                        {
+                            namestaj.BrKomada -= tempItem.Kolicina;
+                        }
+                    }
+                    //Projekat.Instance.JedinicaProdaje.add(item)
                 }
+                else
+                {
+                    var tempItem = (DodatnaUsluga)item;
+                    listaDUId.Add(tempItem.Id);
+                }
+                    
             }
+            GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
             var novaProdaja = new ProdajaNamestaja
             {
                 BrRacuna = tbBrojRacuna.Text,
@@ -171,28 +178,12 @@ namespace POP_SF39_2016_GUI.gui
                 ListaJedinicaProdajeId = listaJedId,
                 DodatneUslugeId = listaDUId,
                 Id = Projekat.Instance.Prodaja.Count() + 1,
-                UkupnaCena = ukupnaCena
+                UkupnaCena = UkupnaCena
             };
             var listaProdaja = Projekat.Instance.Prodaja;
             listaProdaja.Add(novaProdaja);
             GenericSerializer.Serialize("prodajenamestaja.xml", listaProdaja);
-            GenericSerializer.Serialize("jediniceprodaje.xml", listaJedProdaje);
-            var listaNamestajaZaOduzeti = Projekat.Instance.Namestaji;
-
-            foreach (JedinicaProdaje jedProdaje in listaNamestajaZaProdaju)
-            {
-                Console.WriteLine("test");
-                //ovaj deo ne radi kako treba.. pise manje u fajl
-                foreach (Namestaj namestaj in listaNamestajaZaOduzeti)
-                {
-                    if (namestaj.Id == jedProdaje.NamestajId)
-                    {
-                        namestaj.BrKomada -= jedProdaje.Kolicina;
-                    }
-                }
-            }
-
-            GenericSerializer.Serialize("namestaj.xml", listaNamestajaZaOduzeti);
+            GenericSerializer.Serialize("jediniceprodaje.xml", ListaJedProdaje);
             this.Close(); 
 
         }
@@ -227,16 +218,15 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     JedinicaProdaje jd = new JedinicaProdaje
                     {
-                        Id = listaJedProdaje.Count() + 1,
+                        Id = ListaJedProdaje.Count() + 1,
                         NamestajId = selektovaniNamestaj.Id,
                         Kolicina = kolicina,
                     };
-                    listaJedProdaje.Add(jd);
                     tempCena = selektovaniNamestaj.Cena * kolicina;
-                    ukupnaCena += tempCena;
-                    ukupnaCenaSaPDV += tempCena + tempCena * ProdajaNamestaja.PDV;
-                    listaNamestajaZaProdaju.Add(jd);
-                    korpa.Add(jd);
+                    UkupnaCena += tempCena;
+                    UkupnaCenaSaPDV += tempCena + tempCena * ProdajaNamestaja.PDV;
+                    ListaJedProdaje.Add(jd);
+                    Korpa.Add(jd);
 
                     return;
                 case RadSa.DODATNAUSLUGA:
@@ -247,10 +237,9 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     DodatnaUsluga selektovanaDodatnaUsluga = (DodatnaUsluga)dgProdajaDU.SelectedItem;
                     tempCena = selektovanaDodatnaUsluga.Cena ;
-                    ukupnaCena += tempCena;
-                    ukupnaCenaSaPDV += tempCena + tempCena * ProdajaNamestaja.PDV;
-                    listaDUZaProdaju.Add(selektovanaDodatnaUsluga);
-                    korpa.Add(selektovanaDodatnaUsluga);
+                    UkupnaCena += tempCena;
+                    UkupnaCenaSaPDV += tempCena + tempCena * ProdajaNamestaja.PDV;
+                    Korpa.Add(selektovanaDodatnaUsluga);
                     return;
             }
         }
@@ -283,22 +272,22 @@ namespace POP_SF39_2016_GUI.gui
                 }
                 if (kolicina == itemSaRacuna.Kolicina)
                 {
-                    korpa.Remove(itemSaRacuna);
+                    Korpa.Remove(itemSaRacuna);
                 }
                 else
                 {
                     itemSaRacuna.Kolicina = itemSaRacuna.Kolicina - kolicina;
                 }
-                ukupnaCena -= (kolicina * itemSaRacuna.Namestaj.Cena);
+                UkupnaCena -= (kolicina * itemSaRacuna.Namestaj.Cena);
                 return;
             } catch { Console.WriteLine("nije namestaj"); }
             try
             {
                 DodatnaUsluga itemSaRacuna = (DodatnaUsluga)dgRacun.SelectedItem;
-                korpa.RemoveAt(dgRacun.SelectedIndex);
+                Korpa.RemoveAt(dgRacun.SelectedIndex);
                 tempCena = itemSaRacuna.Cena;
-                ukupnaCena -= tempCena;
-                ukupnaCenaSaPDV -= tempCena * ProdajaNamestaja.PDV;
+                UkupnaCena -= tempCena;
+                UkupnaCenaSaPDV -= tempCena * ProdajaNamestaja.PDV;
             } catch { Console.WriteLine("nije DU"); return; }
         }
     }

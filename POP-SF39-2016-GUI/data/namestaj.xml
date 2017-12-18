@@ -1,57 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
-    <Naziv>Ikea Krevet</Naziv>
+    <Naziv>Ultra polica321</Naziv>
     <Id>1</Id>
-    <Cena>5000</Cena>
-    <Sifra>ikkrevet</Sifra>
-    <BrKomada>18</BrKomada>
+    <Cena>123.5</Cena>
+    <Sifra>UL1PO</Sifra>
+    <BrKomada>2</BrKomada>
     <TipNamestajaId>1</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Naziv>Sofa 007</Naziv>
+    <Naziv>Crni krevet</Naziv>
     <Id>2</Id>
-    <Cena>2200</Cena>
-    <Sifra>bsofa</Sifra>
-    <BrKomada>15</BrKomada>
+    <Cena>5000</Cena>
+    <Sifra>CR2KR</Sifra>
+    <BrKomada>20</BrKomada>
+    <TipNamestajaId>2</TipNamestajaId>
+    <Obrisan>false</Obrisan>
+  </Namestaj>
+  <Namestaj>
+    <Naziv>Sto 123</Naziv>
+    <Id>3</Id>
+    <Cena>2000</Cena>
+    <Sifra>ST11ST</Sifra>
+    <BrKomada>13</BrKomada>
     <TipNamestajaId>3</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Naziv>Drvena polica</Naziv>
-    <Id>3</Id>
-    <Cena>1100</Cena>
-    <Sifra>dpolica</Sifra>
-    <BrKomada>5</BrKomada>
-    <TipNamestajaId>7</TipNamestajaId>
-    <Obrisan>false</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Naziv>Barski sto</Naziv>
+    <Naziv>Lazy bag</Naziv>
     <Id>4</Id>
-    <Cena>45000</Cena>
-    <Sifra>bsto</Sifra>
-    <BrKomada>27</BrKomada>
-    <TipNamestajaId>8</TipNamestajaId>
-    <Obrisan>true</Obrisan>
-  </Namestaj>
-  <Namestaj>
-    <Naziv>Krevet Test</Naziv>
-    <Id>5</Id>
-    <Cena>2501</Cena>
-    <Sifra>krevett</Sifra>
-    <BrKomada>30</BrKomada>
-    <TipNamestajaId>1</TipNamestajaId>
+    <Cena>6700</Cena>
+    <Sifra>LA3ST</Sifra>
+    <BrKomada>15</BrKomada>
+    <TipNamestajaId>4</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Naziv>51</Naziv>
-    <Id>6</Id>
-    <Cena>51</Cena>
-    <Sifra>51</Sifra>
-    <BrKomada>15151</BrKomada>
-    <TipNamestajaId>6</TipNamestajaId>
+    <Naziv>test</Naziv>
+    <Id>5</Id>
+    <Cena>3000.2</Cena>
+    <Sifra>test</Sifra>
+    <BrKomada>13</BrKomada>
+    <TipNamestajaId>2</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>
