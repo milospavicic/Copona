@@ -1,7 +1,6 @@
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe.config
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.pdb
-D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csprojResolveAssemblyReference.cache
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\MainWindow.g.cs
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\App.g.cs
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI_MarkupCompile.cache

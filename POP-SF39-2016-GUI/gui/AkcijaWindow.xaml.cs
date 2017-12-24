@@ -26,7 +26,7 @@ namespace POP_SF39_2016_GUI.gui
             DODAVANJE,
             IZMENA
         };
-
+        public List<Namestaj> ListaNamestaja { get; set; } = new List<Namestaj>();
         private Akcija akcija;
         private Operacija operacija;
         private int index;
@@ -72,29 +72,21 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Operacija.DODAVANJE:
                     AkcijaDAO.Create(akcija);
-                    IEnumerable list = dgNamestaj.ItemsSource as IEnumerable;
-                    foreach (var row in list)
+                    foreach (var tempNamestaj in ListaNamestaja)
                     {
-                        bool IsChecked = (bool)((CheckBox)dgNamestaj.Columns[0].GetCellContent(row)).IsChecked;
 
-                        if (IsChecked)
+                        var naAkciji = new NaAkciji()
                         {
-                            //pretvori red u namestaj, napravi novi NaAkciji,dodaj index u listu.
-                            var namestaj = (Namestaj)row;
-                            var naAkciji = new NaAkciji()
-                            {//ovde negde puca
-                                IdAkcije = Projekat.Instance.Akcija.Count,
-                                IdNamestaja = namestaj.Id,
-                                Popust = int.Parse(tbPopust.Text)
-                            };
-                            NaAkcijiDAO.Create(naAkciji);
-                        }
+                            IdAkcije = Projekat.Instance.Akcija.Count,
+                            IdNamestaja = tempNamestaj.Id,
+                            Popust = int.Parse(tbPopust.Text)
+                        };
+                        NaAkcijiDAO.Create(naAkciji);
                     }
                     break;
                 case Operacija.IZMENA:
                     NaAkcijiDAO.SetPopust(akcija.Id, int.Parse(tbPopust.Text));
                     AkcijaDAO.Update(akcija);
-                    //Projekat.Instance.Akcija[index] = akcija;
                     break;
             }
             this.Close();
@@ -103,6 +95,16 @@ namespace POP_SF39_2016_GUI.gui
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        private void OnChecked(object sender, RoutedEventArgs e)
+        {
+            ListaNamestaja.Add((Namestaj)dgNamestaj.SelectedItem);
+        }
+
+        private void OnUnChecked(object sender, RoutedEventArgs e)
+        {
+            ListaNamestaja.Remove((Namestaj)dgNamestaj.SelectedItem);
         }
     }
 }
