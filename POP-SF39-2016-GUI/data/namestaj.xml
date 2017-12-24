@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ArrayOfNamestaj xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Namestaj>
-    <Naziv>Ultra polica321</Naziv>
+    <Naziv>Ultra polica</Naziv>
     <Id>1</Id>
     <Cena>123.5</Cena>
     <Sifra>UL1PO</Sifra>
@@ -14,7 +14,7 @@
     <Id>2</Id>
     <Cena>5000</Cena>
     <Sifra>CR2KR</Sifra>
-    <BrKomada>20</BrKomada>
+    <BrKomada>22</BrKomada>
     <TipNamestajaId>2</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
@@ -32,17 +32,17 @@
     <Id>4</Id>
     <Cena>6700</Cena>
     <Sifra>LA3ST</Sifra>
-    <BrKomada>15</BrKomada>
+    <BrKomada>17</BrKomada>
     <TipNamestajaId>4</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
   <Namestaj>
-    <Naziv>test</Naziv>
+    <Naziv>qq</Naziv>
     <Id>5</Id>
-    <Cena>3000.2</Cena>
-    <Sifra>test</Sifra>
-    <BrKomada>13</BrKomada>
-    <TipNamestajaId>2</TipNamestajaId>
+    <Cena>22</Cena>
+    <Sifra>qq</Sifra>
+    <BrKomada>22</BrKomada>
+    <TipNamestajaId>3</TipNamestajaId>
     <Obrisan>false</Obrisan>
   </Namestaj>
 </ArrayOfNamestaj>

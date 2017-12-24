@@ -2,19 +2,37 @@
 <ArrayOfKorisnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <Korisnik>
     <Id>1</Id>
-    <Ime>goran</Ime>
-    <Prezime>zora</Prezime>
+    <Ime>Zoran</Ime>
+    <Prezime>Jovanovic</Prezime>
     <KorisnickoIme>123</KorisnickoIme>
     <Lozinka>123</Lozinka>
     <TipKorisnika>Administrator</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>
   <Korisnik>
-    <Id>1</Id>
-    <Ime>goran1</Ime>
-    <Prezime>zoran11</Prezime>
+    <Id>2</Id>
+    <Ime>Goran</Ime>
+    <Prezime>Jovanovic</Prezime>
     <KorisnickoIme>1234</KorisnickoIme>
     <Lozinka>1234</Lozinka>
+    <TipKorisnika>Prodavac</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
+  <Korisnik>
+    <Id>3</Id>
+    <Ime>Jovan</Ime>
+    <Prezime>Jovanovic</Prezime>
+    <KorisnickoIme>321</KorisnickoIme>
+    <Lozinka>321</Lozinka>
+    <TipKorisnika>Administrator</TipKorisnika>
+    <Obrisan>false</Obrisan>
+  </Korisnik>
+  <Korisnik>
+    <Id>4</Id>
+    <Ime>dad</Ime>
+    <Prezime>ada</Prezime>
+    <KorisnickoIme>4114</KorisnickoIme>
+    <Lozinka>1441</Lozinka>
     <TipKorisnika>Prodavac</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>

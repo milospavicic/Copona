@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
- Title="GlavniMeniWindow" Height="800" Width="1200" Closing="Window_Closing">
+ Title="GlavniMeniWindow" Height="800" Width="1200" Closing="Window_Closing" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
     <Grid>
         <!-- Osnovna mreze-->
         <Grid.ColumnDefinitions>
@@ -23,20 +23,20 @@
             <Grid>
                 <!-- Meni mreza-->
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="120*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
-                    <RowDefinition Height="50*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="250*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
+                    <RowDefinition Height="40*"/>
                 </Grid.RowDefinitions>
                 <Button Content="Prodaja" Grid.Row="0" Grid.Column="1" Click="ProdajaBtnOnClick"/>
                 <Button Content="O Salonu" Grid.Row="1" Grid.Column="1" Click="IspisInformmacija"/>
@@ -63,9 +63,10 @@
                     <ColumnDefinition Width="260*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="200*"/>
-                    <RowDefinition Height="420*"/>
-                    <RowDefinition Height="150*"/>
+                    <RowDefinition Height="220*"/>
+                    <RowDefinition Height="430*"/>
+                    <RowDefinition Height="120*"/>
+                    
                 </Grid.RowDefinitions>
                 <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
                 <!--<ListBox Name="lbNamestaj" HorizontalAlignment="Stretch" Margin="10,10,10,10" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15"  Visibility="Hidden"/>-->
@@ -118,17 +119,34 @@
                 <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden">
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="100*"/>
-                            <ColumnDefinition Width="370*"/>
+                            <ColumnDefinition Width="115*"/>
+                            <ColumnDefinition Width="115*"/>
+                            <ColumnDefinition Width="115*"/>
+                            <ColumnDefinition Width="115*"/>
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        <Button Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="5,5,5,5" Click="DodajItem"/>
-                        <Button Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="5,5,5,5" Click="IzmeniItem"/>
-                        <Button Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="5,5,5,5" Click="ObrisiItem"/>
+                        <Border Grid.ColumnSpan="4" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+                        <Border Grid.Column="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+                        <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+                        <Border Grid.Column="2" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+                        <Border Grid.Column="3" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
+                        <Border Grid.Column="2" Grid.RowSpan="1" BorderBrush="Black" BorderThickness="1"/>
+
+                        <Button Name="btnDodaj" Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="35,5,35,5" Click="DodajItem"/>
+                        <Button Name="btnIzmeni" Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="35,5,35,5" Click="IzmeniItem"/>
+                        <Button Name="btnObrisi" Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="35,5,35,5" Click="ObrisiItem"/>
+                        <TextBox Grid.Row="0" Grid.Column="1" Margin="35,5,35,5"/>
+                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="35,5,35,5" />
+                        <Button Content="Pretrazi" Grid.Row="2" Grid.Column="1" Margin="35,5,35,5" />
+                        <ComboBox Grid.Row="1" Grid.Column="1" Margin="35,5,35,5" />
+                        <Button Content="Pretrazi" Grid.Row="2" Grid.Column="1" Margin="35,5,35,5" />
+                        <ComboBox Grid.Row="1" Grid.Column="2" Margin="35,5,35,5" />
+                        <Button Content="Sortiraj" Grid.Row="2" Grid.Column="2" Margin="35,5,35,5" />
+                        <Button Content="Detaljnije" Grid.Row="0" Grid.Column="2" Margin="35,5,35,5" Click="DetaljnijeOnClick" />
                     </Grid>
                 </Border>
             </Grid>

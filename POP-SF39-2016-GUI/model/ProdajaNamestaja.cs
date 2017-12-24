@@ -30,7 +30,24 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Id");
             }
         }
-        
+        public string Kupac
+        {
+            get { return kupac; }
+            set
+            {
+                kupac = value;
+                OnPropertyChanged("Kupac");
+            }
+        }
+        public string BrRacuna
+        {
+            get { return brRacuna; }
+            set
+            {
+                brRacuna = value;
+                OnPropertyChanged("BrRacuna");
+            }
+        }
 
         public List<int> ListaJedinicaProdajeId
         {
@@ -49,24 +66,6 @@ namespace POP_SF39_2016.model
             {
                 datumProdaje = value;
                 OnPropertyChanged("DatumProdaje");
-            }
-        }
-        public string Kupac
-        {
-            get { return kupac; }
-            set
-            {
-                kupac = value;
-                OnPropertyChanged("Kupac");
-            }
-        }
-        public string BrRacuna
-        {
-            get { return brRacuna; }
-            set
-            {
-                brRacuna = value;
-                OnPropertyChanged("BrRacuna");
             }
         }
         public List<int> DodatneUslugeId

@@ -1,0 +1,36 @@
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.DetaljnijeAkcijaWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        mc:Ignorable="d"
+        Title="DetaljnijeAkcijaWindow" Height="300" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="270*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="470*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="135*"/>
+                    <ColumnDefinition Width="135*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="200*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Popust" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="15"/>
+                <TextBox Name="tbPopust" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="20,20,150,20"/>
+                <DataGrid Name="dgNamestajNaAkciji" Grid.ColumnSpan="2" Grid.Row="1" AutoGeneratingColumn="PrikazivanjeKolona" />
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

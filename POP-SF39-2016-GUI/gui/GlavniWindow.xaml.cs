@@ -1,5 +1,6 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -39,28 +40,35 @@ namespace POP_SF39_2016_GUI.gui
             InitializeComponent();
             this.logovaniKorisnik = logovaniKorisnik;
             dgTabela.IsSynchronizedWithCurrentItem = true;
-            dgTabela.IsReadOnly=true;
+            dgTabela.IsReadOnly = true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
-
         }
 
         private bool obrisanFilter(object obj)
         {
-            switch (izabranaOpcija)
+            try
             {
-                case Opcija.NAMESTAJ:
-                    return !((Namestaj)obj).Obrisan;
-                case Opcija.TIPNAMESTAJA:
-                    return !((TipNamestaja)obj).Obrisan;
-                case Opcija.KORISNIK:
-                    return !((Korisnik)obj).Obrisan;
-                case Opcija.AKCIJA:
-                    return !((Akcija)obj).Obrisan;
-                case Opcija.DODATNAUSLUGA:
-                    return !((DodatnaUsluga)obj).Obrisan;
-                case Opcija.PRODAJA:
-                    return !((ProdajaNamestaja)obj).Obrisan;
+                switch (izabranaOpcija)
+                {
+                    case Opcija.NAMESTAJ:
+                        return !((Namestaj)obj).Obrisan;
+                    case Opcija.TIPNAMESTAJA:
+                        return !((TipNamestaja)obj).Obrisan;
+                    case Opcija.KORISNIK:
+                        return !((Korisnik)obj).Obrisan;
+                    case Opcija.AKCIJA:
+                        return !((Akcija)obj).Obrisan;
+                    case Opcija.DODATNAUSLUGA:
+                        return !((DodatnaUsluga)obj).Obrisan;
+                    case Opcija.PRODAJA:
+                        return !((ProdajaNamestaja)obj).Obrisan;
+                }
             }
+            catch
+            {
+                Console.WriteLine("PUCA PRETVARANJE>>>>>>>>>");
+            }
+
             return false;
         }
 
@@ -83,15 +91,20 @@ namespace POP_SF39_2016_GUI.gui
         }
         private void Prikaz()
         {
-            if(logovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
+            dgTabela.Margin = new Thickness(10, 10, 10, 160);
+            dgTabela.Visibility = Visibility.Visible;
+            borderAddEditDelItem.Visibility = Visibility.Visible;
+            if (logovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
             {
-                dgTabela.Margin = new Thickness(10, 10, 10, 145);
-                dgTabela.Visibility = Visibility.Visible;
-                borderAddEditDelItem.Visibility = Visibility.Visible;
+                btnDodaj.Visibility = Visibility.Visible;
+                btnIzmeni.Visibility = Visibility.Visible;
+                btnObrisi.Visibility = Visibility.Visible;
             }
             else
             {
-                dgTabela.Visibility = Visibility.Visible;
+                btnDodaj.Visibility = Visibility.Hidden;
+                btnIzmeni.Visibility = Visibility.Hidden;
+                btnObrisi.Visibility = Visibility.Hidden;
             }
         }
         //-------------------------------------------------------------------
@@ -103,7 +116,6 @@ namespace POP_SF39_2016_GUI.gui
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
-                    //dgTabela.ItemsSource = Projekat.Instance.Namestaj;
                     break;
                 case Opcija.TIPNAMESTAJA:
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
@@ -131,6 +143,7 @@ namespace POP_SF39_2016_GUI.gui
                     dgTabela.ItemsSource = view;
                     break;
             }
+            return;
         }
         //-------------------------------------------------------------------
         private void Logout(object sender, RoutedEventArgs e)
@@ -324,7 +337,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.AKCIJA:
                     var novaAkcija = new Akcija()
                     {
-                         PocetakAkcije=DateTime.Today
+                        Obrisan = false
                     };
                     var akcijaProzor = new AkcijaWindow(novaAkcija, 0, AkcijaWindow.Operacija.DODAVANJE);
                     akcijaProzor.ShowDialog();
@@ -394,10 +407,7 @@ namespace POP_SF39_2016_GUI.gui
                     MessageBoxResult namestajMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (namestajMessage == MessageBoxResult.Yes)
                     {
-                        foreach (Namestaj namestaj in listaNamestaja)
-                            if (namestaj.Id == izabraniNamestaj.Id)
-                                namestaj.Obrisan = true;
-                        GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
+                        NamestajDAO.Delete(izabraniNamestaj);
                     };
                     break;
                 case Opcija.TIPNAMESTAJA:
@@ -465,7 +475,7 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    if ( (string)e.Column.Header == "TipNamestajaId")
+                    if ( (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv" )
                     {
                         e.Cancel = true;
                     }
@@ -482,6 +492,18 @@ namespace POP_SF39_2016_GUI.gui
                         e.Cancel = true;
                     }
                     break;
+                case Opcija.DODATNAUSLUGA:
+                    if ((string)e.Column.Header == "CenaSaPdv" || (string)e.Column.Header == "CenaUkupno" || (string)e.Column.Header == "CenaUkupnoPDV" || (string)e.Column.Header == "Kolicina")
+                    {
+                        e.Cancel = true;
+                    }
+                    break;
+                case Opcija.PRODAJA:
+                    if ((string)e.Column.Header == "ListaJedinicaProdajeId" || (string)e.Column.Header == "DodatneUslugeId")
+                    {
+                        e.Cancel = true;
+                    }
+                    break;
             }
         }
 
@@ -494,6 +516,18 @@ namespace POP_SF39_2016_GUI.gui
             var novaProdaja = new ProdajaNamestaja();
             var prodajaProzor = new ProdajaWindow(novaProdaja, 0, ProdajaWindow.Operacija.DODAVANJE);
             prodajaProzor.ShowDialog();
+        }
+
+        private void DetaljnijeOnClick(object sender, RoutedEventArgs e)
+        {
+            switch (izabranaOpcija)
+            {
+                case Opcija.AKCIJA:
+                    var izabranaAkcija = (Akcija)dgTabela.SelectedItem;
+                    var akcijaDetaljnijeProzor = new DetaljnijeAkcijaWindow(izabranaAkcija.Id);
+                    akcijaDetaljnijeProzor.ShowDialog();
+                    break;
+            }
         }
     }
 }

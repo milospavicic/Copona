@@ -84,7 +84,7 @@ namespace POP_SF39_2016_GUI.DAO
 
 
                 cmd.CommandText = "INSERT INTO Korisnik(Ime,Prezime,KorisnickoIme,Lozinka,TipKorisnika,Obrisan) VALUES (@Ime,@Prezime,@KorisnickoIme,@Lozinka,@TipKorisnika,@Obrisan)";
-                cmd.CommandText += "Select SCOPE_IDENTITY();";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Ime", nk.Ime);
                 cmd.Parameters.AddWithValue("Prezime", nk.Prezime);

@@ -46,9 +46,18 @@ namespace POP_SF39_2016_GUI.gui
         {
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
-            dgNamestaj.ItemsSource = Projekat.Instance.Namestaji;
-            tbPopust.DataContext = akcija;
+            if (operacija == Operacija.DODAVANJE)
+                dgNamestaj.ItemsSource = Projekat.Instance.Namestaji;
+            else
+            {
+                tbPopust.Text = NaAkcijiDAO.GetPopust(akcija.Id).ToString();
+                dgNamestaj.ItemsSource = NaAkcijiDAO.GetAllNamestajForActionId(akcija.Id);
+                dgNamestaj.IsHitTestVisible = false;
+                dgNamestaj.IsReadOnly = true;
+                dgNamestaj.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+                dpPocetniDatum.IsHitTestVisible = false;
 
+            }
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -58,38 +67,36 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            IEnumerable list = dgNamestaj.ItemsSource as IEnumerable;
-            foreach (var row in list)
-            {
-                bool IsChecked = (bool)((CheckBox)dgNamestaj.Columns[0].GetCellContent(row)).IsChecked;
-
-                if (IsChecked)
-                {
-                    //pretvori red u namestaj, napravi novi NaAkciji,dodaj index u listu.
-                    var namestaj = (Namestaj)row;
-                    var naAkciji = new NaAkciji()
-                    {//ovde negde puca
-                        IdAkcije = Projekat.Instance.Akcija.Count + 1,
-                        IdNamestaja = namestaj.Id,
-                        Popust = int.Parse(tbPopust.Text)
-                    };
-                    NaAkcijiDAO.Create(naAkciji);
-                }
-            }
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    //akcija.Id = listaAkcija.Count + 1;
-                    listaAkcija.Add(akcija);
-                    akcija.Obrisan = false;
                     AkcijaDAO.Create(akcija);
+                    IEnumerable list = dgNamestaj.ItemsSource as IEnumerable;
+                    foreach (var row in list)
+                    {
+                        bool IsChecked = (bool)((CheckBox)dgNamestaj.Columns[0].GetCellContent(row)).IsChecked;
+
+                        if (IsChecked)
+                        {
+                            //pretvori red u namestaj, napravi novi NaAkciji,dodaj index u listu.
+                            var namestaj = (Namestaj)row;
+                            var naAkciji = new NaAkciji()
+                            {//ovde negde puca
+                                IdAkcije = Projekat.Instance.Akcija.Count,
+                                IdNamestaja = namestaj.Id,
+                                Popust = int.Parse(tbPopust.Text)
+                            };
+                            NaAkcijiDAO.Create(naAkciji);
+                        }
+                    }
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.Akcija[index] = akcija;
+                    NaAkcijiDAO.SetPopust(akcija.Id, int.Parse(tbPopust.Text));
+                    AkcijaDAO.Update(akcija);
+                    //Projekat.Instance.Akcija[index] = akcija;
                     break;
             }
-            GenericSerializer.Serialize("akcije.xml",listaAkcija);
             this.Close();
             
         }

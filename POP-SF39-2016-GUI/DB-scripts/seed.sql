@@ -60,8 +60,16 @@ VALUES('11/11/2016','9/3/2017',0)
 --	IdAkcije INT REFERENCES Akcija(IdAkcije),
 --	Popust INT check(Popust<=100) DODAJ POPUST =>1
 INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
-VALUES(1,1,2,0)
+VALUES(1,1,30,0)
 INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
-VALUES(2,1,5,0)
+VALUES(2,1,30,0)
 INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
 VALUES(4,1,30,0)
+
+
+SELECT * FROM NaAkciji
+SELECT DISTINCT POPUST FROM NaAkciji WHERE Obrisan = 0 AND IdAkcije = 1;
+
+UPDATE NaAkciji SET Popust = 15 WHERE Obrisan = 0 and IdAkcije = 1
+DELETE FROM NaAkciji
+DROP TABLE NaAkciji

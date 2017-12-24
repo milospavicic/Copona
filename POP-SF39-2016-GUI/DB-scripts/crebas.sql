@@ -15,8 +15,6 @@ CREATE TABLE Namestaj(
 	Kolicina INT,
 	Obrisan BIT,
 	FOREIGN KEY (TipNamestajaId) REFERENCES TipNamestaja(Id)
-
-
 );
 CREATE TABLE DodatnaUsluga(
 	Id INT PRIMARY KEY IDENTITY(1,1),
@@ -53,3 +51,6 @@ CREATE TABLE NaAkciji(
 	Obrisan BIT
 );
 drop table NaAkciji
+
+drop table Akcija
+drop table Namestaj

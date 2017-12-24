@@ -25,15 +25,15 @@
     <Obrisan>false</Obrisan>
   </Akcija>
   <Akcija>
-    <Id>1007</Id>
-    <PocetakAkcije>2017-12-22T00:00:00+01:00</PocetakAkcije>
-    <KrajAkcije>2017-12-22T00:00:00+01:00</KrajAkcije>
+    <Id>8</Id>
+    <PocetakAkcije>2017-12-24T00:00:00+01:00</PocetakAkcije>
+    <KrajAkcije>2017-12-24T00:00:00+01:00</KrajAkcije>
     <Obrisan>false</Obrisan>
   </Akcija>
   <Akcija>
-    <Id>1007</Id>
-    <PocetakAkcije>2017-12-22T00:00:00+01:00</PocetakAkcije>
-    <KrajAkcije>2017-12-22T00:00:00+01:00</KrajAkcije>
+    <Id>9</Id>
+    <PocetakAkcije>2017-12-24T00:00:00+01:00</PocetakAkcije>
+    <KrajAkcije>2017-12-24T00:00:00+01:00</KrajAkcije>
     <Obrisan>false</Obrisan>
   </Akcija>
 </ArrayOfAkcija>

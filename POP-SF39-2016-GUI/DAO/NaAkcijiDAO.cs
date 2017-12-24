@@ -85,6 +85,76 @@ namespace POP_SF39_2016_GUI.DAO
             Projekat.Instance.NaAkciji.Add(na);
             return na;
         }
+        public static List<Namestaj> GetAllNamestajForActionId(int IdAkcije)
+        {
+            var listaNamestaja = new List<Namestaj>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT IdNamestaja FROM NaAkciji WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
+
+                cmd.Parameters.AddWithValue("IdAkcije", IdAkcije);
+
+                da.SelectCommand = cmd;
+
+                da.Fill(ds, "NaAkciji"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["NaAkciji"].Rows)
+                {
+                    var tempNamestaj =  Namestaj.GetById((int)row["IdNamestaja"]);
+                    listaNamestaja.Add(tempNamestaj);
+                }
+            }
+            return listaNamestaja;
+        }
+        public static int GetPopust(int IdAkcije)
+        {
+            int popust = 0;
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT DISTINCT POPUST FROM NaAkciji WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
+
+                cmd.Parameters.AddWithValue("IdAkcije", IdAkcije);
+
+                da.SelectCommand = cmd;
+
+                da.Fill(ds, "NaAkciji"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["NaAkciji"].Rows)
+                {
+                    popust = (int)row["Popust"];
+                }
+            }
+            return popust;
+        }
+        public static void SetPopust(int IdAkcije,int Popust)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+
+                cmd.CommandText = "UPDATE NaAkciji SET Popust = @Popust WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
+
+                cmd.Parameters.AddWithValue("Popust", Popust);
+                cmd.Parameters.AddWithValue("IdAkcije", IdAkcije);
+
+                cmd.ExecuteNonQuery();
+            }
+        }
 
     }
 }
