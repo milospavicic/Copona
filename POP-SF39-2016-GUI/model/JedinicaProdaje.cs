@@ -103,5 +103,26 @@ namespace POP_SF39_2016_GUI.model
                 return Namestaj.Cena;
             }
         }
+        public double CenaSaPdv
+        {
+            get
+            {
+                return Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV;
+            }
+        }
+        public double CenaUkupno
+        {
+            get
+            {
+                return Namestaj.Cena * Kolicina;
+            }
+        }
+        public double CenaUkupnoPDV
+        {
+            get
+            {
+                return (Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV)*Kolicina;
+            }
+        }
     }
 }

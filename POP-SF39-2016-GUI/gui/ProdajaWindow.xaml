@@ -76,11 +76,14 @@
         </Border>
         <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
             <Grid>
-                <DataGrid Name="dgRacun" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGenerateColumns="False" MinColumnWidth="150" MaxColumnWidth="200">
+                <DataGrid Name="dgRacun" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGenerateColumns="False">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}"/>
-                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"/>
-                        <DataGridTextColumn Header="Kolicina" Binding="{Binding Kolicina}"/>
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" MinWidth="130"/>
+                        <DataGridTextColumn Header="Cena Komad" Binding="{Binding Cena}" MinWidth="80"/>
+                        <DataGridTextColumn Header="Cena Komad + PDV" Binding="{Binding CenaSaPdv}"  MinWidth="120"/>
+                        <DataGridTextColumn Header="Kolicina" Binding="{Binding Kolicina}" MinWidth="50" TextBlock.TextAlignment="Center"/>
+                        <DataGridTextColumn Header="Cena Ukupno" Binding="{Binding CenaUkupno}" MinWidth="85"/>
+                        <DataGridTextColumn Header="Cena Ukupno + PDV" Binding="{Binding CenaUkupnoPDV}" MinWidth="125"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>
@@ -97,7 +100,7 @@
                 </Grid.RowDefinitions>
                 <Button Name="btnDodaj" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="btnDodaj_Click" />
                 <Button Name="btnIzbaci" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="4" VerticalAlignment="Stretch" Click="btnIzbaci_Click" />
-                <Label Grid.Row="2" Grid.Column="1" Content="Kolicina:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
+                <Label Name="lbKolicina" Grid.Row="2" Grid.Column="1" Content="Kolicina:" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
                 <TextBox Name="tbKolicina" Grid.Row="3" Grid.Column="1" Margin="3" HorizontalContentAlignment="Center" VerticalContentAlignment="Center"/>
             </Grid>
         </Border>

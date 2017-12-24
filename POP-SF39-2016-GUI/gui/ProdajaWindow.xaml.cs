@@ -76,7 +76,8 @@ namespace POP_SF39_2016_GUI.gui
             if (tab != null)
             {
                 radSa = RadSa.NAMESTAJ;
-                tbKolicina.IsReadOnly = false;
+                lbKolicina.Visibility = Visibility.Visible;
+                tbKolicina.Visibility = Visibility.Visible;
                 Console.WriteLine("NAM");
             }
         }
@@ -87,6 +88,8 @@ namespace POP_SF39_2016_GUI.gui
             {
                 radSa = RadSa.DODATNAUSLUGA;
                 tbKolicina.Text = "";
+                lbKolicina.Visibility = Visibility.Hidden;
+                tbKolicina.Visibility = Visibility.Hidden;
                 Console.WriteLine("DU");
             }
         }

@@ -14,9 +14,6 @@ namespace POP_SF39_2016.model
         private int id;
         private DateTime pocetakAkcije;
         private DateTime krajAkcije;
-        private Namestaj namestaj;
-        private int? namestajId;
-        private double popust;
         private bool obrisan;
         public Akcija()
         {
@@ -24,24 +21,6 @@ namespace POP_SF39_2016.model
             krajAkcije = DateTime.Today;
         }
 
-        [XmlIgnore]
-        public Namestaj Namestaj
-        {
-            get
-            {
-                if (namestaj == null)
-                {
-                    namestaj = Namestaj.GetById(NamestajId);
-                }
-                return namestaj;
-            }
-            set
-            {
-                namestaj = value;
-                NamestajId = namestaj.Id;
-                OnPropertyChanged("Namestaj");
-            }
-        }
         public int Id
         {
             get { return id; }
@@ -72,26 +51,6 @@ namespace POP_SF39_2016.model
             }
         }
 
-        public int? NamestajId
-        {
-            get { return namestajId; }
-            set
-            {
-                namestajId = value;
-                OnPropertyChanged("NamestajId");
-            }
-        }
-
-        public double Popust
-        {
-            get { return popust; }
-            set
-            {
-                popust = value;
-                OnPropertyChanged("Popust");
-            }
-        }
-
         public bool Obrisan
         {
             get { return obrisan; }
@@ -117,9 +76,6 @@ namespace POP_SF39_2016.model
                 Id = id,
                 PocetakAkcije = pocetakAkcije,
                 KrajAkcije = krajAkcije,
-                NamestajId = namestajId,
-                Namestaj = namestaj,
-                Popust = popust,
                 Obrisan = obrisan,
             };
             
@@ -127,7 +83,7 @@ namespace POP_SF39_2016.model
 
         public override string ToString()
         {
-            return $"{PocetakAkcije},{KrajAkcije},{Popust},{NamestajId}";
+            return $"{PocetakAkcije},{KrajAkcije}";
         }
     }
 }

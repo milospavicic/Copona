@@ -1,5 +1,6 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -51,13 +52,13 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Operacija.DODAVANJE:
                     tipNamestaja.Id = listaTipaNamestaja.Count + 1;
-                    listaTipaNamestaja.Add(tipNamestaja);
+                    TipNamestajaDAO.Create(tipNamestaja);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.TipoviNamestaja[index] = tipNamestaja;
+                    TipNamestajaDAO.Update(tipNamestaja);
                     break;
             }
-            GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);
+            //GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

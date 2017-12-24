@@ -71,6 +71,10 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Cena");
             }
         }
+        public double CenaSaPdv
+        {
+            get { return cena + cena * ProdajaNamestaja.PDV; }
+        }
 
         public string Sifra
         {

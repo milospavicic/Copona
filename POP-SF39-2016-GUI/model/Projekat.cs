@@ -21,19 +21,22 @@ namespace POP_SF39_2016.model
         public ObservableCollection<DodatnaUsluga> DodatneUsluge { get; set; }
         public ObservableCollection<ProdajaNamestaja> Prodaja { get; set; }
         public ObservableCollection<JedinicaProdaje> JediniceProdaje { get; set; }
+        public ObservableCollection<NaAkciji> NaAkciji { get; set; }
         private Projekat()
         {
 
             //Namestaj = GenericSerializer.Deserialize<Namestaj>("namestaj.xml");
             //TipNamestaja = GenericSerializer.Deserialize<TipNamestaja>("tipnamestaja.xml");
             //Korisnici = GenericSerializer.Deserialize<Korisnik>("korisnici.xml");
-            Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
+            //Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
             //DodatneUsluge = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
-            Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
             //JedinicaProdaje = GenericSerializer.Deserialize<JedinicaProdaje>("jediniceprodaje.xml");
-            JediniceProdaje = JedinicaProdajeDAO.GetAll();
-            Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
             Korisnici = KorisnikDAO.GetAll();
+            Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
+            Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
+            NaAkciji = NaAkcijiDAO.GetAll();
+            JediniceProdaje = JedinicaProdajeDAO.GetAll();
+            Akcija = AkcijaDAO.GetAll();
             DodatneUsluge = DodatnaUslugaDAO.GetAll();
             TipoviNamestaja = TipNamestajaDAO.GetAll();
             Namestaji = NamestajDAO.GetAll();

@@ -5,41 +5,48 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="AkcijaWindow" Height="400" Width="400">
+        Title="AkcijaWindow" Height="600" Width="500">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
-            <ColumnDefinition Width="370*"/>
+            <ColumnDefinition Width="470*"/>
             <ColumnDefinition Width="15*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="570*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="1" Grid.Row="1">
+        <Border Grid.Column="1" Grid.Row="1" BorderBrush="Black" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="1*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
-                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="0.5*"/>
+                    <RowDefinition Height="2*"/>
+                    <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Pocetni datum:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Label Content="Krajni datum:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Label Content="Popust:" Grid.Column="0" Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Namestaj na popustu:" Grid.Column="0" Grid.Row="3" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <DatePicker SelectedDate="{Binding Path=PocetakAkcije}" Name="dpPocetniDatum" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                <DatePicker SelectedDate="{Binding Path=KrajAkcije}" Name="dpKrajnjiDatum" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center"/>
+                <DatePicker SelectedDate="{Binding Path=PocetakAkcije}" Name="dpPocetniDatum" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="50,0"/>
+                <DatePicker SelectedDate="{Binding Path=KrajAkcije}" Name="dpKrajnjiDatum" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="50,0"/>
                 <TextBox Text="{Binding Path=Popust}"  Name="tbPopust" Grid.Column="1" Grid.Row="2" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
-                <ComboBox SelectedValue="{Binding Path=Namestaj}" Name="cbNamestaj" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
-                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
-                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="6" Margin="35,15,35,15" Click="SacuvajIzmene"/>
+                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="6" Margin="35,15,35,15" Click="ZatvoriWindow"/>
+                <DataGrid Name="dgNamestaj" Grid.ColumnSpan="2" Grid.Row="3" Grid.RowSpan="1" AutoGenerateColumns="False" CanUserAddRows="False">
+                    <DataGrid.Columns>
+                        <DataGridCheckBoxColumn Header="Akcija" MaxWidth="40"/>
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Sifra" Binding="{Binding Sifra}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" Width="100" IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Kolicina" Binding="{Binding BrKomada}" Width="120" IsReadOnly="True"/>
+                    </DataGrid.Columns>
+                </DataGrid>
             </Grid>
         </Border>
     </Grid>

@@ -30,11 +30,39 @@ namespace POP_SF39_2016_GUI
         public MainWindow()
         {
             InitializeComponent();
-
+            /***
+            Console.WriteLine(NaAkcijiDAO.Count());
+            Console.WriteLine("HELLO");
+            var listaNaAkciji = NaAkcijiDAO.GetAll();
+            foreach(var test in listaNaAkciji)
+                Console.WriteLine(test.IdNamestaja);
+            Console.WriteLine("ELOO");
+            var testt = new NaAkciji()
+            {
+                IdNaAkciji = 4,
+                IdAkcije = 1,
+                IdNamestaja = 2,
+                Popust = 50,
+            };
+            NaAkcijiDAO.Create(testt);
+            listaNaAkciji = NaAkcijiDAO.GetAll();
+            foreach (var test in listaNaAkciji)
+                Console.WriteLine(test.IdNamestaja);
+            ***/
+            /***
+            var akcija = new Akcija
+            {
+                Id = 1,
+                KrajAkcije = DateTime.Today,
+                PocetakAkcije = DateTime.Today,
+            };
+            AkcijaDAO.Create(akcija);
+            ***/
+            /***
             var korisnik = KorisnikDAO.GetById(2);
             korisnik.Ime = "Dragan";
             KorisnikDAO.Update(korisnik);
-
+            ***/
             /***
             var noviKorisnik = new Korisnik
             {

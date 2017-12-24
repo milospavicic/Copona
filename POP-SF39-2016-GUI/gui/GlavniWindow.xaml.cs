@@ -324,7 +324,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.AKCIJA:
                     var novaAkcija = new Akcija()
                     {
-                        Popust = 0
+                         PocetakAkcije=DateTime.Today
                     };
                     var akcijaProzor = new AkcijaWindow(novaAkcija, 0, AkcijaWindow.Operacija.DODAVANJE);
                     akcijaProzor.ShowDialog();

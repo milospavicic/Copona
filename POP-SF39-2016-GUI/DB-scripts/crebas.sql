@@ -39,3 +39,17 @@ CREATE TABLE JedinicaProdaje(
 	Kolicina INT,
 	Obrisan BIT
 );
+CREATE TABLE Akcija(
+	IdAkcije INT PRIMARY KEY IDENTITY(1,1),
+	DatumPocetak DATE,
+	DatumKraj DATE,
+	Obrisan BIT
+);
+CREATE TABLE NaAkciji(
+	IdNaAkciji INT PRIMARY KEY IDENTITY(1,1),
+	IdNamestaja INT REFERENCES Namestaj(Id),
+	IdAkcije INT REFERENCES Akcija(IdAkcije),
+	Popust INT check(Popust<=100),
+	Obrisan BIT
+);
+drop table NaAkciji

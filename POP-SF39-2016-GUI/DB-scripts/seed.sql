@@ -45,3 +45,23 @@ INSERT INTO JedinicaProdaje(NamestajId,Kolicina,Obrisan)
 VALUES(4,2,0)
 INSERT INTO JedinicaProdaje(NamestajId,Kolicina,Obrisan)
 VALUES(5,2,0)
+
+INSERT INTO Akcija(DatumPocetak,DatumKraj,Obrisan)
+VALUES('1/1/2016','2/2/2017',0)
+INSERT INTO Akcija(DatumPocetak,DatumKraj,Obrisan)
+VALUES('12/2/2016','3/13/2018',0)
+INSERT INTO Akcija(DatumPocetak,DatumKraj,Obrisan)
+VALUES('4/7/2016','9/3/2017',0)
+INSERT INTO Akcija(DatumPocetak,DatumKraj,Obrisan)
+VALUES('11/11/2016','9/3/2017',0)
+
+--	IdNaAkciji INT PRIMARY KEY IDENTITY(1,1),
+--	IdNamestaja INT REFERENCES Namestaj(Id),
+--	IdAkcije INT REFERENCES Akcija(IdAkcije),
+--	Popust INT check(Popust<=100) DODAJ POPUST =>1
+INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
+VALUES(1,1,2,0)
+INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
+VALUES(2,1,5,0)
+INSERT INTO NaAkciji(IdNamestaja,IdAkcije,Popust,Obrisan)
+VALUES(4,1,30,0)

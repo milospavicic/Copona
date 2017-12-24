@@ -72,11 +72,32 @@ namespace POP_SF39_2016.model
             };
         }
         [XmlIgnore]
-        public int Kolicina
+        public string Kolicina
         {
             get
             {
-                return 1;
+                return "/";
+            }
+        }
+        public double CenaSaPdv
+        {
+            get
+            {
+                return Cena + Cena * ProdajaNamestaja.PDV;
+            }
+        }
+        public double CenaUkupno
+        {
+            get
+            {
+                return Cena;
+            }
+        }
+        public double CenaUkupnoPDV
+        {
+            get
+            {
+                return Cena + Cena * ProdajaNamestaja.PDV;
             }
         }
     }

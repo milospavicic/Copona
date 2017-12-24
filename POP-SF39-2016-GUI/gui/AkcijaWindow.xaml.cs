@@ -1,6 +1,9 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
+using POP_SF39_2016_GUI.model;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -34,7 +37,8 @@ namespace POP_SF39_2016_GUI.gui
             this.akcija = akcija;
             this.operacija = operacija;
             this.index = index;
-            
+            dgNamestaj.AutoGenerateColumns = false;
+            dgNamestaj.IsSynchronizedWithCurrentItem = true;
             PopunjavanjePolja();
         }
 
@@ -42,9 +46,9 @@ namespace POP_SF39_2016_GUI.gui
         {
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
+            dgNamestaj.ItemsSource = Projekat.Instance.Namestaji;
             tbPopust.DataContext = akcija;
-            cbNamestaj.ItemsSource = Projekat.Instance.Namestaji;
-            cbNamestaj.DataContext = akcija;
+
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -54,17 +58,32 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            if (cbNamestaj.SelectedItem == null)
+            IEnumerable list = dgNamestaj.ItemsSource as IEnumerable;
+            foreach (var row in list)
             {
-                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
-                return;
+                bool IsChecked = (bool)((CheckBox)dgNamestaj.Columns[0].GetCellContent(row)).IsChecked;
+
+                if (IsChecked)
+                {
+                    //pretvori red u namestaj, napravi novi NaAkciji,dodaj index u listu.
+                    var namestaj = (Namestaj)row;
+                    var naAkciji = new NaAkciji()
+                    {//ovde negde puca
+                        IdAkcije = Projekat.Instance.Akcija.Count + 1,
+                        IdNamestaja = namestaj.Id,
+                        Popust = int.Parse(tbPopust.Text)
+                    };
+                    NaAkcijiDAO.Create(naAkciji);
+                }
             }
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    akcija.Id = listaAkcija.Count + 1;
+                    //akcija.Id = listaAkcija.Count + 1;
                     listaAkcija.Add(akcija);
+                    akcija.Obrisan = false;
+                    AkcijaDAO.Create(akcija);
                     break;
                 case Operacija.IZMENA:
                     Projekat.Instance.Akcija[index] = akcija;
