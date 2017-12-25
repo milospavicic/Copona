@@ -89,6 +89,7 @@ namespace POP_SF39_2016_GUI.gui
                     AkcijaDAO.Update(akcija);
                     break;
             }
+
             this.Close();
             
         }
