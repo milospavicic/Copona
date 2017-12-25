@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
- Title="GlavniMeniWindow" Height="800" Width="1200" Closing="Window_Closing" ResizeMode="CanMinimize" WindowStartupLocation="CenterScreen" WindowState="Maximized">
+ Title="GlavniMeniWindow" Height="800" Width="1200" Closing="Window_Closing" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Grid>
         <!-- Osnovna mreze-->
         <Grid.ColumnDefinitions>

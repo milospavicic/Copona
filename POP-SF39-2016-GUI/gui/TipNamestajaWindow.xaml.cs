@@ -51,14 +51,12 @@ namespace POP_SF39_2016_GUI.gui
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    tipNamestaja.Id = listaTipaNamestaja.Count + 1;
                     TipNamestajaDAO.Create(tipNamestaja);
                     break;
                 case Operacija.IZMENA:
                     TipNamestajaDAO.Update(tipNamestaja);
                     break;
             }
-            //GenericSerializer.Serialize("tipnamestaja.xml", listaTipaNamestaja);
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

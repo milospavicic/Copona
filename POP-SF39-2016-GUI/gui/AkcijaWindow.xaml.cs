@@ -71,13 +71,12 @@ namespace POP_SF39_2016_GUI.gui
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    AkcijaDAO.Create(akcija);
+                    var novaAkcija = AkcijaDAO.Create(akcija);
                     foreach (var tempNamestaj in ListaNamestaja)
                     {
-
                         var naAkciji = new NaAkciji()
                         {
-                            IdAkcije = Projekat.Instance.Akcija.Count,
+                            IdAkcije = novaAkcija.Id,
                             IdNamestaja = tempNamestaj.Id,
                             Popust = int.Parse(tbPopust.Text)
                         };

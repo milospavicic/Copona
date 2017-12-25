@@ -22,6 +22,7 @@ namespace POP_SF39_2016.model
         public ObservableCollection<ProdajaNamestaja> Prodaja { get; set; }
         public ObservableCollection<JedinicaProdaje> JediniceProdaje { get; set; }
         public ObservableCollection<NaAkciji> NaAkciji { get; set; }
+        public ObservableCollection<ProdataDU> ProdateDU { get; set; }
         private Projekat()
         {
 
@@ -31,9 +32,12 @@ namespace POP_SF39_2016.model
             //Akcija = GenericSerializer.Deserialize<Akcija>("akcije.xml");
             //DodatneUsluge = GenericSerializer.Deserialize<DodatnaUsluga>("dodatneusluge.xml");
             //JedinicaProdaje = GenericSerializer.Deserialize<JedinicaProdaje>("jediniceprodaje.xml");
+            //Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
+            //Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
+            ProdateDU = ProdataDodatnaUslugaDAO.GetAll();
+            Prodaja = ProdajaDAO.GetAll();
+            Salon = SalonDAO.GetAll();
             Korisnici = KorisnikDAO.GetAll();
-            Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
-            Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
             NaAkciji = NaAkcijiDAO.GetAll();
             JediniceProdaje = JedinicaProdajeDAO.GetAll();
             Akcija = AkcijaDAO.GetAll();

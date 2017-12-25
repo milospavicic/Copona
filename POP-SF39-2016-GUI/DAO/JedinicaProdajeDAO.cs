@@ -32,6 +32,7 @@ namespace POP_SF39_2016_GUI.DAO
                 {
                     var njp = new JedinicaProdaje();
                     njp.Id = (int)row["Id"];
+                    njp.ProdajaId = int.Parse(row["ProdajaId"].ToString());
                     njp.NamestajId = int.Parse(row["NamestajId"].ToString());
                     njp.Kolicina = int.Parse(row["Kolicina"].ToString());
                     njp.Obrisan = bool.Parse(row["Obrisan"].ToString());
@@ -40,6 +41,30 @@ namespace POP_SF39_2016_GUI.DAO
                 }
             }
             return jedProdaje;
+        }
+        public static List<Namestaj> GetAllForId(int Id)
+        {
+            var listaNamestaja = new List<Namestaj>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+                cmd.CommandText = "SELECT NamestajId FROM JedinicaProdaje WHERE Obrisan=0 and ProdajaId=@ProdajaId";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
+                cmd.Parameters.AddWithValue("ProdajaId", Id);
+                da.SelectCommand = cmd;
+                da.Fill(ds, "JedinicaProdaje"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["JedinicaProdaje"].Rows)
+                {
+                    Namestaj tempNamestaj = Namestaj.GetById(int.Parse(row["NamestajId"].ToString()));
+
+                    listaNamestaja.Add(tempNamestaj);
+                }
+            }
+            return listaNamestaja;
         }
 
         public static JedinicaProdaje Create(JedinicaProdaje njp)
@@ -50,9 +75,10 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO JedinicaProdaje(NamestajId,Kolicina,Obrisan) VALUES (@NamestajId,@Kolicina,@Obrisan)";
+                cmd.CommandText = "INSERT INTO JedinicaProdaje(ProdajaId,NamestajId,Kolicina,Obrisan) VALUES (@ProdajaId,@NamestajId,@Kolicina,@Obrisan)";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 
+                cmd.Parameters.AddWithValue("ProdajaId", njp.ProdajaId);
                 cmd.Parameters.AddWithValue("NamestajId", njp.NamestajId);
                 cmd.Parameters.AddWithValue("Kolicina", njp.Kolicina);
                 cmd.Parameters.AddWithValue("Obrisan", njp.Obrisan);

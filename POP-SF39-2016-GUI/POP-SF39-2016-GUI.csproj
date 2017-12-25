@@ -61,6 +61,9 @@
     <Compile Include="DAO\KorisnikDAO.cs" />
     <Compile Include="DAO\NaAkcijiDAO.cs" />
     <Compile Include="DAO\NamestajDAO.cs" />
+    <Compile Include="DAO\ProdajaDAO.cs" />
+    <Compile Include="DAO\ProdataDodatnaUslugaDAO.cs" />
+    <Compile Include="DAO\SalonDAO.cs" />
     <Compile Include="DAO\TipNamestajaDAO.cs" />
     <Compile Include="gui\AkcijaWindow.xaml.cs">
       <DependentUpon>AkcijaWindow.xaml</DependentUpon>
@@ -93,6 +96,7 @@
     <Compile Include="model\NaAkciji.cs" />
     <Compile Include="model\Namestaj.cs" />
     <Compile Include="model\ProdajaNamestaja.cs" />
+    <Compile Include="model\ProdataDU.cs" />
     <Compile Include="model\Projekat.cs" />
     <Compile Include="model\Salon.cs" />
     <Compile Include="model\TipNamestaja.cs" />

@@ -11,11 +11,11 @@ using System.Threading.Tasks;
 
 namespace POP_SF39_2016_GUI.DAO
 {
-    class NamestajDAO
+    class ProdajaDAO
     {
-        public static ObservableCollection<Namestaj> GetAll()
+        public static ObservableCollection<ProdajaNamestaja> GetAll()
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
+            var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
@@ -23,29 +23,27 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0";
+                cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
                 da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
+                da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
 
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
                 {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
+                    var np = new ProdajaNamestaja();
+                    np.Id = (int)row["Id"];
+                    np.Kupac = row["Kupac"].ToString();
+                    np.BrRacuna = row["BrRacuna"].ToString();
+                    np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
+                    np.UkupnaCena = double.Parse(row["Cena"].ToString());
+                    np.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaNamestaja.Add(n);
+                    listaProdaja.Add(np);
                 }
             }
-            return listaNamestaja;
+            return listaProdaja;
         }
         
-        public static Namestaj Create(Namestaj nn)
+        public static ProdajaNamestaja Create(ProdajaNamestaja npn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -53,22 +51,21 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO Namestaj(TipNamestajaId,Naziv,Sifra,Kolicina,Cena,Obrisan) VALUES (@TipNamestajaId,@Naziv,@Sifra,@Kolicina,@Cena,@Obrisan)";
+                cmd.CommandText = "INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,UkupnaCena,Obrisan) VALUES (@Kupac,@BrRacuna,@DatumProdaje,@UkupnaCena,@Obrisan)";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("TipNamestajaId", nn.TipNamestajaId);
-                cmd.Parameters.AddWithValue("Naziv", nn.Naziv);
-                cmd.Parameters.AddWithValue("Sifra", nn.Sifra);
-                cmd.Parameters.AddWithValue("Kolicina", nn.BrKomada);
-                cmd.Parameters.AddWithValue("Cena", nn.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
+                cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
+                cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
+                cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
+                cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
+                cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
 
-                nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                npn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
             }
-            Projekat.Instance.Namestaji.Add(nn);
-            return nn;
+            Projekat.Instance.Prodaja.Add(npn);
+            return npn;
         }
-        
+        /**
         public static void Update(Namestaj nzu)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -110,5 +107,6 @@ namespace POP_SF39_2016_GUI.DAO
             namestaj.Obrisan = true;
             Update(namestaj);
         }
+        ***/
     }
 }

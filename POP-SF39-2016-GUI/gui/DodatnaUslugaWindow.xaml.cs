@@ -1,5 +1,6 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,14 +61,12 @@ namespace POP_SF39_2016_GUI.gui
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    dodatnaUsluga.Id = listaDodatnihUsluga.Count + 1;
-                    listaDodatnihUsluga.Add(dodatnaUsluga);
+                    DodatnaUslugaDAO.Create(dodatnaUsluga);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.DodatneUsluge[index] = dodatnaUsluga;
+                    DodatnaUslugaDAO.Update(dodatnaUsluga);
                     break;
             }
-            GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

@@ -417,10 +417,7 @@ namespace POP_SF39_2016_GUI.gui
                     MessageBoxResult tipNamestajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (tipNamestajaMessage == MessageBoxResult.Yes)
                     {
-                        foreach (TipNamestaja tipNamestaja in listaTipaNamestaja)
-                            if (tipNamestaja.Id == izabraniTipNamestaja.Id)
-                                tipNamestaja.Obrisan = true;
-                        GenericSerializer.Serialize("tipnamestaja.xml",listaTipaNamestaja);
+                        TipNamestajaDAO.Delete(izabraniTipNamestaja);
                     };
                     break;
                 case Opcija.KORISNIK:
@@ -430,10 +427,7 @@ namespace POP_SF39_2016_GUI.gui
                     MessageBoxResult korisnikMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (korisnikMessage == MessageBoxResult.Yes)
                     {
-                        foreach (Korisnik korisnik in listaKorisnika)
-                            if (korisnik.Id == izabraniKorisnik.Id)
-                                korisnik.Obrisan = true;
-                        GenericSerializer.Serialize("korisnici.xml", listaKorisnika);
+                        KorisnikDAO.Delete(izabraniKorisnik);
                     };
                     break;
                 case Opcija.AKCIJA:
@@ -443,10 +437,7 @@ namespace POP_SF39_2016_GUI.gui
                     MessageBoxResult akcijaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (akcijaMessage == MessageBoxResult.Yes)
                     {
-                        foreach (Akcija akcija in listaAkcija)
-                            if (akcija.Id == izabranaAkcija.Id)
-                                akcija.Obrisan = true;
-                        GenericSerializer.Serialize("akcije.xml", listaAkcija);
+                        AkcijaDAO.Delete(izabranaAkcija);
                     };
                     break;
                 case Opcija.DODATNAUSLUGA:
@@ -456,10 +447,7 @@ namespace POP_SF39_2016_GUI.gui
                     MessageBoxResult dodatnaUslugaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (dodatnaUslugaMessage == MessageBoxResult.Yes)
                     {
-                        foreach (DodatnaUsluga dodatnaUsluga in listaDodatnihUsluga)
-                            if (dodatnaUsluga.Id == izabranaDodatnaUsluga.Id)
-                                dodatnaUsluga.Obrisan = true;
-                        GenericSerializer.Serialize("dodatneusluge.xml", listaDodatnihUsluga);
+                        DodatnaUslugaDAO.Delete(izabranaDodatnaUsluga);
                     };
                     break;
             }

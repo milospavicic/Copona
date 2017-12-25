@@ -33,6 +33,7 @@ CREATE TABLE Korisnik(
 );
 CREATE TABLE JedinicaProdaje(
 	Id INT PRIMARY KEY IDENTITY(1,1),
+	ProdajaId INT,
 	NamestajId INT,
 	Kolicina INT,
 	Obrisan BIT
@@ -50,7 +51,31 @@ CREATE TABLE NaAkciji(
 	Popust INT check(Popust<=100),
 	Obrisan BIT
 );
-drop table NaAkciji
-
-drop table Akcija
-drop table Namestaj
+CREATE TABLE Salon(
+	  IdSalona INT PRIMARY KEY IDENTITY(1,1),
+	  Naziv VARCHAR(30),
+	  Adresa VARCHAR(60),
+	  BrojTelefona VARCHAR(30),
+	  Email VARCHAR(30),
+	  WebAdresa VARCHAR(60),
+	  BrRacuna VARCHAR(30),
+	  Pib INT,
+	  MaticniBr INT,
+	  Obrisan BIT
+);
+CREATE TABLE ProdajaNamestaja(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	Kupac VARCHAR(30),
+	BrRacuna VARCHAR(60),
+	DatumProdaje DATETIME,
+	UkupnaCena NUMERIC(9,2),
+	Obrisan BIT
+);
+CREATE TABLE ProdataDodatnaUsluga(
+	Id INT PRIMARY KEY IDENTITY(1,1),
+	ProdajaId INT,
+	DodatnaUslugaId INT,
+	Obrisan BIT
+);
+DROP TABLE ProdajaNamestaja
+DROP TABLE JedinicaProdaje

@@ -1,5 +1,6 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using POP_SF39_2016_GUI.model;
 using System;
 using System.Collections.Generic;
@@ -23,8 +24,6 @@ namespace POP_SF39_2016_GUI.gui
    
     public partial class ProdajaWindow : Window
     {
-        public ObservableCollection<JedinicaProdaje> ListaJedProdaje { get; set; } = Projekat.Instance.JediniceProdaje;
-        // lista za indexiranje jedProdaje..
         public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<object>();
         public double UkupnaCena { get; set; }
         public double UkupnaCenaSaPDV { get; set; }
@@ -146,49 +145,50 @@ namespace POP_SF39_2016_GUI.gui
                 MessageBoxResult poruka = MessageBox.Show("Korpa je prazna.", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            
-            List<int> listaJedId = new List<int>();
-            List<int> listaDUId = new List<int>();
-            var listaNamestaja = Projekat.Instance.Namestaji;
-            foreach (var item in Korpa)
+            switch (operacija)
             {
-                if (item.GetType() == typeof(JedinicaProdaje))
-                {
-                    var tempItem = (JedinicaProdaje)item;
-                    listaJedId.Add(tempItem.Id);
-                    foreach (Namestaj namestaj in listaNamestaja)
+                case Operacija.DODAVANJE:
+                    var novaProdaja = new ProdajaNamestaja
                     {
-                        if (namestaj.Id == tempItem.NamestajId)
+                        BrRacuna = tbBrojRacuna.Text,
+                        Kupac = tbKupac.Text,
+                        DatumProdaje = DateTime.Today,
+                        UkupnaCena = double.Parse(tbUkupnaCena.Text), ///////
+                        Obrisan = false
+                    };
+                    var tempProdaja = ProdajaDAO.Create(novaProdaja);
+                    var listaNamestaja = Projekat.Instance.Namestaji;
+                    foreach (var item in Korpa)
+                    {
+                        if (item.GetType() == typeof(JedinicaProdaje))
                         {
-                            namestaj.BrKomada -= tempItem.Kolicina;
+                            var tempItem = (JedinicaProdaje)item;
+                            foreach (Namestaj namestaj in listaNamestaja)
+                            {
+                                if (namestaj.Id == tempItem.NamestajId)
+                                {
+                                    namestaj.BrKomada -= tempItem.Kolicina;
+                                }
+                            }
+                            tempItem.ProdajaId = tempProdaja.Id;
+                            JedinicaProdajeDAO.Create(tempItem);
+                        }
+                        else
+                        {
+                            var tempItem = (DodatnaUsluga)item;
+                            var tempPDU = new ProdataDU
+                            {
+                                ProdajaId = tempProdaja.Id,
+                                DodatnaUslugaId = tempItem.Id,
+                                Obrisan = false
+                            };
+                        ProdataDodatnaUslugaDAO.Create(tempPDU);
                         }
                     }
-                    //Projekat.Instance.JedinicaProdaje.add(item)
-                }
-                else
-                {
-                    var tempItem = (DodatnaUsluga)item;
-                    listaDUId.Add(tempItem.Id);
-                }
-                    
+                    var listaProdaja = Projekat.Instance.Prodaja;
+                    this.Close();
+                    break;
             }
-            GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
-            var novaProdaja = new ProdajaNamestaja
-            {
-                BrRacuna = tbBrojRacuna.Text,
-                Kupac = tbKupac.Text,
-                DatumProdaje = DateTime.Today,
-                ListaJedinicaProdajeId = listaJedId,
-                DodatneUslugeId = listaDUId,
-                Id = Projekat.Instance.Prodaja.Count() + 1,
-                UkupnaCena = UkupnaCena
-            };
-            var listaProdaja = Projekat.Instance.Prodaja;
-            listaProdaja.Add(novaProdaja);
-            GenericSerializer.Serialize("prodajenamestaja.xml", listaProdaja);
-            GenericSerializer.Serialize("jediniceprodaje.xml", ListaJedProdaje);
-            this.Close(); 
-
         }
 
         private void btnDodaj_Click(object sender, RoutedEventArgs e)
@@ -221,14 +221,12 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     JedinicaProdaje jd = new JedinicaProdaje
                     {
-                        Id = ListaJedProdaje.Count() + 1,
                         NamestajId = selektovaniNamestaj.Id,
                         Kolicina = kolicina,
                     };
                     tempCena = selektovaniNamestaj.Cena * kolicina;
                     UkupnaCena += tempCena;
                     UkupnaCenaSaPDV += tempCena + tempCena * ProdajaNamestaja.PDV;
-                    ListaJedProdaje.Add(jd);
                     Korpa.Add(jd);
 
                     return;

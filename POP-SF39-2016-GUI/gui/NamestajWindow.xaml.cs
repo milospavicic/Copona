@@ -1,5 +1,6 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -45,42 +46,36 @@ namespace POP_SF39_2016_GUI.gui
         tbSifra.DataContext = namestaj;
         tbCena.DataContext = namestaj;
         tbBrojKomada.DataContext = namestaj;
-        cbTipNamestaja.DataContext = namestaj;
-            if (operacija == Operacija.DODAVANJE)
-                cbTipNamestaja.SelectedIndex = 1;
-       
+        cbTipNamestaja.DataContext = namestaj;   
     }
     private void SacuvajIzmene(object sender, RoutedEventArgs e)
     {
-            try
-            {
-                int.Parse(tbBrojKomada.Text);
-                int.Parse(tbCena.Text);
-            }
-            catch
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
-            if (cbTipNamestaja.SelectedItem == null)
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
+        try
+        {
+            int.Parse(tbBrojKomada.Text);
+            int.Parse(tbCena.Text);
+        }
+        catch
+        {
+            MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
+            return;
+        }
+        if (cbTipNamestaja.SelectedItem == null)
+        {
+            MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
+            return;
+        }
         var listaNamestaja = Projekat.Instance.Namestaji;
         switch (operacija)
         {
             case Operacija.DODAVANJE:
-                namestaj.Id = listaNamestaja.Count() + 1;
-                listaNamestaja.Add(namestaj);
+                NamestajDAO.Create(namestaj);
                 break;
                  
             case Operacija.IZMENA:
-                Projekat.Instance.Namestaji[index] = namestaj;
-                break;
-               
+                NamestajDAO.Update(namestaj);
+                break;      
         }
-        GenericSerializer.Serialize("namestaj.xml", listaNamestaja);
         this.Close();
     }
     private void ZatvoriWindow(object sender, RoutedEventArgs e)

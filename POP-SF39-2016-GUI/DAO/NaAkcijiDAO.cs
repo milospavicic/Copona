@@ -14,6 +14,7 @@ namespace POP_SF39_2016_GUI.DAO
 {
     class NaAkcijiDAO
     {
+        /***
         public static int Count()
         {
             int slIndex = 0;
@@ -35,7 +36,7 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return slIndex;
         }
-
+        ***/
         public static ObservableCollection<NaAkciji> GetAll()
         {
             var listaNaAkcija = new ObservableCollection<NaAkciji>();

@@ -13,7 +13,6 @@ namespace POP_SF39_2016_GUI.DAO
 {
     class KorisnikDAO
     {
-        
         public static ObservableCollection<Korisnik> GetAll()
         {
             var korisnici = new ObservableCollection<Korisnik>();

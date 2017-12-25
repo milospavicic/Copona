@@ -113,6 +113,7 @@ namespace POP_SF39_2016_GUI.DAO
                 if (dodatnaUsluga.Id == du.Id)
                 {
                     dodatnaUsluga.Naziv = du.Naziv;
+                    dodatnaUsluga.Cena = du.Cena;
                     dodatnaUsluga.Obrisan = du.Obrisan;
                 }
             }

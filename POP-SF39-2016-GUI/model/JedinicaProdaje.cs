@@ -13,6 +13,7 @@ namespace POP_SF39_2016_GUI.model
     {
         private int id;
         private int? namestajId;
+        private int? prodajaId;
         private bool obrisan;
         private int kolicina;
         private Namestaj namestaj;
@@ -54,6 +55,15 @@ namespace POP_SF39_2016_GUI.model
             {
                 namestajId = value;
                 OnPropertyChanged("NamestajId");
+            }
+        }
+        public int? ProdajaId
+        {
+            get { return prodajaId; }
+            set
+            {
+                prodajaId = value;
+                OnPropertyChanged("ProdajaId");
             }
         }
         public int Kolicina
