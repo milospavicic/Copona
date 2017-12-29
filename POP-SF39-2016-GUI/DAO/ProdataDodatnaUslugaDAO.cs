@@ -41,32 +41,34 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return dodatneUsluge;
         }
-        /**
-        public static TipNamestaja GetById(int Id)
+        public static ObservableCollection<ProdataDU> GetAllForId(int Id)
         {
-            var tipNamestaja = new TipNamestaja();
+            var dodatneUsluge = new ObservableCollection<ProdataDU>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Id=@Id";
-                cmd.Parameters.AddWithValue("Id", Id);
+                cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE Obrisan=0 AND ProdajaId=@ProdajaId";
+                cmd.Parameters.AddWithValue("ProdajaId", Id);
                 da.SelectCommand = cmd;
-                da.Fill(ds, "TipNamestaja"); //izvrsavanje upita
+                da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
 
-                foreach (DataRow row in ds.Tables["TipNamestaja"].Rows)
+                foreach (DataRow row in ds.Tables["ProdataDodatnaUsluga"].Rows)
                 {
-                    tipNamestaja.Id = (int)row["Id"];
-                    tipNamestaja.Naziv = row["Naziv"].ToString();
-                    tipNamestaja.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    var du = new ProdataDU();
+                    du.Id = (int)row["Id"];
+                    du.ProdajaId = (int)row["ProdajaId"];
+                    du.DodatnaUslugaId = (int)row["DodatnaUslugaId"];
+                    du.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    dodatneUsluge.Add(du);
                 }
 
             }
-            return tipNamestaja;
+            return dodatneUsluge;
         }
-        **/
         public static ProdataDU Create(ProdataDU tn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -86,6 +88,40 @@ namespace POP_SF39_2016_GUI.DAO
             }
             Projekat.Instance.ProdateDU.Add(tn);
             return tn;
+        }
+        public static void Update(ProdataDU jp)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "UPDATE ProdataDodatnaUsluga SET DodatnaUslugaId=@DodatnaUslugaId,ProdajaId=@ProdajaId,Obrisan=@Obrisan WHERE Id = @Id";
+                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                cmd.Parameters.AddWithValue("Id", jp.Id);
+                cmd.Parameters.AddWithValue("DodatnaUslugaId", jp.DodatnaUslugaId);
+                cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId);;
+                cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
+
+                cmd.ExecuteNonQuery();
+            }
+            foreach (var prodataDU in Projekat.Instance.ProdateDU)
+            {
+                if (prodataDU.Id == jp.Id)
+                {
+                    prodataDU.DodatnaUslugaId = jp.DodatnaUslugaId;
+                    prodataDU.ProdajaId = jp.ProdajaId;
+                    prodataDU.Obrisan = jp.Obrisan;
+                }
+            }
+        }
+        public static void Delete(ProdataDU du)
+        {
+            du.Obrisan = true;
+            Update(du);
         }
     }
 }

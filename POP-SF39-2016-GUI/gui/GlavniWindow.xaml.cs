@@ -1,21 +1,11 @@
 ﻿using POP_SF39_2016.model;
-using POP_SF39_2016.util;
 using POP_SF39_2016_GUI.DAO;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -46,30 +36,22 @@ namespace POP_SF39_2016_GUI.gui
 
         private bool obrisanFilter(object obj)
         {
-            try
+            switch (izabranaOpcija)
             {
-                switch (izabranaOpcija)
-                {
-                    case Opcija.NAMESTAJ:
-                        return !((Namestaj)obj).Obrisan;
-                    case Opcija.TIPNAMESTAJA:
-                        return !((TipNamestaja)obj).Obrisan;
-                    case Opcija.KORISNIK:
-                        return !((Korisnik)obj).Obrisan;
-                    case Opcija.AKCIJA:
-                        return !((Akcija)obj).Obrisan;
-                    case Opcija.DODATNAUSLUGA:
-                        return !((DodatnaUsluga)obj).Obrisan;
-                    case Opcija.PRODAJA:
-                        return !((ProdajaNamestaja)obj).Obrisan;
-                }
+                case Opcija.NAMESTAJ:
+                    return !((Namestaj)obj).Obrisan;
+                case Opcija.TIPNAMESTAJA:
+                    return !((TipNamestaja)obj).Obrisan;
+                case Opcija.KORISNIK:
+                    return !((Korisnik)obj).Obrisan;
+                case Opcija.AKCIJA:
+                    return !((Akcija)obj).Obrisan;
+                case Opcija.DODATNAUSLUGA:
+                    return !((DodatnaUsluga)obj).Obrisan;
+                case Opcija.PRODAJA:
+                    return !((ProdajaNamestaja)obj).Obrisan;
             }
-            catch
-            {
-                Console.WriteLine("PUCA PRETVARANJE>>>>>>>>>");
-            }
-
-            return false;
+        return false;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -389,6 +371,11 @@ namespace POP_SF39_2016_GUI.gui
                     var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(),Projekat.Instance.DodatneUsluge.IndexOf(novaDodatnaUsluga), DodatnaUslugaWindow.Operacija.IZMENA);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
+                case Opcija.PRODAJA:
+                    var novaProdaja = (ProdajaNamestaja)dgTabela.SelectedItem;
+                    var prodajaWindow = new ProdajaWindow((ProdajaNamestaja)novaProdaja.Clone(), Projekat.Instance.Prodaja.IndexOf(novaProdaja), ProdajaWindow.Operacija.IZMENA);
+                    prodajaWindow.ShowDialog();
+                    break;
             }
         }
         private void ObrisiItem(object sender, RoutedEventArgs e)
@@ -487,7 +474,7 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     break;
                 case Opcija.PRODAJA:
-                    if ((string)e.Column.Header == "ListaJedinicaProdajeId" || (string)e.Column.Header == "DodatneUslugeId")
+                    if ((string)e.Column.Header == "ListaJedinicaProdajeId" || (string)e.Column.Header == "DodatneUslugeId" || (string)e.Column.Header == "UkupnaCenaPdv")
                     {
                         e.Cancel = true;
                     }
@@ -512,8 +499,13 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.AKCIJA:
                     var izabranaAkcija = (Akcija)dgTabela.SelectedItem;
-                    var akcijaDetaljnijeProzor = new DetaljnijeAkcijaWindow(izabranaAkcija.Id);
+                    var akcijaDetaljnijeProzor = new DetaljnijeAkcijaWindow(izabranaAkcija);
                     akcijaDetaljnijeProzor.ShowDialog();
+                    break;
+                case Opcija.PRODAJA:
+                    var izabranaProdaja = (ProdajaNamestaja)dgTabela.SelectedItem;
+                    var prodajaDetaljnijeProzor = new DetaljnijeProdajaWindow(izabranaProdaja);
+                    prodajaDetaljnijeProzor.ShowDialog();
                     break;
             }
         }

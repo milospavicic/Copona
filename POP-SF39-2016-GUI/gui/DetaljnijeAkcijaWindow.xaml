@@ -14,7 +14,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="470*"/>
+            <RowDefinition Height="270*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
@@ -29,7 +29,7 @@
                 </Grid.RowDefinitions>
                 <Label Content="Popust" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Right" VerticalContentAlignment="Center" Margin="15"/>
                 <TextBox Name="tbPopust" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Center" VerticalContentAlignment="Center" Margin="20,20,150,20"/>
-                <DataGrid Name="dgNamestajNaAkciji" Grid.ColumnSpan="2" Grid.Row="1" AutoGeneratingColumn="PrikazivanjeKolona" />
+                <DataGrid Name="dgNamestajNaAkciji" Grid.ColumnSpan="2" Grid.Row="1" AutoGeneratingColumn="PrikazivanjeKolona" MouseDoubleClick="IgnoreDoubleclick"/>
             </Grid>
         </Border>
     </Grid>

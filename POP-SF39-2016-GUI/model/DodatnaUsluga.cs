@@ -100,5 +100,17 @@ namespace POP_SF39_2016.model
                 return Cena + Cena * ProdajaNamestaja.PDV;
             }
         }
+        public int test(int i)
+        {
+            Console.WriteLine(i);
+            return i;
+        }
+
+        public static DodatnaUsluga GetById(int Id)
+        {
+            DodatnaUsluga dodatnaUsluga = null;
+            Projekat.Instance.DodatneUsluge.ToList().ForEach(x => { if (x.Id == Id) dodatnaUsluga = x;});
+            return dodatnaUsluga;
+        }
     }
 }

@@ -34,16 +34,17 @@ namespace POP_SF39_2016.model
             //JedinicaProdaje = GenericSerializer.Deserialize<JedinicaProdaje>("jediniceprodaje.xml");
             //Salon = GenericSerializer.Deserialize<Salon>("salon.xml");
             //Prodaja = GenericSerializer.Deserialize<ProdajaNamestaja>("prodajenamestaja.xml");
+            TipoviNamestaja = TipNamestajaDAO.GetAll();
+            Namestaji = NamestajDAO.GetAll();
             ProdateDU = ProdataDodatnaUslugaDAO.GetAll();
-            Prodaja = ProdajaDAO.GetAll();
             Salon = SalonDAO.GetAll();
             Korisnici = KorisnikDAO.GetAll();
             NaAkciji = NaAkcijiDAO.GetAll();
             JediniceProdaje = JedinicaProdajeDAO.GetAll();
             Akcija = AkcijaDAO.GetAll();
             DodatneUsluge = DodatnaUslugaDAO.GetAll();
-            TipoviNamestaja = TipNamestajaDAO.GetAll();
-            Namestaji = NamestajDAO.GetAll();
+            Prodaja = ProdajaDAO.GetAll();
+
         }
 
 

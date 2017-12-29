@@ -9,7 +9,7 @@ using System.Xml.Serialization;
 
 namespace POP_SF39_2016_GUI.model
 {
-    public class JedinicaProdaje : INotifyPropertyChanged, ICloneable
+    public class JedinicaProdaje : INotifyPropertyChanged
     {
         private int id;
         private int? namestajId;
@@ -18,6 +18,8 @@ namespace POP_SF39_2016_GUI.model
         private int kolicina;
         private Namestaj namestaj;
         public event PropertyChangedEventHandler PropertyChanged;
+        private double cenaUkupno;
+        private double cenaUkupnoPdv;
 
 
 
@@ -91,13 +93,6 @@ namespace POP_SF39_2016_GUI.model
                 PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        public object Clone()
-        {
-            throw new NotImplementedException();
-        }
-
-        [XmlIgnore]
         public string Naziv
         {
             get
@@ -123,15 +118,34 @@ namespace POP_SF39_2016_GUI.model
         public double CenaUkupno
         {
             get
-            {
-                return Namestaj.Cena * Kolicina;
+            {  
+                if (cenaUkupno == 0)
+                {
+                    cenaUkupno = Namestaj.Cena * Kolicina;
+                }
+                return cenaUkupno;
             }
+            set
+            {
+                cenaUkupno = value;
+                OnPropertyChanged("CenaUkupno");
+            }
+
         }
-        public double CenaUkupnoPDV
+        public double CenaUkupnoPdv
         {
             get
             {
-                return (Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV)*Kolicina;
+                if (cenaUkupnoPdv == 0)
+                {
+                    cenaUkupnoPdv = (Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV) * Kolicina;
+                }
+                return cenaUkupnoPdv;
+            }
+            set
+            {
+                cenaUkupnoPdv = value;
+                OnPropertyChanged("CenaUkupnoPdv");
             }
         }
     }

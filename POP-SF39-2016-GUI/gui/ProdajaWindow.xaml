@@ -32,7 +32,7 @@
                             <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdajaDU_AutoGeneratingColumn" />
                         </Grid>
                     </TabItem>
-                    <TabItem Header="Podaci.." Selector.Selected="PodaciSelected">
+                    <TabItem Header="Podaci.." >
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="1*"/>
@@ -41,7 +41,7 @@
                             </Grid.RowDefinitions>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="1*"/>
-                                <ColumnDefinition Width="1*"/>
+                                <ColumnDefinition Width="4*"/>
                                 <ColumnDefinition Width="1*"/>
                             </Grid.ColumnDefinitions>
                             <Border Grid.Row="1" Grid.Column="1" Margin="5" BorderBrush="Black" BorderThickness="1" >
@@ -56,17 +56,20 @@
                                         <RowDefinition Height="1*"/>
                                         <RowDefinition Height="1*"/>
                                         <RowDefinition Height="1*"/>
+                                        <RowDefinition Height="1*"/>
                                     </Grid.RowDefinitions>
                                     <Label Content="Kupac" Grid.Column="0" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
                                     <Label Content="Broj racuna" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
                                     <Label Content="Datum kupovine" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
                                     <Label Content="Ukupna cena" Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
-                                    <TextBox Name="tbKupac" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
-                                    <TextBox Name="tbBrojRacuna" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
-                                    <TextBlock Name="tbDatum" Grid.Column="1" Grid.Row="2"  Margin="25" FontSize="14"/>
-                                    <TextBlock Name="tbUkupnaCena" Grid.Column="1" Grid.Row="3"  Margin="25" FontSize="14"/>
-                                    <Button Name="btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="4"  Margin="25" Click="btnIzadji_Click"/>
-                                    <Button Name="btnProdajFinal" Content="Prodaj" Grid.Column="0" Grid.Row="4"  Margin="25" Click="btnProdajFinal_Click"/>
+                                    <TextBox Name="tbKupac" Text="{Binding Path=Kupac}" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
+                                    <TextBox Name="tbBrojRacuna" Text="{Binding Path=BrRacuna}" Grid.Column="1" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbDatum" Text="{Binding Path=DatumProdaje}" Grid.Column="1" Grid.Row="2"  Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbUkupnaCena" Text="{Binding Path=UkupnaCena}" Grid.Column="1" Grid.Row="3"  Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbUkupnaCenaPdv" Text="{Binding Path=UkupnaCenaPdv}" Grid.Column="1" Grid.Row="4"  Margin="25" FontSize="14"/>
+                                    <TextBlock Name="tbTest" Text="{Binding Path=UkupnaCenaPdv}" Grid.Column="0" Grid.Row="4"  Margin="25" FontSize="14"/>
+                                    <Button Name="btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5"  Margin="25" Click="btnIzadji_Click"/>
+                                    <Button Name="btnProdajFinal" Content="Prodaj" Grid.Column="0" Grid.Row="5"  Margin="25" Click="btnProdajFinal_Click"/>
                                 </Grid>
                             </Border>
                         </Grid>
@@ -83,7 +86,7 @@
                         <DataGridTextColumn Header="Cena Komad + PDV" Binding="{Binding CenaSaPdv}"  MinWidth="120"/>
                         <DataGridTextColumn Header="Kolicina" Binding="{Binding Kolicina}" MinWidth="50" TextBlock.TextAlignment="Center"/>
                         <DataGridTextColumn Header="Cena Ukupno" Binding="{Binding CenaUkupno}" MinWidth="85"/>
-                        <DataGridTextColumn Header="Cena Ukupno + PDV" Binding="{Binding CenaUkupnoPDV}" MinWidth="125"/>
+                        <DataGridTextColumn Header="Cena Ukupno + PDV" Binding="{Binding CenaUkupnoPdv}" MinWidth="125"/>
                     </DataGrid.Columns>
                 </DataGrid>
             </Grid>

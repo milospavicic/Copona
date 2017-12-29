@@ -34,7 +34,7 @@ namespace POP_SF39_2016_GUI.DAO
                     np.Kupac = row["Kupac"].ToString();
                     np.BrRacuna = row["BrRacuna"].ToString();
                     np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    np.UkupnaCena = double.Parse(row["Cena"].ToString());
+                    np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
                     np.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
                     listaProdaja.Add(np);
@@ -42,7 +42,7 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return listaProdaja;
         }
-        
+
         public static ProdajaNamestaja Create(ProdajaNamestaja npn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -65,8 +65,8 @@ namespace POP_SF39_2016_GUI.DAO
             Projekat.Instance.Prodaja.Add(npn);
             return npn;
         }
-        /**
-        public static void Update(Namestaj nzu)
+        
+        public static void Update(ProdajaNamestaja npn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -75,38 +75,36 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "UPDATE Namestaj SET TipNamestajaId=@TipNamestajaId,Naziv=@Naziv,Sifra=@Sifra,Kolicina=@Kolicina,Cena=@Cena,Obrisan=@Obrisan WHERE Id = @Id";
+                cmd.CommandText = "UPDATE ProdajaNamestaja SET Kupac=@Kupac,BrRacuna=@BrRacuna,DatumProdaje=@DatumProdaje,UkupnaCena=@UkupnaCena,Obrisan=@Obrisan WHERE Id = @Id";
                 cmd.CommandText += " SELECT SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("Id", nzu.Id);
-                cmd.Parameters.AddWithValue("TipNamestajaId", nzu.TipNamestajaId);
-                cmd.Parameters.AddWithValue("Naziv", nzu.Naziv);
-                cmd.Parameters.AddWithValue("Sifra", nzu.Sifra);
-                cmd.Parameters.AddWithValue("Kolicina", nzu.BrKomada);
-                cmd.Parameters.AddWithValue("Cena", nzu.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", nzu.Obrisan);
+                cmd.Parameters.AddWithValue("Id", npn.Id);
+                cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
+                cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
+                cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
+                cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
+                cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
 
                 cmd.ExecuteNonQuery();
             }
-            foreach (var namestaj in Projekat.Instance.Namestaji)
+            foreach (var prodaja in Projekat.Instance.Prodaja)
             {
-                if (namestaj.Id == nzu.Id)
+                if (prodaja.Id == npn.Id)
                 {
-                    namestaj.TipNamestajaId = nzu.TipNamestajaId;
-                    namestaj.Naziv = nzu.Naziv;
-                    namestaj.Sifra = nzu.Sifra;
-                    namestaj.Cena = nzu.Cena;
-                    namestaj.BrKomada = nzu.BrKomada;
-                    namestaj.Obrisan = nzu.Obrisan;
+                    prodaja.Kupac = npn.Kupac;
+                    prodaja.BrRacuna = npn.BrRacuna;
+                    prodaja.DatumProdaje = npn.DatumProdaje;
+                    prodaja.UkupnaCena = npn.UkupnaCena;
+                    prodaja.Obrisan = npn.Obrisan;
                 }
             }
         }
 
-        public static void Delete(Namestaj namestaj)
+        public static void Delete(ProdajaNamestaja prodaja)
         {
-            namestaj.Obrisan = true;
-            Update(namestaj);
+            prodaja.Obrisan = true;
+            Update(prodaja);
         }
-        ***/
+        
     }
 }

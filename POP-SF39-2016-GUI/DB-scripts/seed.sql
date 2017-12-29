@@ -65,10 +65,10 @@ VALUES(4,1,30,0)
 INSERT INTO Salon(Naziv,Adresa,BrojTelefona,Email,WebAdresa,BrRacuna,Pib,MaticniBr,Obrisan)
 VALUES('Moj Salon','Kralja Petra II, br 41','060-553/2313','example@mojsalon.com','www.mojsalon.com','58267581764',123456789,987654321,0)
 ----------------------------------------------------------
-INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,Obrisan)
-VALUES('Zoran','12131415','2017/12/25',0)
-INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,Obrisan)
-VALUES('Goran','51413121','2017/12/24',0)
+INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,UkupnaCena,Obrisan)
+VALUES('Zoran','12131415','2017/12/25',50000,0)
+INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,UkupnaCena,Obrisan)
+VALUES('Goran','51413121','2017/12/24',50000,0)
 ----------------------------------------------------------
 INSERT INTO ProdataDodatnaUsluga(ProdajaId,DodatnaUslugaId,Obrisan)
 VALUES(1,1,0)
@@ -83,3 +83,5 @@ SELECT DISTINCT POPUST FROM NaAkciji WHERE Obrisan = 0 AND IdAkcije = 1;
 UPDATE NaAkciji SET Popust = 15 WHERE Obrisan = 0 and IdAkcije = 1
 DELETE FROM NaAkciji
 DROP TABLE NaAkciji
+
+SELECT * FROM Namestaj WHERE Id not in (SELECT IdNamestaja FROM NaAkciji WHERE obrisan=0)

@@ -71,6 +71,9 @@
     <Compile Include="gui\DetaljnijeAkcijaWindow.xaml.cs">
       <DependentUpon>DetaljnijeAkcijaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="gui\DetaljnijeProdajaWindow.xaml.cs">
+      <DependentUpon>DetaljnijeProdajaWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="gui\DodatnaUslugaWindow.xaml.cs">
       <DependentUpon>DodatnaUslugaWindow.xaml</DependentUpon>
     </Compile>
@@ -106,6 +109,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="gui\DetaljnijeAkcijaWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="gui\DetaljnijeProdajaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

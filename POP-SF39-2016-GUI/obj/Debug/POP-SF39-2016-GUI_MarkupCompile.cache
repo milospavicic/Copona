@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\
 POP_SF39_2016_GUI
 none
 false
 DEBUG;TRACE
-D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\App.xaml
-9-2103098003
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\App.xaml
+101071552228
 21555011357
-35842229840
+36-1082725294
 14-799888181
-gui\AkcijaWindow.xaml;gui\DetaljnijeAkcijaWindow.xaml;gui\DodatnaUslugaWindow.xaml;gui\GlavniWindow.xaml;gui\KorisnikWindow.xaml;gui\NamestajWindow.xaml;gui\ProdajaWindow.xaml;gui\TipNamestajaWindow.xaml;MainWindow.xaml;
+gui\AkcijaWindow.xaml;gui\DetaljnijeAkcijaWindow.xaml;gui\DetaljnijeProdajaWindow.xaml;gui\DodatnaUslugaWindow.xaml;gui\GlavniWindow.xaml;gui\KorisnikWindow.xaml;gui\NamestajWindow.xaml;gui\ProdajaWindow.xaml;gui\TipNamestajaWindow.xaml;MainWindow.xaml;
 
 False
 

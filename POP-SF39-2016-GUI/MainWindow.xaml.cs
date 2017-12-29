@@ -30,6 +30,14 @@ namespace POP_SF39_2016_GUI
         public MainWindow()
         {
             InitializeComponent();
+            /***
+            var tempList = NamestajDAO.GetAllNamestajNotOnAction().ToList();
+            tempList.ForEach(Console.WriteLine);
+            var temp = NaAkcijiDAO.GetForNamestajId(1005);
+            temp.Obrisan = false;
+            NaAkcijiDAO.Update(temp);
+            Console.WriteLine(temp.IdNaAkciji);
+            ***/
             //List<Namestaj> listaId = NaAkcijiDAO.GetAllNamestajForActionId(1);
             //listaId.ForEach(Console.WriteLine);
             /***

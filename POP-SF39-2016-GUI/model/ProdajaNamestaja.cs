@@ -20,6 +20,8 @@ namespace POP_SF39_2016.model
         private string brRacuna;
         private List<int> dodatneUslugeId;
         private double ukupnaCena;
+        private double ukupnaCenaPdv;
+
         public event PropertyChangedEventHandler PropertyChanged;
         public int Id
         {
@@ -86,6 +88,16 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("UkupnaCena");
             }
         }
+        public double UkupnaCenaPdv
+        {
+            get { return ukupnaCenaPdv; }
+            set
+            {
+                ukupnaCenaPdv = value;
+                OnPropertyChanged("UkupnaCenaPdv");
+            }
+        }
+    
 
         public bool Obrisan
         {

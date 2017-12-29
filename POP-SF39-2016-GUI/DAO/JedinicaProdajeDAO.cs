@@ -42,16 +42,16 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return jedProdaje;
         }
-        public static List<Namestaj> GetAllForId(int Id)
+        public static ObservableCollection<JedinicaProdaje> GetAllForId(int Id)
         {
-            var listaNamestaja = new List<Namestaj>();
+            var listaJedinicaProdaje = new ObservableCollection<JedinicaProdaje>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT NamestajId FROM JedinicaProdaje WHERE Obrisan=0 and ProdajaId=@ProdajaId";
+                cmd.CommandText = "SELECT * FROM JedinicaProdaje WHERE Obrisan=0 and ProdajaId=@ProdajaId";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
                 cmd.Parameters.AddWithValue("ProdajaId", Id);
                 da.SelectCommand = cmd;
@@ -59,12 +59,17 @@ namespace POP_SF39_2016_GUI.DAO
 
                 foreach (DataRow row in ds.Tables["JedinicaProdaje"].Rows)
                 {
-                    Namestaj tempNamestaj = Namestaj.GetById(int.Parse(row["NamestajId"].ToString()));
+                    var njp = new JedinicaProdaje();
+                    njp.Id = (int)row["Id"];
+                    njp.ProdajaId = int.Parse(row["ProdajaId"].ToString());
+                    njp.NamestajId = int.Parse(row["NamestajId"].ToString());
+                    njp.Kolicina = int.Parse(row["Kolicina"].ToString());
+                    njp.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    listaNamestaja.Add(tempNamestaj);
+                    listaJedinicaProdaje.Add(njp);
                 }
             }
-            return listaNamestaja;
+            return listaJedinicaProdaje;
         }
 
         public static JedinicaProdaje Create(JedinicaProdaje njp)
@@ -87,6 +92,42 @@ namespace POP_SF39_2016_GUI.DAO
             }
             Projekat.Instance.JediniceProdaje.Add(njp);
             return njp;
+        }
+        public static void Update(JedinicaProdaje jp)
+        {
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                con.Open();
+                SqlCommand cmd = con.CreateCommand();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "UPDATE JedinicaProdaje SET NamestajId=@NamestajId,ProdajaId=@ProdajaId,Kolicina=@Kolicina,Obrisan=@Obrisan WHERE Id = @Id";
+                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                cmd.Parameters.AddWithValue("Id", jp.Id);
+                cmd.Parameters.AddWithValue("NamestajId", jp.NamestajId);
+                cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId);
+                cmd.Parameters.AddWithValue("Kolicina", jp.Kolicina);
+                cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
+
+                cmd.ExecuteNonQuery();
+            }
+            foreach (var jedinicaProdaje in Projekat.Instance.JediniceProdaje)
+            {
+                if (jedinicaProdaje.Id == jp.Id)
+                {
+                    jedinicaProdaje.NamestajId = jp.NamestajId;
+                    jedinicaProdaje.ProdajaId = jp.ProdajaId;
+                    jedinicaProdaje.Kolicina = jp.Kolicina;
+                    jedinicaProdaje.Obrisan = jp.Obrisan;
+                }
+            }
+        }
+        public static void Delete(JedinicaProdaje jp)
+        {
+            jp.Obrisan = true;
+            Update(jp);
         }
     }
 }

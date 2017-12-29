@@ -44,7 +44,40 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return listaNamestaja;
         }
-        
+
+        public static Namestaj GetById(int Id)
+        {
+            var namestaj = new Namestaj();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0 AND Id = @Id";
+                cmd.Parameters.AddWithValue("Id", Id);
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                {
+                    var n = new Namestaj();
+                    n.Id = (int)row["Id"];
+                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                    n.Naziv = row["Naziv"].ToString();
+                    n.Sifra = row["Sifra"].ToString();
+                    n.Cena = double.Parse(row["Cena"].ToString());
+                    n.BrKomada = (int)row["Kolicina"];
+
+                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    namestaj = n;
+                }
+            }
+            return namestaj;
+        }
+
         public static Namestaj Create(Namestaj nn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -109,6 +142,32 @@ namespace POP_SF39_2016_GUI.DAO
         {
             namestaj.Obrisan = true;
             Update(namestaj);
+        }
+
+        public static ObservableCollection<Namestaj> GetAllNamestajNotOnAction()
+        {
+            var listaNamestaja = new ObservableCollection<Namestaj>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT Id FROM Namestaj WHERE Id not in (SELECT IdNamestaja FROM NaAkciji WHERE obrisan=0)";
+                cmd.CommandText += " Select SCOPE_IDENTITY();";
+
+                da.SelectCommand = cmd;
+
+                da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                {
+                    var tempNamestaj = Namestaj.GetById((int)row["Id"]);
+                    listaNamestaja.Add(tempNamestaj);
+                }
+            }
+            return listaNamestaja;
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using POP_SF39_2016_GUI.DAO;
+﻿using POP_SF39_2016.model;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,13 +21,12 @@ namespace POP_SF39_2016_GUI.gui
     /// </summary>
     public partial class DetaljnijeAkcijaWindow : Window
     {
-        int idAkcije;
-        public DetaljnijeAkcijaWindow(int idAkcije)
+        private Akcija trenutnaAkcija;
+        public DetaljnijeAkcijaWindow(Akcija trenutnaAkcija)
         {
             InitializeComponent();
-            this.idAkcije = idAkcije;
+            this.trenutnaAkcija = trenutnaAkcija;
             tbPopust.IsReadOnly = true;
-            dgNamestajNaAkciji.IsHitTestVisible = false;
             dgNamestajNaAkciji.IsReadOnly = true;
             dgNamestajNaAkciji.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             PopunjavanjePolja();
@@ -36,8 +36,8 @@ namespace POP_SF39_2016_GUI.gui
         private void PopunjavanjePolja()
         {
 
-            tbPopust.Text = NaAkcijiDAO.GetPopust(idAkcije).ToString();
-            dgNamestajNaAkciji.ItemsSource = NaAkcijiDAO.GetAllNamestajForActionId(idAkcije);
+            tbPopust.Text = NaAkcijiDAO.GetPopust(trenutnaAkcija.Id).ToString();
+            dgNamestajNaAkciji.ItemsSource = NaAkcijiDAO.GetAllNamestajForActionId(trenutnaAkcija.Id);
 
         }
 
@@ -47,6 +47,10 @@ namespace POP_SF39_2016_GUI.gui
             {
                 e.Cancel = true;
             }
+        }
+        private void IgnoreDoubleclick(object sender, MouseButtonEventArgs e)
+        {
+            return;
         }
     }
 }
