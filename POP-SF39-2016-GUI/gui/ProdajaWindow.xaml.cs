@@ -24,7 +24,7 @@ namespace POP_SF39_2016_GUI.gui
    
     public partial class ProdajaWindow : Window
     {
-        public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<Object>();
+        public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<Object>();   
         ICollectionView view;
         public enum Operacija
         {
@@ -294,6 +294,13 @@ namespace POP_SF39_2016_GUI.gui
                             var tempJP = (JedinicaProdaje)item;
                             if (tempJP.NamestajId == ((Namestaj)dgProdajaN.SelectedItem).Id)
                             {
+                                if(kolicina + tempJP.Kolicina > selektovaniNamestaj.BrKomada)
+                                {
+                                    {
+                                        MessageBoxResult poruka = MessageBox.Show("Nema dovoljno komada!", "Upozorenje", MessageBoxButton.OK);
+                                        return;
+                                    }
+                                }
                                 tempJP.Kolicina += kolicina;
                                 var tempCenaJP = tempJP.Kolicina * tempJP.Cena;
                                 tempJP.CenaUkupno = tempCenaJP;

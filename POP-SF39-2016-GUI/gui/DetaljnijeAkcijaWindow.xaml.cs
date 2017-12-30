@@ -26,7 +26,8 @@ namespace POP_SF39_2016_GUI.gui
         {
             InitializeComponent();
             this.trenutnaAkcija = trenutnaAkcija;
-            tbPopust.IsReadOnly = true;
+            tbPocetniDatum.DataContext = trenutnaAkcija;
+            tbKrajnjiDatum.DataContext = trenutnaAkcija;
             dgNamestajNaAkciji.IsReadOnly = true;
             dgNamestajNaAkciji.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             PopunjavanjePolja();
@@ -35,22 +36,32 @@ namespace POP_SF39_2016_GUI.gui
 
         private void PopunjavanjePolja()
         {
-
-            tbPopust.Text = NaAkcijiDAO.GetPopust(trenutnaAkcija.Id).ToString();
-            dgNamestajNaAkciji.ItemsSource = NaAkcijiDAO.GetAllNamestajForActionId(trenutnaAkcija.Id);
-
+            dgNamestajNaAkciji.ItemsSource = NaAkcijiDAO.GetAllNAForActionId(trenutnaAkcija.Id);
         }
 
         private void PrikazivanjeKolona(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
-            if ((string)e.Column.Header == "Id" || (string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv")
+            if ((string)e.Column.Header == "IdNaAkciji" || (string)e.Column.Header == "IdNamestaja" || (string)e.Column.Header == "IdAkcije" || (string)e.Column.Header == "Obrisan")
             {
                 e.Cancel = true;
+            }
+            if ((string)e.Column.Header == "Popust")
+            {
+                e.Column.Width = 50;
+            }
+            if ((string)e.Column.Header == "Cena")
+            {
+                e.Column.Width = 70;
             }
         }
         private void IgnoreDoubleclick(object sender, MouseButtonEventArgs e)
         {
             return;
+        }
+
+        private void Indexiranje(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex()).ToString();
         }
     }
 }

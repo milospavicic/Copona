@@ -54,7 +54,6 @@ namespace POP_SF39_2016_GUI.DAO
                 cmd.Parameters.AddWithValue("DatumPocetak", nn.PocetakAkcije);
                 cmd.Parameters.AddWithValue("DatumKraj", nn.KrajAkcije);
                 cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
-                Console.WriteLine(cmd);
 
                 nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
             }

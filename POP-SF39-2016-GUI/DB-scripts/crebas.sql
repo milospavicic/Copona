@@ -48,7 +48,7 @@ CREATE TABLE NaAkciji(
 	IdNaAkciji INT PRIMARY KEY IDENTITY(1,1),
 	IdNamestaja INT REFERENCES Namestaj(Id),
 	IdAkcije INT REFERENCES Akcija(IdAkcije),
-	Popust INT check(Popust<=100),
+	Popust INT check(Popust<100 AND Popust>0),
 	Obrisan BIT
 );
 CREATE TABLE Salon(
@@ -77,5 +77,6 @@ CREATE TABLE ProdataDodatnaUsluga(
 	DodatnaUslugaId INT,
 	Obrisan BIT
 );
-DROP TABLE ProdajaNamestaja
-DROP TABLE JedinicaProdaje
+DROP TABLE Akcija
+DROP TABLE NaAkciji
+DROP TABLE Namestaj

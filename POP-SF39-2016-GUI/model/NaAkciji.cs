@@ -12,8 +12,18 @@ namespace POP_SF39_2016_GUI.model
         public int IdNaAkciji { get; set; }
         public int IdAkcije { get; set; }
         public int IdNamestaja { get; set; }
-        public int Popust { get; set; }
         public bool Obrisan { get; set; }
         public string Naziv { get {return NamestajDAO.GetById(IdNamestaja).Naziv; }}
+        public string Sifra { get { return NamestajDAO.GetById(IdNamestaja).Sifra; } }
+        public double Cena { get { return NamestajDAO.GetById(IdNamestaja).Cena; } }
+        public int Popust { get; set; }
+        public double CenaSaPopustom
+        {
+            get
+            {
+                var tempCena = Cena;
+                return tempCena - (tempCena*Popust)/100;
+            }
+        }
     }
 }

@@ -1,0 +1,40 @@
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.UnesiPopustWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        mc:Ignorable="d"
+        Title="Unos popusta %." Height="150" Width="305" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="5*"/>
+            <ColumnDefinition Width="140*"/>
+            <ColumnDefinition Width="5*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="270*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="5*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="70*"/>
+                    <ColumnDefinition Width="5*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="70*"/>
+                    <RowDefinition Height="125*"/>
+                    <RowDefinition Height="125*"/>
+                </Grid.RowDefinitions>
+                <TextBlock Text="Molimo vas unesite popust za izabrani namestaj." Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="0" VerticalAlignment="Bottom" />
+                <TextBox Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="3" Margin="70,5,70,5" Name="tbPopust" Text="{Binding Path=PopustNamestaja}" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+                <Button Content="Unesi" Grid.Column="1" Grid.Row="2" Margin="35,10,20,10" Click="UnetiPopust" />
+                <Button Content="Izadji" Grid.Column="2" Grid.Row="2" Margin="20,10,35,10" Click="Izadji"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

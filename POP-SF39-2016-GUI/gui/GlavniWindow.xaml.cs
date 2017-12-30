@@ -32,6 +32,7 @@ namespace POP_SF39_2016_GUI.gui
             dgTabela.IsSynchronizedWithCurrentItem = true;
             dgTabela.IsReadOnly = true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
+            dgTabela.CanUserSortColumns = false;
         }
 
         private bool obrisanFilter(object obj)

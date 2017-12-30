@@ -120,9 +120,9 @@ namespace POP_SF39_2016_GUI.DAO
             na.Obrisan = true;
             Update(na);
         }
-        public static ObservableCollection<Namestaj> GetAllNamestajForActionId(int IdAkcije)
+        public static ObservableCollection<NaAkciji> GetAllNAForActionId(int IdAkcije)
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
+            var listaNaAkcija = new ObservableCollection<NaAkciji>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
                 SqlCommand cmd = con.CreateCommand();
@@ -130,7 +130,7 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "SELECT IdNamestaja FROM NaAkciji WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
+                cmd.CommandText = "SELECT * FROM NaAkciji WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("IdAkcije", IdAkcije);
@@ -141,14 +141,19 @@ namespace POP_SF39_2016_GUI.DAO
 
                 foreach (DataRow row in ds.Tables["NaAkciji"].Rows)
                 {
-                    var tempNamestaj =  Namestaj.GetById((int)row["IdNamestaja"]);
-                    listaNamestaja.Add(tempNamestaj);
+                    var a = new NaAkciji();
+                    a.IdAkcije = (int)row["IdAkcije"];
+                    a.IdNaAkciji = (int)row["IdNaAkciji"];
+                    a.IdNamestaja = (int)row["IdNamestaja"];
+                    a.Popust = (int)row["Popust"];
+
+                    listaNaAkcija.Add(a);
                 }
             }
-            return listaNamestaja;
+            return listaNaAkcija;
         }
 
-        public static int GetPopust(int IdAkcije)
+        public static int GetPopustForId(int IdNamestaja)
         {
             int popust = 0;
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -158,10 +163,10 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "SELECT DISTINCT POPUST FROM NaAkciji WHERE Obrisan = 0 and IdAkcije = @IdAkcije";
+                cmd.CommandText = "SELECT POPUST FROM NaAkciji WHERE Obrisan = 0 and IdNamestaja = @IdNamestaja";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("IdAkcije", IdAkcije);
+                cmd.Parameters.AddWithValue("IdNamestaja", IdNamestaja);
 
                 da.SelectCommand = cmd;
 

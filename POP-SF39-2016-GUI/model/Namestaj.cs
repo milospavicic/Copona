@@ -1,4 +1,5 @@
-﻿using System;
+﻿using POP_SF39_2016_GUI.DAO;
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -23,6 +24,7 @@ namespace POP_SF39_2016.model
         private bool obrisan;
         private TipNamestaja tipNamestaja;
         public event PropertyChangedEventHandler PropertyChanged;
+        bool naAkciji;
 
         public string Naziv
         {
@@ -64,7 +66,17 @@ namespace POP_SF39_2016.model
 
         public double Cena
         {
-            get { return cena; }
+            get
+            {
+                //FOR NAMESTAJ GET POPUST 
+                var tempPopust = NaAkcijiDAO.GetPopustForId(Id);
+                if (tempPopust != 0 && naAkciji!=true)
+                {
+                    cena = cena - ((cena * tempPopust)) / 100;
+                    naAkciji = true;
+                }
+                return cena;
+            }
             set
             {
                 cena = value;

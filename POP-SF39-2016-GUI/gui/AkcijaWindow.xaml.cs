@@ -27,14 +27,13 @@ namespace POP_SF39_2016_GUI.gui
             DODAVANJE,
             IZMENA
         };
-        public ObservableCollection<Namestaj> ListaNamestaja { get; set; } = new ObservableCollection<Namestaj>();
-        public ObservableCollection<Namestaj> ListaNaAkciji { get; set; } = new ObservableCollection<Namestaj>();
-        public ObservableCollection<NaAkciji> ListaNA { get; set; } = new ObservableCollection<NaAkciji>();
+        public ObservableCollection<Namestaj> ListaNamestajaZaDG1 { get; set; } = new ObservableCollection<Namestaj>();
+        public ObservableCollection<NaAkciji> ListaNAZaDG2 { get; set; } = new ObservableCollection<NaAkciji>();
 
         private Akcija akcija;
         private Operacija operacija;
         private int index;
-        private int popustNA;
+        private int PopustNamestaja { get; set; }
 
         public AkcijaWindow(Akcija akcija, int index, Operacija operacija)
         {
@@ -51,84 +50,62 @@ namespace POP_SF39_2016_GUI.gui
         {
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
-            ListaNamestaja = NamestajDAO.GetAllNamestajNotOnAction();
-            if (operacija == Operacija.DODAVANJE)
+            ListaNamestajaZaDG1 = NamestajDAO.GetAllNamestajNotOnAction();
+
+            if (operacija == Operacija.IZMENA)
             {
-                
-                dgNamestaj.ItemsSource = ListaNamestaja;
-                dgZaAkciju.ItemsSource = ListaNA;
-            } 
-            else
-            {
-                tbPopust.Text = NaAkcijiDAO.GetPopust(akcija.Id).ToString();
-                ListaNaAkciji = NaAkcijiDAO.GetAllNamestajForActionId(akcija.Id);
-                dgNamestaj.ItemsSource = ListaNamestaja;
-                dgZaAkciju.ItemsSource = ListaNaAkciji;
-                //dgZaAkciju.IsHitTestVisible = false;
+                ListaNAZaDG2 = NaAkcijiDAO.GetAllNAForActionId(akcija.Id);
                 dgZaAkciju.IsReadOnly = true;
-                dgZaAkciju.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
-                dpPocetniDatum.IsHitTestVisible = false;
-                
+                dpPocetniDatum.IsHitTestVisible = false; 
             }
+            dgNamestaj.ItemsSource = ListaNamestajaZaDG1;
+            dgZaAkciju.ItemsSource = ListaNAZaDG2;
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-            if (dpPocetniDatum.DisplayDate > dpKrajnjiDatum.DisplayDate)
-            {
-                MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
                     var novaAkcija = AkcijaDAO.Create(akcija);
-                    foreach (var tempNamestaj in ListaNaAkciji)
+                    foreach (var tempNaZaCreate in ListaNAZaDG2)
                     {
-                        var naAkciji = new NaAkciji()
-                        {
-                            IdAkcije = novaAkcija.Id,
-                            IdNamestaja = tempNamestaj.Id,
-                            Popust = int.Parse(tbPopust.Text)
-                        };
-                        NaAkcijiDAO.Create(naAkciji);
+                        tempNaZaCreate.IdAkcije = novaAkcija.Id;
+                        NaAkcijiDAO.Create(tempNaZaCreate);
                     }
                     break;
                 case Operacija.IZMENA:
-                    NaAkcijiDAO.SetPopust(akcija.Id, int.Parse(tbPopust.Text));
                     AkcijaDAO.Update(akcija);
-                    var ListaZaBrisanje = NaAkcijiDAO.GetAllNamestajForActionId(akcija.Id);
-                    foreach (Namestaj tempNamestaj in ListaNaAkciji)
+                    var listaNaZaBrisanje = NaAkcijiDAO.GetAllNAForActionId(akcija.Id);
+                    foreach (var tempNaZaCreate in ListaNAZaDG2)
                     {
                         bool postoji = false;
-                        foreach(Namestaj tempN in NaAkcijiDAO.GetAllNamestajForActionId(akcija.Id))
+                        foreach(var tempN in NaAkcijiDAO.GetAllNAForActionId(akcija.Id))
                         {
-                            if(tempN.Id == tempNamestaj.Id)
+                            if(tempNaZaCreate.IdNamestaja == tempN.IdNamestaja)
                             {
                                 postoji = true;
-                                ListaZaBrisanje.Remove(tempN);
+                                if (tempNaZaCreate.Popust != tempN.Popust)
+                                {
+                                    NaAkcijiDAO.Update(tempNaZaCreate);
+                                }
+                                listaNaZaBrisanje.ToList().ForEach(x => { if (x.IdNamestaja == tempNaZaCreate.IdNamestaja) listaNaZaBrisanje.Remove(x); });
+                                
+
                                 break;
                             }
                         }
                         if (postoji == false)
                         {
-                            
-                            var naAkciji = new NaAkciji()
-                            {
-                                IdAkcije = akcija.Id,
-                                IdNamestaja = tempNamestaj.Id,
-                                Popust = int.Parse(tbPopust.Text)
-                            };
-                            NaAkcijiDAO.Create(naAkciji);
+                            tempNaZaCreate.IdAkcije = akcija.Id;
+                            NaAkcijiDAO.Create(tempNaZaCreate);
                         }
                     }
-                    foreach (Namestaj tempN in ListaZaBrisanje)
+                    foreach (var tempNA in listaNaZaBrisanje)
                     {
-                        var tempNaAkciji = NaAkcijiDAO.GetForNamestajId(tempN.Id);
-                        NaAkcijiDAO.Delete(tempNaAkciji);
+                        NaAkcijiDAO.Delete(tempNA);
                     }
-
                     break;
             }
 
@@ -140,51 +117,40 @@ namespace POP_SF39_2016_GUI.gui
             this.Close();
         }
 
-        private void DodajUListu(object sender, RoutedEventArgs e)
+        private void DodajAkciju(object sender, RoutedEventArgs e)
         {
-            if (popustNA>=1 && popustNA<=99)
+            var unesiPopust = new UnesiPopustWindow();
+            unesiPopust.ShowDialog();
+
+            if (unesiPopust.DialogResult == true)
             {
                 var tempNaAkciji = new NaAkciji
                 {
                     IdNamestaja = ((Namestaj)dgNamestaj.SelectedItem).Id,
-                    Popust = popustNA,
+                    Popust = unesiPopust.PopustNamestaja,
                 };
-                ListaNA.Add(tempNaAkciji);
+                ListaNAZaDG2.Add(tempNaAkciji);
+
+                ListaNamestajaZaDG1.Remove((Namestaj)dgNamestaj.SelectedItem);
             }
-            else
-            {
-                MessageBoxResult poruka = MessageBox.Show("'Popust' polje mora biti popunjeno.", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
-            //ListaNaAkciji.Add((Namestaj)dgNamestaj.SelectedItem);
-            ListaNamestaja.Remove((Namestaj)dgNamestaj.SelectedItem);
-            popustNA = 0;
         }
 
         private void IzbaciIzAkcije(object sender, RoutedEventArgs e)
         {
             var tempNA = (NaAkciji)dgZaAkciju.SelectedItem;
-            ListaNA.Remove(tempNA);
+            ListaNAZaDG2.Remove(tempNA);
             var tempN = NamestajDAO.GetById(tempNA.IdNamestaja);
-            ListaNamestaja.Add(tempN);
+            ListaNamestajaZaDG1.Add(tempN);
         }
 
-        private void PopustProcenat(object sender, RoutedEventArgs e)
+        private void DatumProvera(object sender, SelectionChangedEventArgs e)
         {
-
-            var tb = (TextBox)sender;
-            Console.WriteLine(tb.Text);
-            try { popustNA = int.Parse(tb.Text); } catch { popustNA=0;}
-            
-            //DataGridRow row = dgNamestaj.ItemContainerGenerator.ContainerFromIndex
-            //    (dgNamestaj.SelectedIndex) as DataGridRow;
-            //var i = 5; /// Specify your column index here.
-            ////EDIT
-            //TextBox ele = ((ContentPresenter)(dgNamestaj.Columns[i].GetCellContent(row))).Content as TextBox;
-            //Console.WriteLine(ele.Text);
-
-            //Console.WriteLine(((Namestaj)dgNamestaj.SelectedItem).);
+            if (akcija.PocetakAkcije > akcija.KrajAkcije)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
+                akcija.KrajAkcije = akcija.PocetakAkcije;
+                return;
+            }
         }
-        
     }
 }

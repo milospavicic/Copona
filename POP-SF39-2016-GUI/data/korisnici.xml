@@ -24,15 +24,6 @@
     <Prezime>Jovanovic</Prezime>
     <KorisnickoIme>321</KorisnickoIme>
     <Lozinka>321</Lozinka>
-    <TipKorisnika>Administrator</TipKorisnika>
-    <Obrisan>false</Obrisan>
-  </Korisnik>
-  <Korisnik>
-    <Id>4</Id>
-    <Ime>dad</Ime>
-    <Prezime>ada</Prezime>
-    <KorisnickoIme>4114</KorisnickoIme>
-    <Lozinka>1441</Lozinka>
     <TipKorisnika>Prodavac</TipKorisnika>
     <Obrisan>false</Obrisan>
   </Korisnik>

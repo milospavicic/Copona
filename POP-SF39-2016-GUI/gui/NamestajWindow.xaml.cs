@@ -43,7 +43,6 @@ namespace POP_SF39_2016_GUI.gui
     {
         cbTipNamestaja.ItemsSource = Projekat.Instance.TipoviNamestaja;
         tbNaziv.DataContext = namestaj;
-        tbSifra.DataContext = namestaj;
         tbCena.DataContext = namestaj;
         tbBrojKomada.DataContext = namestaj;
         cbTipNamestaja.DataContext = namestaj;   
@@ -65,10 +64,12 @@ namespace POP_SF39_2016_GUI.gui
             MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
             return;
         }
-        var listaNamestaja = Projekat.Instance.Namestaji;
         switch (operacija)
         {
             case Operacija.DODAVANJE:
+                    string sifraNamestaja = "";
+                    sifraNamestaja += namestaj.Naziv.Substring(0,2) + new Random().Next(1, 100) + namestaj.TipNamestaja.Naziv.Substring(0,2);
+                    namestaj.Sifra = sifraNamestaja.ToUpper();
                 NamestajDAO.Create(namestaj);
                 break;
                  

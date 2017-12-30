@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="AkcijaWindow" Height="600" Width="500">
+        Title="AkcijaWindow" Height="600" Width="500" WindowStartupLocation="CenterScreen" ResizeMode="NoResize">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -27,56 +27,54 @@
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="0.5*"/>
-                    <RowDefinition Height="0.5*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="2*"/>
                     <RowDefinition Height="0.5*"/>
                 </Grid.RowDefinitions>
                 <Label Content="Pocetni datum:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
                 <Label Content="Krajni datum:" Grid.Column="2" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <Label Content="Popust:" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                <DatePicker SelectedDate="{Binding Path=PocetakAkcije}" Name="dpPocetniDatum" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                <DatePicker SelectedDate="{Binding Path=KrajAkcije}" Name="dpKrajnjiDatum" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" />
-                <TextBox Name="tbPopust" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10" VerticalContentAlignment="Center"/>
-                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="6" Margin="35,15,35,15" Click="SacuvajIzmene"/>
-                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="6" Margin="35,15,35,15" Click="ZatvoriWindow"/>
-                <DataGrid Name="dgNamestaj" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="1" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False" >
+                <DatePicker SelectedDate="{Binding Path=PocetakAkcije}" Name="dpPocetniDatum" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedDateChanged="DatumProvera"/>
+                <DatePicker SelectedDate="{Binding Path=KrajAkcije}" Name="dpKrajnjiDatum" Grid.Column="3" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Center" SelectedDateChanged="DatumProvera"/>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="1" Grid.Row="5" Margin="0,15,25,15" Click="SacuvajIzmene"/>
+                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="2" Grid.Row="5" Margin="25,15,0,15" Click="ZatvoriWindow"/>
+                <DataGrid Name="dgNamestaj" Grid.ColumnSpan="4" Grid.Row="1" Grid.RowSpan="1" ColumnWidth="*" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single" >
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Sifra" Binding="{Binding Sifra}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"  IsReadOnly="True"/>
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}"  IsReadOnly="True" Width="1*"/>
+                        <DataGridTextColumn Header="Sifra" Binding="{Binding Sifra}" IsReadOnly="True" Width="1*"/>
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}"  IsReadOnly="True" Width="1*"/>
                         <DataGridTextColumn Header="Kolicina" Binding="{Binding BrKomada}" Width="SizeToHeader" IsReadOnly="True"/>
-                        <DataGridTemplateColumn IsReadOnly="True" Header="Dodaj u akciju" >
+                        <DataGridTemplateColumn IsReadOnly="True" Header="Dodaj u akciju" Width="1*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
-                                    <Button Content="Dodaj u akciju" Margin="2,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="DodajUListu" />
+                                    <Button Content="Dodaj u akciju" Margin="2,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="DodajAkciju" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                         </DataGridTemplateColumn>
-                        
-                         <DataGridTemplateColumn  IsReadOnly="True" Header="Dodaj u akciju" >
-                            <DataGridTemplateColumn.CellTemplate>
-                                <DataTemplate>
-                                    <TextBox  Margin="2,0,2,0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" LostFocus="PopustProcenat" VerticalContentAlignment="Center"/>
-                                </DataTemplate>
-                            </DataGridTemplateColumn.CellTemplate>
-                        </DataGridTemplateColumn>
-                        
                     </DataGrid.Columns>
                 </DataGrid>
-                <DataGrid Name="dgZaAkciju" ColumnWidth="*" Grid.ColumnSpan="4" Grid.Row="3" Grid.RowSpan="1" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid Name="dgZaAkciju" ColumnWidth="*" Grid.ColumnSpan="4" Grid.Row="2" Grid.RowSpan="1" AutoGenerateColumns="False" CanUserAddRows="False" SelectionMode="Single">
                     <DataGrid.Columns>
-                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Sifra" Binding="{Binding Sifra}"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Kolicina" Binding="{Binding BrKomada}"  IsReadOnly="True"/>
-                        <DataGridTextColumn Header="Popust" Binding="{Binding Popust}"  IsReadOnly="True"/>
-                        <DataGridTemplateColumn  IsReadOnly="True" Header="Izbaci iz akcije">
+                        <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" IsReadOnly="True" Width="1*"/>
+                        <DataGridTextColumn Header="Sifra" Binding="{Binding Sifra}"  IsReadOnly="True" Width="1*"/>
+                        <DataGridTextColumn Header="Cena" Binding="{Binding Cena}" IsReadOnly="True" Width="1*"/>
+                        <DataGridTextColumn Header="Popust" Binding="{Binding Popust}"  IsReadOnly="True" Width="SizeToHeader"/>
+                        <DataGridTextColumn Header="CenaSaPopustom" Binding="{Binding CenaSaPopustom}"  IsReadOnly="True" Width="SizeToHeader"/>
+                        <DataGridTemplateColumn  IsReadOnly="True" Header="Izbaci iz akcije" Width="2*">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate>
                                     <Button  Content="Izbaci iz akcije" Margin="2,0,2,0" HorizontalAlignment="Center" VerticalAlignment="Stretch" Click="IzbaciIzAkcije" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
+                            <DataGridTemplateColumn.HeaderStyle>
+                                <Style TargetType="DataGridColumnHeader">
+                                    <Setter Property="HorizontalContentAlignment" Value="Center" />
+                                </Style>
+                            </DataGridTemplateColumn.HeaderStyle>
                         </DataGridTemplateColumn>
                     </DataGrid.Columns>
                 </DataGrid>
