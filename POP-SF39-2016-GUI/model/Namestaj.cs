@@ -25,7 +25,8 @@ namespace POP_SF39_2016.model
         private TipNamestaja tipNamestaja;
         public event PropertyChangedEventHandler PropertyChanged;
         bool naAkciji;
-
+        private double akcijskaCena;
+        private int tempProcenat;
         public string Naziv
         {
             get { return naziv; }
@@ -35,7 +36,15 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Naziv");
             }
         }
-        [XmlIgnore]
+        public string Sifra
+        {
+            get { return sifra; }
+            set
+            {
+                sifra = value;
+                OnPropertyChanged("Sifra");
+            }
+        }
         public TipNamestaja TipNamestaja
         {
             get
@@ -49,7 +58,8 @@ namespace POP_SF39_2016.model
             set
             {
                 tipNamestaja = value;
-                TipNamestajaId = tipNamestaja.Id;
+                if(tipNamestaja!=null)
+                    TipNamestajaId = tipNamestaja.Id;
                 OnPropertyChanged("TipNamestaja");
             }
         }
@@ -63,41 +73,49 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Id");
             }
         }
-
         public double Cena
         {
             get
             {
-                //FOR NAMESTAJ GET POPUST 
-                var tempPopust = NaAkcijiDAO.GetPopustForId(Id);
-                if (tempPopust != 0 && naAkciji!=true)
-                {
-                    cena = cena - ((cena * tempPopust)) / 100;
-                    naAkciji = true;
-                }
                 return cena;
             }
             set
             {
                 cena = value;
+                AkcijskaCena = cena;
                 OnPropertyChanged("Cena");
             }
         }
-        public double CenaSaPdv
+        public double AkcijskaCena
         {
-            get { return cena + cena * ProdajaNamestaja.PDV; }
-        }
-
-        public string Sifra
-        {
-            get { return sifra; }
+            get
+            {
+                var tempPopust = NaAkcijiDAO.GetPopustForId(Id);
+                if(tempPopust!=tempProcenat && tempPopust != 0 && tempProcenat != 0)
+                    akcijskaCena = cena - ((cena * tempPopust)) / 100;
+                if (tempPopust != 0 && naAkciji != true)
+                {
+                    akcijskaCena = cena - ((cena * tempPopust)) / 100;
+                    naAkciji = true;
+                    tempProcenat = tempPopust;
+                }
+                if(tempPopust!= 0 && naAkciji == true)
+                {
+                    return akcijskaCena;
+                }
+                return cena;
+            }
             set
             {
-                sifra = value;
-                OnPropertyChanged("Sifra");
+                akcijskaCena = value - ((value * tempProcenat)) / 100;
+                OnPropertyChanged("AkcijskaCena");
             }
         }
 
+        public double CenaSaPdv
+        {
+            get { return AkcijskaCena + AkcijskaCena * ProdajaNamestaja.PDV; }
+        }
         public int BrKomada
         {
             get { return brKomada; }
@@ -114,7 +132,7 @@ namespace POP_SF39_2016.model
             set
             {
                 tipNamestajaId = value;
-                OnPropertyChanged("TipNamestajaID");
+                OnPropertyChanged("TipNamestajaId");
             }
         }
 

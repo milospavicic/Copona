@@ -51,8 +51,9 @@ namespace POP_SF39_2016_GUI.gui
     {
         try
         {
-            int.Parse(tbBrojKomada.Text);
-            int.Parse(tbCena.Text);
+            double.Parse(tbBrojKomada.Text);
+
+            double.Parse(tbCena.Text);
         }
         catch
         {
@@ -67,9 +68,9 @@ namespace POP_SF39_2016_GUI.gui
         switch (operacija)
         {
             case Operacija.DODAVANJE:
-                    string sifraNamestaja = "";
-                    sifraNamestaja += namestaj.Naziv.Substring(0,2) + new Random().Next(1, 100) + namestaj.TipNamestaja.Naziv.Substring(0,2);
-                    namestaj.Sifra = sifraNamestaja.ToUpper();
+                string sifraNamestaja = "";
+                sifraNamestaja += namestaj.Naziv.Substring(0,2) + new Random().Next(1, 100) + namestaj.TipNamestaja.Naziv.Substring(0,2);
+                namestaj.Sifra = sifraNamestaja.ToUpper();
                 NamestajDAO.Create(namestaj);
                 break;
                  

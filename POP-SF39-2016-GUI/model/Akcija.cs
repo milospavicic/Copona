@@ -12,6 +12,7 @@ namespace POP_SF39_2016.model
     {
         
         private int id;
+        private string naziv;
         private DateTime pocetakAkcije;
         private DateTime krajAkcije;
         private bool obrisan;
@@ -30,6 +31,17 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Id");
             }
         }
+
+        public string Naziv
+        {
+            get { return naziv; }
+            set
+            {
+                naziv = value;
+                OnPropertyChanged("Naziv");
+            }
+        }
+
 
         public DateTime PocetakAkcije
         {
@@ -74,6 +86,7 @@ namespace POP_SF39_2016.model
             return new Akcija()
             {
                 Id = id,
+                Naziv = naziv,
                 PocetakAkcije = pocetakAkcije,
                 KrajAkcije = krajAkcije,
                 Obrisan = obrisan,

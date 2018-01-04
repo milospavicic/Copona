@@ -24,7 +24,6 @@ namespace POP_SF39_2016_GUI.gui
         {
             InitializeComponent();
         }
-
         private void Izadji(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;

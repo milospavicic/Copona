@@ -50,6 +50,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
+            tbNaziv.DataContext = akcija;
             ListaNamestajaZaDG1 = NamestajDAO.GetAllNamestajNotOnAction();
 
             if (operacija == Operacija.IZMENA)
@@ -88,7 +89,8 @@ namespace POP_SF39_2016_GUI.gui
                                 postoji = true;
                                 if (tempNaZaCreate.Popust != tempN.Popust)
                                 {
-                                    NaAkcijiDAO.Update(tempNaZaCreate);
+                                    tempN.Popust = tempNaZaCreate.Popust;
+                                    NaAkcijiDAO.Update(tempN);
                                 }
                                 listaNaZaBrisanje.ToList().ForEach(x => { if (x.IdNamestaja == tempNaZaCreate.IdNamestaja) listaNaZaBrisanje.Remove(x); });
                                 
@@ -119,7 +121,7 @@ namespace POP_SF39_2016_GUI.gui
 
         private void DodajAkciju(object sender, RoutedEventArgs e)
         {
-            var unesiPopust = new UnesiPopustWindow();
+            var unesiPopust = new UnosWindow(UnosWindow.Opcija.POPUST,0,0);
             unesiPopust.ShowDialog();
 
             if (unesiPopust.DialogResult == true)

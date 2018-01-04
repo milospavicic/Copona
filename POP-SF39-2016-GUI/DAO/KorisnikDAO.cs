@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016_GUI.gui;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -13,6 +14,18 @@ namespace POP_SF39_2016_GUI.DAO
 {
     class KorisnikDAO
     {
+        public enum SortBy
+        {
+            Ime_Opadajuce,
+            Ime_Rastuce,
+            Prezime_Opadajuce,
+            Prezime_Rastuce,
+            KorisnickoIme_Opadajuce,
+            KorisnickoIme_Rastuce,
+            TipKorisnika_Opadajuce,
+            TipKorisnika_Rastuce,
+            Nesortirano,
+        }
         public static ObservableCollection<Korisnik> GetAll()
         {
             var korisnici = new ObservableCollection<Korisnik>();
@@ -35,7 +48,10 @@ namespace POP_SF39_2016_GUI.DAO
                     nk.Prezime = row["Prezime"].ToString();
                     nk.KorisnickoIme = row["KorisnickoIme"].ToString();
                     nk.Lozinka = row["Lozinka"].ToString();
-                    nk.TipKorisnika =(TipKorisnika)Enum.Parse(typeof(TipKorisnika),row["TipKorisnika"].ToString());
+                    if ((int)row["TipKorisnika"] == 1)
+                        nk.TipKorisnika = TipKorisnika.Administrator;
+                    else
+                        nk.TipKorisnika = TipKorisnika.Prodavac;
                     nk.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
                     korisnici.Add(nk);
@@ -66,7 +82,10 @@ namespace POP_SF39_2016_GUI.DAO
                     korisnik.Prezime = row["Prezime"].ToString();
                     korisnik.KorisnickoIme = row["KorisnickoIme"].ToString();
                     korisnik.Lozinka = row["Lozinka"].ToString();
-                    korisnik.TipKorisnika = (TipKorisnika)Enum.Parse(typeof(TipKorisnika), row["TipKorisnika"].ToString());
+                    if ((int)row["TipKorisnika"] == 1)
+                        korisnik.TipKorisnika = TipKorisnika.Administrator;
+                    else
+                        korisnik.TipKorisnika = TipKorisnika.Prodavac;
                     korisnik.Obrisan = bool.Parse(row["Obrisan"].ToString());
                 }
 
@@ -89,7 +108,10 @@ namespace POP_SF39_2016_GUI.DAO
                 cmd.Parameters.AddWithValue("Prezime", nk.Prezime);
                 cmd.Parameters.AddWithValue("KorisnickoIme", nk.KorisnickoIme);
                 cmd.Parameters.AddWithValue("Lozinka", nk.Lozinka);
-                cmd.Parameters.AddWithValue("TipKorisnika", nk.TipKorisnika.ToString());
+                if (nk.TipKorisnika == TipKorisnika.Administrator)
+                    cmd.Parameters.AddWithValue("TipKorisnika", 1);
+                else
+                    cmd.Parameters.AddWithValue("TipKorisnika", 2);
                 cmd.Parameters.AddWithValue("Obrisan", nk.Obrisan);
 
                 nk.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
@@ -115,7 +137,10 @@ namespace POP_SF39_2016_GUI.DAO
                 cmd.Parameters.AddWithValue("Prezime", kzu.Prezime);
                 cmd.Parameters.AddWithValue("KorisnickoIme", kzu.KorisnickoIme);
                 cmd.Parameters.AddWithValue("Lozinka", kzu.Lozinka);
-                cmd.Parameters.AddWithValue("TipKorisnika", kzu.TipKorisnika.ToString());
+                if (kzu.TipKorisnika == TipKorisnika.Administrator)
+                    cmd.Parameters.AddWithValue("TipKorisnika", 1);
+                else
+                    cmd.Parameters.AddWithValue("TipKorisnika", 2);
                 cmd.Parameters.AddWithValue("Obrisan", kzu.Obrisan);
 
                 cmd.ExecuteNonQuery();
@@ -139,6 +164,167 @@ namespace POP_SF39_2016_GUI.DAO
             nk.Obrisan = true;
             Update(nk);
         }
-        
+        public static ObservableCollection<Korisnik> Search(string parametar)
+        {
+            var korisnici = new ObservableCollection<Korisnik>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0 AND (Ime LIKE @parametar OR Prezime LIKE @parametar OR KorisnickoIme LIKE @parametar";
+                cmd.Parameters.AddWithValue("parametar","%"+parametar+"%");
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Korisnik"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Korisnik"].Rows)
+                {
+                    var nk = new Korisnik();
+                    nk.Id = (int)row["Id"];
+                    nk.Ime = row["Ime"].ToString();
+                    nk.Prezime = row["Prezime"].ToString();
+                    nk.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    nk.Lozinka = row["Lozinka"].ToString();
+                    if ((int)row["TipKorisnika"] == 1)
+                        nk.TipKorisnika = TipKorisnika.Administrator;
+                    else
+                        nk.TipKorisnika = TipKorisnika.Prodavac;
+                    nk.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    korisnici.Add(nk);
+                }
+            }
+            return korisnici;
+        }
+        public static ObservableCollection<Korisnik> Sort(SortBy sortBy)
+        {
+            var korisnici = new ObservableCollection<Korisnik>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+                cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0";
+                switch (sortBy)
+                {
+                    case SortBy.Ime_Opadajuce:
+                        cmd.CommandText += " ORDER BY Ime DESC";
+                        break;
+                    case SortBy.Ime_Rastuce:
+                        cmd.CommandText += " ORDER BY Ime ASC";
+                        break;
+                    case SortBy.Prezime_Opadajuce:
+                        cmd.CommandText += " ORDER BY Prezime DESC";
+                        break;
+                    case SortBy.Prezime_Rastuce:
+                        cmd.CommandText += " ORDER BY Prezime ASC";
+                        break;
+                    case SortBy.KorisnickoIme_Opadajuce:
+                        cmd.CommandText += " ORDER BY KorisnickoIme DESC";
+                        break;
+                    case SortBy.KorisnickoIme_Rastuce:
+                        cmd.CommandText += " ORDER BY KorisnickoIme ASC";
+                        break;
+                    case SortBy.TipKorisnika_Opadajuce:
+                        cmd.CommandText += " ORDER BY TipKorisnika DESC";
+                        break;
+                    case SortBy.TipKorisnika_Rastuce:
+                        cmd.CommandText += " ORDER BY TipKorisnika ASC";
+                        break;
+                }
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Korisnik"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Korisnik"].Rows)
+                {
+                    var nk = new Korisnik();
+                    nk.Id = (int)row["Id"];
+                    nk.Ime = row["Ime"].ToString();
+                    nk.Prezime = row["Prezime"].ToString();
+                    nk.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    nk.Lozinka = row["Lozinka"].ToString();
+                    if ((int)row["TipKorisnika"] == 1)
+                        nk.TipKorisnika = TipKorisnika.Administrator;
+                    else
+                        nk.TipKorisnika = TipKorisnika.Prodavac;
+                    nk.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    korisnici.Add(nk);
+                }
+            }
+            return korisnici;
+        }
+        public static ObservableCollection<Korisnik> SearchAndOrSort(GlavniWindow.DoSearch doSearch, string parametar, SortBy sortBy)
+        {
+            var korisnici = new ObservableCollection<Korisnik>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+                switch (doSearch)
+                {
+                    case GlavniWindow.DoSearch.Other:
+                        cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0 AND (Ime LIKE @parametar OR Prezime LIKE @parametar OR KorisnickoIme LIKE @parametar)";
+                        cmd.Parameters.AddWithValue("parametar", "%" + parametar + "%");
+                        break;
+                    case GlavniWindow.DoSearch.No:
+                        cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0";
+                        break;
+                }
+                
+                switch (sortBy)
+                {
+                    case SortBy.Ime_Opadajuce:
+                        cmd.CommandText += " ORDER BY Ime DESC";
+                        break;
+                    case SortBy.Ime_Rastuce:
+                        cmd.CommandText += " ORDER BY Ime ASC";
+                        break;
+                    case SortBy.Prezime_Opadajuce:
+                        cmd.CommandText += " ORDER BY Prezime DESC";
+                        break;
+                    case SortBy.Prezime_Rastuce:
+                        cmd.CommandText += " ORDER BY Prezime ASC";
+                        break;
+                    case SortBy.KorisnickoIme_Opadajuce:
+                        cmd.CommandText += " ORDER BY KorisnickoIme DESC";
+                        break;
+                    case SortBy.KorisnickoIme_Rastuce:
+                        cmd.CommandText += " ORDER BY KorisnickoIme ASC";
+                        break;
+                    case SortBy.TipKorisnika_Opadajuce:
+                        cmd.CommandText += " ORDER BY TipKorisnika DESC";
+                        break;
+                    case SortBy.TipKorisnika_Rastuce:
+                        cmd.CommandText += " ORDER BY TipKorisnika ASC";
+                        break;
+                }
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Korisnik"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Korisnik"].Rows)
+                {
+                    var nk = new Korisnik();
+                    nk.Id = (int)row["Id"];
+                    nk.Ime = row["Ime"].ToString();
+                    nk.Prezime = row["Prezime"].ToString();
+                    nk.KorisnickoIme = row["KorisnickoIme"].ToString();
+                    nk.Lozinka = row["Lozinka"].ToString();
+                    if ((int)row["TipKorisnika"] == 1)
+                        nk.TipKorisnika = TipKorisnika.Administrator;
+                    else
+                        nk.TipKorisnika = TipKorisnika.Prodavac;
+                    nk.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    korisnici.Add(nk);
+                }
+            }
+            return korisnici;
+        }
     }
 }

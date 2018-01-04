@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,7 @@ namespace POP_SF39_2016_GUI.model
             {
                 if (dodatnaUsluga == null)
                 {
-                    dodatnaUsluga = DodatnaUsluga.GetById(DodatnaUslugaId);
+                    dodatnaUsluga = DodatnaUslugaDAO.GetById(DodatnaUslugaId);
                 }
                 return dodatnaUsluga;
             }

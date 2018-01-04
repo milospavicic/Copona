@@ -1,4 +1,5 @@
 ﻿using POP_SF39_2016.model;
+using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -12,16 +13,15 @@ namespace POP_SF39_2016_GUI.model
     public class JedinicaProdaje : INotifyPropertyChanged
     {
         private int id;
-        private int? namestajId;
-        private int? prodajaId;
+        private int namestajId;
+        private int prodajaId;
         private bool obrisan;
         private int kolicina;
         private Namestaj namestaj;
         public event PropertyChangedEventHandler PropertyChanged;
         private double cenaUkupno;
         private double cenaUkupnoPdv;
-
-
+        private double cena;
 
         [XmlIgnore]
         public Namestaj Namestaj
@@ -30,7 +30,7 @@ namespace POP_SF39_2016_GUI.model
             {
                 if (namestaj == null)
                 {
-                    namestaj = Namestaj.GetById(NamestajId);
+                    namestaj = NamestajDAO.GetById(NamestajId);
                 }
                 return namestaj;
             }
@@ -50,7 +50,7 @@ namespace POP_SF39_2016_GUI.model
                 OnPropertyChanged("Id");
             }
         }
-        public int? NamestajId
+        public int NamestajId
         {
             get { return namestajId; }
             set
@@ -59,7 +59,7 @@ namespace POP_SF39_2016_GUI.model
                 OnPropertyChanged("NamestajId");
             }
         }
-        public int? ProdajaId
+        public int ProdajaId
         {
             get { return prodajaId; }
             set
@@ -105,14 +105,22 @@ namespace POP_SF39_2016_GUI.model
         {
             get
             {
-                return Namestaj.Cena;
+                if (cena == 0)
+                {
+                    cena = Namestaj.AkcijskaCena;
+                }
+                return cena;
+            }
+            set
+            {
+                cena = value;
             }
         }
         public double CenaSaPdv
         {
             get
             {
-                return Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV;
+                return Cena + Cena * ProdajaNamestaja.PDV;
             }
         }
         public double CenaUkupno
@@ -121,7 +129,7 @@ namespace POP_SF39_2016_GUI.model
             {  
                 if (cenaUkupno == 0)
                 {
-                    cenaUkupno = Namestaj.Cena * Kolicina;
+                    cenaUkupno = Cena * Kolicina;
                 }
                 return cenaUkupno;
             }
@@ -132,20 +140,20 @@ namespace POP_SF39_2016_GUI.model
             }
 
         }
-        public double CenaUkupnoPdv
+        public double CenaUkupnoPDV
         {
             get
             {
                 if (cenaUkupnoPdv == 0)
                 {
-                    cenaUkupnoPdv = (Namestaj.Cena + Namestaj.Cena * ProdajaNamestaja.PDV) * Kolicina;
+                    cenaUkupnoPdv = (Cena + Cena * ProdajaNamestaja.PDV) * Kolicina;
                 }
                 return cenaUkupnoPdv;
             }
             set
             {
                 cenaUkupnoPdv = value;
-                OnPropertyChanged("CenaUkupnoPdv");
+                OnPropertyChanged("CenaUkupnoPDV");
             }
         }
     }

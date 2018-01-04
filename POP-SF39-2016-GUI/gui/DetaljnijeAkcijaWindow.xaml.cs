@@ -28,6 +28,7 @@ namespace POP_SF39_2016_GUI.gui
             this.trenutnaAkcija = trenutnaAkcija;
             tbPocetniDatum.DataContext = trenutnaAkcija;
             tbKrajnjiDatum.DataContext = trenutnaAkcija;
+            tbNaziv.DataContext = trenutnaAkcija;
             dgNamestajNaAkciji.IsReadOnly = true;
             dgNamestajNaAkciji.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             PopunjavanjePolja();

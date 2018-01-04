@@ -6,6 +6,7 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using System.Linq;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -13,6 +14,9 @@ namespace POP_SF39_2016_GUI.gui
     {
         ICollectionView view;
         public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
+        public bool Pretrazeno { get; set; } = false;
+        public bool Sortirano { get; set; } = false;
+        public ObservableCollection<Namestaj> ListaNamestaja = Projekat.Instance.Namestaji;
 
         public enum Opcija
         {
@@ -22,6 +26,12 @@ namespace POP_SF39_2016_GUI.gui
             DODATNAUSLUGA,
             KORISNIK,
             PRODAJA
+        }
+        public enum DoSearch
+        {
+            Date,
+            Other,
+            No
         }
         public Opcija izabranaOpcija;
         public GlavniWindow(Korisnik logovaniKorisnik)
@@ -93,37 +103,52 @@ namespace POP_SF39_2016_GUI.gui
         //-------------------------------------------------------------------
         public void OsnovniPrikazTabela()
         {
+            cbDatum.IsEnabled = false;
+            cbDatum.IsChecked = false;
+            btnDetaljnije.IsEnabled = false;
+            Pretrazeno = false;
+            Sortirano = false;
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(NamestajDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.TIPNAMESTAJA:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(TipNamestajaDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.KORISNIK:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(KorisnikDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnici);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.AKCIJA:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(AkcijaDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Akcija);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
+                    cbDatum.IsEnabled = true;
+                    btnDetaljnije.IsEnabled = true;
                     break;
                 case Opcija.DODATNAUSLUGA:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(DodatnaUslugaDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatneUsluge);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.PRODAJA:
+                    cbZaSort.ItemsSource = Enum.GetValues(typeof(ProdajaDAO.SortBy));
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Prodaja);
                     view.Filter = obrisanFilter;
                     dgTabela.ItemsSource = view;
+                    cbDatum.IsEnabled = true;
+                    btnDetaljnije.IsEnabled = true;
                     break;
             }
             return;
@@ -288,7 +313,7 @@ namespace POP_SF39_2016_GUI.gui
             Prikaz();
             OsnovniPrikazTabela();
         }
-
+#region Dodavanje
         private void DodajItem(object sender, RoutedEventArgs e)
         {
             switch (izabranaOpcija)
@@ -337,7 +362,10 @@ namespace POP_SF39_2016_GUI.gui
                     ProdajaProzor();
                     break;
             }
+            SearchAndOrSort(null,null);
         }
+        #endregion
+#region Izmena
         private void IzmeniItem(object sender, RoutedEventArgs e)
         {
             if (dgTabela.SelectedItem == null)
@@ -378,7 +406,10 @@ namespace POP_SF39_2016_GUI.gui
                     prodajaWindow.ShowDialog();
                     break;
             }
+            SearchAndOrSort(null, null);
         }
+#endregion
+#region Brisanje
         private void ObrisiItem(object sender, RoutedEventArgs e)
         {
             if (dgTabela.SelectedItem == null)
@@ -391,7 +422,6 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.NAMESTAJ:
                     var izabraniNamestaj = (Namestaj)dgTabela.SelectedItem;
 
-                    ObservableCollection<Namestaj> listaNamestaja = Projekat.Instance.Namestaji;
                     MessageBoxResult namestajMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (namestajMessage == MessageBoxResult.Yes)
                     {
@@ -400,18 +430,26 @@ namespace POP_SF39_2016_GUI.gui
                     break;
                 case Opcija.TIPNAMESTAJA:
                     var izabraniTipNamestaja = (TipNamestaja)dgTabela.SelectedItem;
-
-                    ObservableCollection<TipNamestaja> listaTipaNamestaja = Projekat.Instance.TipoviNamestaja;
+                    if (izabraniTipNamestaja.Id == 1)
+                    {
+                        MessageBoxResult poruka = MessageBox.Show("Ovaj tip se ne moze obrisati!", "Upozorenje", MessageBoxButton.OK);
+                        return;
+                    }
                     MessageBoxResult tipNamestajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (tipNamestajaMessage == MessageBoxResult.Yes)
                     {
+                        var tempListaZaBrisanje = NamestajDAO.GetAllForTipId(izabraniTipNamestaja.Id);
+                        foreach(var item in tempListaZaBrisanje)
+                        {
+                            item.TipNamestaja = TipNamestajaDAO.GetById(1);
+                            NamestajDAO.Update(item);
+                        }
                         TipNamestajaDAO.Delete(izabraniTipNamestaja);
                     };
                     break;
                 case Opcija.KORISNIK:
                     var izabraniKorisnik = (Korisnik)dgTabela.SelectedItem;
-
-                    ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
+                    
                     MessageBoxResult korisnikMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (korisnikMessage == MessageBoxResult.Yes)
                     {
@@ -421,27 +459,47 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.AKCIJA:
                     var izabranaAkcija = (Akcija)dgTabela.SelectedItem;
 
-                    ObservableCollection<Akcija> listaAkcija = Projekat.Instance.Akcija;
                     MessageBoxResult akcijaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (akcijaMessage == MessageBoxResult.Yes)
                     {
+                        var listaZaBrisanje = NaAkcijiDAO.GetAllNAForActionId(izabranaAkcija.Id);
+                        foreach(var item in listaZaBrisanje)
+                        {
+                            NaAkcijiDAO.Delete(item);
+                        }
                         AkcijaDAO.Delete(izabranaAkcija);
                     };
                     break;
                 case Opcija.DODATNAUSLUGA:
                     var izabranaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
 
-                    ObservableCollection<DodatnaUsluga> listaDodatnihUsluga = Projekat.Instance.DodatneUsluge;
                     MessageBoxResult dodatnaUslugaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
                     if (dodatnaUslugaMessage == MessageBoxResult.Yes)
                     {
                         DodatnaUslugaDAO.Delete(izabranaDodatnaUsluga);
                     };
                     break;
+                case Opcija.PRODAJA:
+                    var izabranaProdaja = (ProdajaNamestaja)dgTabela.SelectedItem;
+
+                    MessageBoxResult prodajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    if (prodajaMessage == MessageBoxResult.Yes)
+                    {
+                        var listaZaBrisanje = JedinicaProdajeDAO.GetAllForId(izabranaProdaja.Id);
+                        foreach (var item in listaZaBrisanje)
+                        {
+                            var tempNamestaj = NamestajDAO.GetById(item.NamestajId);
+                            tempNamestaj.BrKomada += item.Kolicina;
+                            NamestajDAO.Update(tempNamestaj);
+                            JedinicaProdajeDAO.Delete(item);
+                        }
+                        ProdajaDAO.Delete(izabranaProdaja);
+                    };
+                    break;
             }
             view.Refresh();
         }
-
+#endregion
         private void dgTabela_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
             if ((string)e.Column.Header == "Obrisan" || (string)e.Column.Header == "Id")
@@ -451,9 +509,13 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    if ( (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv" )
+                    if ( (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv" || (string)e.Column.Header == "Cena")
                     {
                         e.Cancel = true;
+                    }
+                    if((string)e.Column.Header == "AkcijskaCena")
+                    {
+                        e.Column.Header = "Cena";
                     }
                     break;
                 case Opcija.KORISNIK:
@@ -466,6 +528,10 @@ namespace POP_SF39_2016_GUI.gui
                     if ((string)e.Column.Header == "NamestajId")
                     {
                         e.Cancel = true;
+                    }
+                    if ((string)e.Column.Header == "PocetakAkcije" || (string)e.Column.Header == "KrajAkcije")
+                    {
+                        e.Column.Header += " (MM/DD/YYYY)";
                     }
                     break;
                 case Opcija.DODATNAUSLUGA:
@@ -509,6 +575,97 @@ namespace POP_SF39_2016_GUI.gui
                     prodajaDetaljnijeProzor.ShowDialog();
                     break;
             }
+        }
+
+        private void Oznaci(object sender, RoutedEventArgs e)
+        {
+            tbParametar.BorderThickness = new Thickness(2);
+        }
+
+        private void SkiniOznaku(object sender, RoutedEventArgs e)
+        {
+            tbParametar.BorderThickness = new Thickness(1);
+        }
+        public void SearchAndOrSort(object sender, RoutedEventArgs e)
+        {
+            DoSearch doSearch; 
+            DateTime datumZaPretragu = DateTime.Today;
+            if (cbDatum.IsChecked == true)
+            {
+                try
+                {
+                    datumZaPretragu = DateTime.Parse(tbParametar.Text);
+                    doSearch = DoSearch.Date;
+                }
+                catch
+                {
+                    MessageBoxResult poruka = MessageBox.Show("Pogresan format datuma.", "Upozorenje!", MessageBoxButton.OK);
+                    return;
+                }
+            }
+            else
+            {
+                if (tbParametar.Text == "")
+                    doSearch = DoSearch.No;
+                else
+                    doSearch = DoSearch.Other;
+
+            }
+            switch (izabranaOpcija)
+            {
+                case Opcija.NAMESTAJ:
+                    if (cbZaSort.SelectedValue==null)
+                        view = CollectionViewSource.GetDefaultView(NamestajDAO.SearchAndOrSort(doSearch, tbParametar.Text, NamestajDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(NamestajDAO.SearchAndOrSort(doSearch, tbParametar.Text, (NamestajDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.TIPNAMESTAJA:
+                    if (cbZaSort.SelectedValue == null)
+                        view = CollectionViewSource.GetDefaultView(TipNamestajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, TipNamestajaDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(TipNamestajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, (TipNamestajaDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.KORISNIK:
+                    if (cbZaSort.SelectedValue == null)
+                        view = CollectionViewSource.GetDefaultView(KorisnikDAO.SearchAndOrSort(doSearch, tbParametar.Text, KorisnikDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(KorisnikDAO.SearchAndOrSort(doSearch, tbParametar.Text, (KorisnikDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.DODATNAUSLUGA:
+                    if (cbZaSort.SelectedValue == null)
+                        view = CollectionViewSource.GetDefaultView(DodatnaUslugaDAO.SearchAndOrSort(doSearch, tbParametar.Text, DodatnaUslugaDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(DodatnaUslugaDAO.SearchAndOrSort(doSearch, tbParametar.Text, (DodatnaUslugaDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.AKCIJA:
+                    if (cbZaSort.SelectedValue == null)
+                        view = CollectionViewSource.GetDefaultView(AkcijaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, AkcijaDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(AkcijaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, (AkcijaDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+                case Opcija.PRODAJA:
+                    if (cbZaSort.SelectedValue == null)
+                        view = CollectionViewSource.GetDefaultView(ProdajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, ProdajaDAO.SortBy.Nesortirano));
+                    else
+                        view = CollectionViewSource.GetDefaultView(ProdajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, (ProdajaDAO.SortBy)cbZaSort.SelectedValue));
+                    view.Filter = obrisanFilter;
+                    dgTabela.ItemsSource = view;
+                    break;
+            }
+            if (doSearch != DoSearch.No)
+                Pretrazeno = true;
+            if (cbZaSort.SelectedValue != null)
+                Sortirano = true;
         }
     }
 }

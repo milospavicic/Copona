@@ -95,6 +95,9 @@
     <Compile Include="gui\UnesiPopustWindow.xaml.cs">
       <DependentUpon>UnesiPopustWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="gui\UnosWindow.xaml.cs">
+      <DependentUpon>UnosWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="model\Akcija.cs" />
     <Compile Include="model\DodatnaUsluga.cs" />
     <Compile Include="model\JedinicaProdaje.cs" />
@@ -144,6 +147,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="gui\UnesiPopustWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="gui\UnosWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

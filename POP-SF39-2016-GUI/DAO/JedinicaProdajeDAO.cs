@@ -36,7 +36,7 @@ namespace POP_SF39_2016_GUI.DAO
                     njp.NamestajId = int.Parse(row["NamestajId"].ToString());
                     njp.Kolicina = int.Parse(row["Kolicina"].ToString());
                     njp.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
+                    njp.Cena = double.Parse(row["Cena"].ToString());
                     jedProdaje.Add(njp);
                 }
             }
@@ -64,6 +64,7 @@ namespace POP_SF39_2016_GUI.DAO
                     njp.ProdajaId = int.Parse(row["ProdajaId"].ToString());
                     njp.NamestajId = int.Parse(row["NamestajId"].ToString());
                     njp.Kolicina = int.Parse(row["Kolicina"].ToString());
+                    njp.Cena = double.Parse(row["Cena"].ToString());
                     njp.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
                     listaJedinicaProdaje.Add(njp);
@@ -80,12 +81,13 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO JedinicaProdaje(ProdajaId,NamestajId,Kolicina,Obrisan) VALUES (@ProdajaId,@NamestajId,@Kolicina,@Obrisan)";
+                cmd.CommandText = "INSERT INTO JedinicaProdaje(ProdajaId,NamestajId,Kolicina,Cena,Obrisan) VALUES (@ProdajaId,@NamestajId,@Kolicina,@Cena,@Obrisan)";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("ProdajaId", njp.ProdajaId);
                 cmd.Parameters.AddWithValue("NamestajId", njp.NamestajId);
                 cmd.Parameters.AddWithValue("Kolicina", njp.Kolicina);
+                cmd.Parameters.AddWithValue("Cena", njp.Cena);
                 cmd.Parameters.AddWithValue("Obrisan", njp.Obrisan);
 
                 njp.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
@@ -102,13 +104,14 @@ namespace POP_SF39_2016_GUI.DAO
                 DataSet ds = new DataSet();
 
 
-                cmd.CommandText = "UPDATE JedinicaProdaje SET NamestajId=@NamestajId,ProdajaId=@ProdajaId,Kolicina=@Kolicina,Obrisan=@Obrisan WHERE Id = @Id";
+                cmd.CommandText = "UPDATE JedinicaProdaje SET NamestajId=@NamestajId,ProdajaId=@ProdajaId,Kolicina=@Kolicina,Cena=@Cena,Obrisan=@Obrisan WHERE Id = @Id";
                 cmd.CommandText += " SELECT SCOPE_IDENTITY();";
 
                 cmd.Parameters.AddWithValue("Id", jp.Id);
                 cmd.Parameters.AddWithValue("NamestajId", jp.NamestajId);
                 cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId);
                 cmd.Parameters.AddWithValue("Kolicina", jp.Kolicina);
+                cmd.Parameters.AddWithValue("Cena", jp.Cena);
                 cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
 
                 cmd.ExecuteNonQuery();
@@ -120,6 +123,7 @@ namespace POP_SF39_2016_GUI.DAO
                     jedinicaProdaje.NamestajId = jp.NamestajId;
                     jedinicaProdaje.ProdajaId = jp.ProdajaId;
                     jedinicaProdaje.Kolicina = jp.Kolicina;
+                    jedinicaProdaje.Cena = jp.Cena;
                     jedinicaProdaje.Obrisan = jp.Obrisan;
                 }
             }
