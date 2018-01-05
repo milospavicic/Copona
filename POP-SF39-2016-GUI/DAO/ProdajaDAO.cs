@@ -79,7 +79,7 @@ namespace POP_SF39_2016_GUI.DAO
             Projekat.Instance.Prodaja.Add(npn);
             return npn;
         }
-        
+
         public static void Update(ProdajaNamestaja npn)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -137,10 +137,10 @@ namespace POP_SF39_2016_GUI.DAO
                         break;
                     case GlavniWindow.DoSearch.Other:
                         cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE (Id IN(SELECT ProdajaId FROM JedinicaProdaje WHERE Obrisan=0 AND NamestajId IN (SELECT Id FROM Namestaj WHERE Naziv LIKE @parametarS))OR Kupac LIKE @parametarS OR BrRacuna LIKE @parametarS) AND Obrisan=0";
-                        cmd.Parameters.AddWithValue("parametarS","%" + parametarS + "%");
+                        cmd.Parameters.AddWithValue("parametarS", "%" + parametarS + "%");
                         break;
                 }
-                
+
                 da.SelectCommand = cmd;
                 da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
 

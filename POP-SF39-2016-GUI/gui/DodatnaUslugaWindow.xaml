@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="DodatnaUslugaWindow" Height="200" Width="300">
+        Title="DodatnaUslugaWindow" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -34,7 +34,6 @@
                 <TextBox Name="tbCena" Text="{Binding Path=Cena}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
                 <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="2" Margin="25,10,25,10" Click="SacuvajIzmene" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
                 <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="2" Margin="25,10,25,10" Click="ZatvoriWindow" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-
             </Grid>
         </Border>
     </Grid>

@@ -13,7 +13,7 @@ namespace POP_SF39_2016_GUI.gui
     public partial class GlavniWindow : Window
     {
         ICollectionView view;
-        public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
+        public Korisnik LogovaniKorisnik { get; set; } = new Korisnik();
         public bool Pretrazeno { get; set; } = false;
         public bool Sortirano { get; set; } = false;
         public ObservableCollection<Namestaj> ListaNamestaja = Projekat.Instance.Namestaji;
@@ -38,7 +38,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             
             InitializeComponent();
-            this.logovaniKorisnik = logovaniKorisnik;
+            this.LogovaniKorisnik = logovaniKorisnik;
             dgTabela.IsSynchronizedWithCurrentItem = true;
             dgTabela.IsReadOnly = true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -78,7 +78,6 @@ namespace POP_SF39_2016_GUI.gui
         private void SkloniSve()
         {
             borderCentarInfo.Visibility = Visibility.Hidden;
-            borderCentarEdit.Visibility = Visibility.Hidden;
             borderAddEditDelItem.Visibility = Visibility.Hidden;
             dgTabela.Visibility = Visibility.Hidden;
         }
@@ -87,7 +86,7 @@ namespace POP_SF39_2016_GUI.gui
             dgTabela.Margin = new Thickness(10, 10, 10, 160);
             dgTabela.Visibility = Visibility.Visible;
             borderAddEditDelItem.Visibility = Visibility.Visible;
-            if (logovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
+            if (LogovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
             {
                 btnDodaj.Visibility = Visibility.Visible;
                 btnIzmeni.Visibility = Visibility.Visible;
@@ -173,25 +172,6 @@ namespace POP_SF39_2016_GUI.gui
             };
         }
 
-        private void IspisInformmacija(object sender, RoutedEventArgs e)
-        {
-            SkloniSve();
-            borderCentarInfo.Visibility = Visibility.Visible;
-            string ispis = "";
-            ObservableCollection<Salon> listaSalona = Projekat.Instance.Salon;
-            Salon mojSalon = listaSalona[0];
-            ispis += "Naziv: " + mojSalon.Naziv + "\n";
-            ispis += "Adresa: " + mojSalon.Adresa + "\n";
-            ispis += "Broj telefona: " + mojSalon.BrojTelefona + "\n";
-            ispis += "Email: " + mojSalon.Email + "\n";
-            ispis += "Web adresa: " + mojSalon.WebAdresa + "\n";
-            ispis += "Maticni broj: " + mojSalon.MaticniBr + "\n";
-            ispis += "Broj Racuna: " + mojSalon.BrRacuna + "\n";
-            ispis += "Pib: " + mojSalon.Pib + "\n";
-
-            tbOSalonu.Text = ispis;
-        }
-
         private void PrikaziSakrij(object sender, RoutedEventArgs e)
         {
 
@@ -199,10 +179,12 @@ namespace POP_SF39_2016_GUI.gui
             {
                 btnNamestaj.Visibility = Visibility.Visible;
                 btnTipNamestaj.Visibility = Visibility.Visible;
-                btnKorisnici.Visibility = Visibility.Visible;
                 btnAkcije.Visibility = Visibility.Visible;
                 btnDodatneUsluge.Visibility = Visibility.Visible;
                 btnProdaje.Visibility = Visibility.Visible;
+                if(LogovaniKorisnik.TipKorisnika == TipKorisnika.Administrator)
+                    btnKorisnici.Visibility = Visibility.Visible;
+
             }
             else
             {
@@ -217,59 +199,8 @@ namespace POP_SF39_2016_GUI.gui
 
         private void IzmenaPodataka(object sender, RoutedEventArgs e)
         {
-            SkloniSve();
-            borderCentarEdit.Visibility = Visibility.Visible;
-            ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
-            foreach (Korisnik korisnik in listaKorisnika)
-            {
-                if (korisnik.Id == logovaniKorisnik.Id)
-                {
-                    tbIme.Text = korisnik.Ime;
-                    tbPrezime.Text = korisnik.Prezime;
-                    tbKorisnickoIme.Text = korisnik.KorisnickoIme;
-                    tbKorisnickoIme.IsReadOnly = true;
-                    pbSifra.Password = korisnik.Lozinka;
-                    if (korisnik.TipKorisnika == TipKorisnika.Administrator)
-                    {
-                        tbPozicija.Text = "Administrator";
-                    }
-                    else
-                    {
-                        tbPozicija.Text = "Prodavac";
-                    }
-                    tbPozicija.IsReadOnly = true;
-                }
-            }
-        }
-
-        private void SnimiPodatkeKorisnika(object sender, RoutedEventArgs e)
-        {
-            if (tbIme.Text == "" || tbPrezime.Text == "" || pbSifra.Password == "")
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
-
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
-            {
-                ObservableCollection<Korisnik> listaKorisnika = Projekat.Instance.Korisnici;
-                foreach (Korisnik korisnik in listaKorisnika)
-                {
-                    if (korisnik.Id == logovaniKorisnik.Id)
-                    {
-                        korisnik.Ime = tbIme.Text;
-                        korisnik.Prezime = tbPrezime.Text;
-                        korisnik.Lozinka = pbSifra.Password;
-                    }
-                }
-                Projekat.Instance.Korisnici = listaKorisnika;
-                borderCentarEdit.Visibility = Visibility.Hidden;
-            };
-        }
-        private void IzadjiEdit(object sender, RoutedEventArgs e)
-        {
-            borderCentarEdit.Visibility = Visibility.Hidden;
+            var korisnikProzor = new KorisnikWindow(LogovaniKorisnik, KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
+            korisnikProzor.ShowDialog();
         }
         public void PrikazNamestaja(object sender, RoutedEventArgs e)
         {
@@ -319,43 +250,28 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    var noviNamestaj = new Namestaj()
-                    {
-                        Naziv = ""
-                    };
-                    var namestajProzor = new NamestajWindow(noviNamestaj, 0, NamestajWindow.Operacija.DODAVANJE);
+                    var noviNamestaj = new Namestaj();
+                    var namestajProzor = new NamestajWindow(noviNamestaj, NamestajWindow.Operacija.DODAVANJE);
                     namestajProzor.ShowDialog();
                     break;
                 case Opcija.TIPNAMESTAJA:
-                    var noviTipNamestaja = new TipNamestaja()
-                    {
-                        Naziv = ""
-                    };
-                    var tipNamestajaProzor = new TipNamestajaWindow(noviTipNamestaja, 0, TipNamestajaWindow.Operacija.DODAVANJE);
+                    var noviTipNamestaja = new TipNamestaja();
+                    var tipNamestajaProzor = new TipNamestajaWindow(noviTipNamestaja, TipNamestajaWindow.Operacija.DODAVANJE);
                     tipNamestajaProzor.ShowDialog();
                     break;
                 case Opcija.KORISNIK:
-                    var noviKorisnik = new Korisnik()
-                    {
-                        Ime = ""
-                    };
-                    var korisnikProzor = new KorisnikWindow(noviKorisnik, 0, KorisnikWindow.Operacija.DODAVANJE);
+                    var noviKorisnik = new Korisnik();
+                    var korisnikProzor = new KorisnikWindow(noviKorisnik, KorisnikWindow.Operacija.DODAVANJE, LogovaniKorisnik);
                     korisnikProzor.ShowDialog();
                     break;
                 case Opcija.AKCIJA:
-                    var novaAkcija = new Akcija()
-                    {
-                        Obrisan = false
-                    };
-                    var akcijaProzor = new AkcijaWindow(novaAkcija, 0, AkcijaWindow.Operacija.DODAVANJE);
+                    var novaAkcija = new Akcija();
+                    var akcijaProzor = new AkcijaWindow(novaAkcija, AkcijaWindow.Operacija.DODAVANJE);
                     akcijaProzor.ShowDialog();
                     break;
                 case Opcija.DODATNAUSLUGA:
-                    var novaDodatnaUsluga = new DodatnaUsluga()
-                    {
-                        Naziv = ""
-                    };
-                    var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, 0, DodatnaUslugaWindow.Operacija.DODAVANJE);
+                    var novaDodatnaUsluga = new DodatnaUsluga();
+                    var dodatnaUslugaProzor = new DodatnaUslugaWindow(novaDodatnaUsluga, DodatnaUslugaWindow.Operacija.DODAVANJE);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
                 case Opcija.PRODAJA:
@@ -377,32 +293,32 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.NAMESTAJ:
                     var noviNamestaj = (Namestaj)dgTabela.SelectedItem;
-                    var namestajProzor = new NamestajWindow((Namestaj)noviNamestaj.Clone(),Projekat.Instance.Namestaji.IndexOf(noviNamestaj), NamestajWindow.Operacija.IZMENA);
+                    var namestajProzor = new NamestajWindow((Namestaj)noviNamestaj.Clone(), NamestajWindow.Operacija.IZMENA);
                     namestajProzor.ShowDialog();
                     break;
                 case Opcija.TIPNAMESTAJA:
                     var noviTipNamestaja = (TipNamestaja)dgTabela.SelectedItem;
-                    var tipNamestajaProzor = new TipNamestajaWindow((TipNamestaja)noviTipNamestaja.Clone(), Projekat.Instance.TipoviNamestaja.IndexOf(noviTipNamestaja), TipNamestajaWindow.Operacija.IZMENA);
+                    var tipNamestajaProzor = new TipNamestajaWindow((TipNamestaja)noviTipNamestaja.Clone(), TipNamestajaWindow.Operacija.IZMENA);
                     tipNamestajaProzor.ShowDialog();
                     break;
                 case Opcija.KORISNIK:
                     var noviKorisnik = (Korisnik)dgTabela.SelectedItem;
-                    var korisnikProzor = new KorisnikWindow((Korisnik)noviKorisnik.Clone(),Projekat.Instance.Korisnici.IndexOf(noviKorisnik), KorisnikWindow.Operacija.IZMENA);
+                    var korisnikProzor = new KorisnikWindow((Korisnik)noviKorisnik.Clone(), KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
                     korisnikProzor.ShowDialog();
                     break;
                 case Opcija.AKCIJA:
                     var novaAkcija = (Akcija)dgTabela.SelectedItem;
-                    var akcijaProzor = new AkcijaWindow((Akcija)novaAkcija.Clone(),Projekat.Instance.Akcija.IndexOf(novaAkcija), AkcijaWindow.Operacija.IZMENA);
+                    var akcijaProzor = new AkcijaWindow((Akcija)novaAkcija.Clone(), AkcijaWindow.Operacija.IZMENA);
                     akcijaProzor.ShowDialog();
                     break;
                 case Opcija.DODATNAUSLUGA:
                     var novaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
-                    var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(),Projekat.Instance.DodatneUsluge.IndexOf(novaDodatnaUsluga), DodatnaUslugaWindow.Operacija.IZMENA);
+                    var dodatnaUslugaProzor = new DodatnaUslugaWindow((DodatnaUsluga)novaDodatnaUsluga.Clone(), DodatnaUslugaWindow.Operacija.IZMENA);
                     dodatnaUslugaProzor.ShowDialog();
                     break;
                 case Opcija.PRODAJA:
                     var novaProdaja = (ProdajaNamestaja)dgTabela.SelectedItem;
-                    var prodajaWindow = new ProdajaWindow((ProdajaNamestaja)novaProdaja.Clone(), Projekat.Instance.Prodaja.IndexOf(novaProdaja), ProdajaWindow.Operacija.IZMENA);
+                    var prodajaWindow = new ProdajaWindow((ProdajaNamestaja)novaProdaja.Clone(), ProdajaWindow.Operacija.IZMENA);
                     prodajaWindow.ShowDialog();
                     break;
             }
@@ -556,7 +472,7 @@ namespace POP_SF39_2016_GUI.gui
         private void ProdajaProzor()
         {
             var novaProdaja = new ProdajaNamestaja();
-            var prodajaProzor = new ProdajaWindow(novaProdaja, 0, ProdajaWindow.Operacija.DODAVANJE);
+            var prodajaProzor = new ProdajaWindow(novaProdaja, ProdajaWindow.Operacija.DODAVANJE);
             prodajaProzor.ShowDialog();
         }
 
@@ -666,6 +582,11 @@ namespace POP_SF39_2016_GUI.gui
                 Pretrazeno = true;
             if (cbZaSort.SelectedValue != null)
                 Sortirano = true;
+        }
+        public void SalonEditView(object sender, RoutedEventArgs e)
+        {
+            var salonProzor = new SalonWindow(LogovaniKorisnik);
+            salonProzor.ShowDialog();
         }
     }
 }

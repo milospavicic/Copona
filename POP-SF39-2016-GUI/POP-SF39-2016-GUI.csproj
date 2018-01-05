@@ -89,11 +89,11 @@
     <Compile Include="gui\ProdajaWindow.xaml.cs">
       <DependentUpon>ProdajaWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="gui\SalonWindow.xaml.cs">
+      <DependentUpon>SalonWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="gui\TipNamestajaWindow.xaml.cs">
       <DependentUpon>TipNamestajaWindow.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="gui\UnesiPopustWindow.xaml.cs">
-      <DependentUpon>UnesiPopustWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="gui\UnosWindow.xaml.cs">
       <DependentUpon>UnosWindow.xaml</DependentUpon>
@@ -109,7 +109,6 @@
     <Compile Include="model\Projekat.cs" />
     <Compile Include="model\Salon.cs" />
     <Compile Include="model\TipNamestaja.cs" />
-    <Compile Include="util\GenericSerializer.cs" />
     <Page Include="gui\AkcijaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -142,11 +141,11 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="gui\TipNamestajaWindow.xaml">
+    <Page Include="gui\SalonWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="gui\UnesiPopustWindow.xaml">
+    <Page Include="gui\TipNamestajaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -192,28 +191,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\korisnici.xml" />
-    <Resource Include="data\namestaj.xml">
-      <SubType>Designer</SubType>
-    </Resource>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\akcije.xml" />
-    <Resource Include="data\dodatneusluge.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\salon.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\tipnamestaja.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\jediniceprodaje.xml" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="data\prodajenamestaja.xml" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="DB-scripts\crebas.sql" />

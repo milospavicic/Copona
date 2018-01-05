@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="KorisnikWindow" Height="400" Width="400">
+        Title="KorisnikWindow" Height="400" Width="330" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -14,13 +14,15 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="370*"/>
+            <RowDefinition Height="300*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Column="1" Grid.Row="1">
+        <Border Grid.Column="1" Grid.Row="1"  BorderBrush="Black" BorderThickness="1">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.5*"/>
                     <ColumnDefinition Width="1*"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
@@ -30,20 +32,22 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
                 </Grid.RowDefinitions>
-                <Label Content="Ime" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
-                <Label Content="Prezime" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1" Grid.Column="0" FontSize="20"/>
-                <Label Content="Korisnicko ime" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="2" Grid.Column="0" FontSize="20"/>
-                <Label Content="Sifra" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="3" Grid.Column="0" FontSize="20"/>
-                <Label Content="Pozicija" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="4" Grid.Column="0" FontSize="20"/>
-                <TextBox Text="{Binding Path=Ime}" Name="tbIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="0" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Text="{Binding Path=Prezime}" Name="tbPrezime" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <TextBox Text="{Binding Path=KorisnickoIme}" Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <PasswordBox Name="pbSifra" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="1" FontSize="20" Margin="10" VerticalContentAlignment="Center"/>
-                <ComboBox Text="{Binding Path=TipKorisnika}" SelectedValue="{Binding Path=TipKorisnika}" Name="cbPozicija" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="1" FontSize="20" Margin="12" VerticalContentAlignment="Center"/>
+                <Label Content="Informacije o korisniku:" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="4" FontSize="15" />
+                <Label Content="Ime" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="1" Grid.Column="1" Grid.ColumnSpan="2" />
+                <Label Content="Prezime" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
+                <Label Content="Korisnicko ime" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" />
+                <Label Content="Sifra" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
+                <Label Content="Pozicija" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="5" Grid.Column="1" Grid.ColumnSpan="2" />
+                <TextBox Text="{Binding Path=Ime}" Name="tbIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="1" Grid.Column="3" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=Prezime}" Name="tbPrezime" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="2" Grid.Column="3" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=KorisnickoIme}" Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="3" Grid.Column="3" Margin="10" VerticalContentAlignment="Center"/>
+                <TextBox Text="{Binding Path=Lozinka}" Name="tbSifra" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="4" Grid.Column="3"  Margin="10" VerticalContentAlignment="Center"/>
+                <ComboBox SelectedValue="{Binding Path=TipKorisnika}" Name="cbPozicija" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Grid.Row="5" Grid.Column="3" FontSize="13" Margin="12" VerticalContentAlignment="Center"/>
 
-                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="5" Margin="35,15,35,15" Click="SacuvajIzmene"/>
-                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="5" Margin="35,15,35,15" Click="ZatvoriWindow"/>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="6" Width="75" Height="21" Margin="35,0,0,0" Click="SacuvajIzmene"/>
+                <Button Name= "btnIzadji" Content="Izadji" Grid.Column="3" Grid.Row="6" Width="75" Height="21" Margin="0,0,35,0" Click="ZatvoriWindow"/>
             </Grid>
         </Border>
     </Grid>

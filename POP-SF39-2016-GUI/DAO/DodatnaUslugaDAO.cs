@@ -103,7 +103,7 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return dodatnaUsluga;
         }
-        
+
         public static DodatnaUsluga Create(DodatnaUsluga du)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -171,7 +171,7 @@ namespace POP_SF39_2016_GUI.DAO
 
 
                 cmd.CommandText = "SELECT * FROM DodatnaUsluga WHERE Obrisan=0 AND Naziv LIKE @parametar";
-                cmd.Parameters.AddWithValue("parametar", "%"+ parametar + "%");
+                cmd.Parameters.AddWithValue("parametar", "%" + parametar + "%");
                 da.SelectCommand = cmd;
                 da.Fill(ds, "DodatnaUsluga"); //izvrsavanje upita
 

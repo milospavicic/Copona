@@ -1,22 +1,10 @@
 ﻿using POP_SF39_2016.model;
-using POP_SF39_2016.util;
 using POP_SF39_2016_GUI.DAO;
 using POP_SF39_2016_GUI.model;
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -32,15 +20,13 @@ namespace POP_SF39_2016_GUI.gui
 
         private Akcija akcija;
         private Operacija operacija;
-        private int index;
         private int PopustNamestaja { get; set; }
 
-        public AkcijaWindow(Akcija akcija, int index, Operacija operacija)
+        public AkcijaWindow(Akcija akcija, Operacija operacija)
         {
             InitializeComponent();
             this.akcija = akcija;
             this.operacija = operacija;
-            this.index = index;
             dgNamestaj.AutoGenerateColumns = false;
             dgNamestaj.IsSynchronizedWithCurrentItem = true;
             PopunjavanjePolja();
@@ -57,7 +43,7 @@ namespace POP_SF39_2016_GUI.gui
             {
                 ListaNAZaDG2 = NaAkcijiDAO.GetAllNAForActionId(akcija.Id);
                 dgZaAkciju.IsReadOnly = true;
-                dpPocetniDatum.IsHitTestVisible = false; 
+                dpPocetniDatum.IsHitTestVisible = false;
             }
             dgNamestaj.ItemsSource = ListaNamestajaZaDG1;
             dgZaAkciju.ItemsSource = ListaNAZaDG2;
@@ -65,6 +51,7 @@ namespace POP_SF39_2016_GUI.gui
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
+
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
@@ -82,9 +69,9 @@ namespace POP_SF39_2016_GUI.gui
                     foreach (var tempNaZaCreate in ListaNAZaDG2)
                     {
                         bool postoji = false;
-                        foreach(var tempN in NaAkcijiDAO.GetAllNAForActionId(akcija.Id))
+                        foreach (var tempN in NaAkcijiDAO.GetAllNAForActionId(akcija.Id))
                         {
-                            if(tempNaZaCreate.IdNamestaja == tempN.IdNamestaja)
+                            if (tempNaZaCreate.IdNamestaja == tempN.IdNamestaja)
                             {
                                 postoji = true;
                                 if (tempNaZaCreate.Popust != tempN.Popust)
@@ -93,7 +80,7 @@ namespace POP_SF39_2016_GUI.gui
                                     NaAkcijiDAO.Update(tempN);
                                 }
                                 listaNaZaBrisanje.ToList().ForEach(x => { if (x.IdNamestaja == tempNaZaCreate.IdNamestaja) listaNaZaBrisanje.Remove(x); });
-                                
+
 
                                 break;
                             }
@@ -112,7 +99,7 @@ namespace POP_SF39_2016_GUI.gui
             }
 
             this.Close();
-            
+
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
@@ -121,7 +108,7 @@ namespace POP_SF39_2016_GUI.gui
 
         private void DodajAkciju(object sender, RoutedEventArgs e)
         {
-            var unesiPopust = new UnosWindow(UnosWindow.Opcija.POPUST,0,0);
+            var unesiPopust = new UnosWindow(UnosWindow.Opcija.POPUST, 0, 0);
             unesiPopust.ShowDialog();
 
             if (unesiPopust.DialogResult == true)
@@ -142,7 +129,8 @@ namespace POP_SF39_2016_GUI.gui
             var tempNA = (NaAkciji)dgZaAkciju.SelectedItem;
             ListaNAZaDG2.Remove(tempNA);
             var tempN = NamestajDAO.GetById(tempNA.IdNamestaja);
-            ListaNamestajaZaDG1.Add(tempN);
+            if (tempN.Obrisan != true)
+                ListaNamestajaZaDG1.Add(tempN);
         }
 
         private void DatumProvera(object sender, SelectionChangedEventArgs e)

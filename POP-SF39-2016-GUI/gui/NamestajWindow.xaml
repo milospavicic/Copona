@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="NamestajWindow" Height="400" Width="400">
+        Title="NamestajWindow" Height="400" Width="400" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>

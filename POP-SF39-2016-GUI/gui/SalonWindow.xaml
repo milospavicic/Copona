@@ -1,0 +1,62 @@
+﻿<Window x:Class="POP_SF39_2016_GUI.gui.SalonWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        mc:Ignorable="d"
+        Title="SalonWindow" Height="460" Width="360" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="430*"/>
+            <ColumnDefinition Width="15*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="15*"/>
+            <RowDefinition Height="330*"/>
+            <RowDefinition Height="15*"/>
+        </Grid.RowDefinitions>
+        <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.25*"/>
+                    <ColumnDefinition Width="0.5*"/>
+                    <ColumnDefinition Width="1*"/>
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1.1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                    <RowDefinition Height="1*"/>
+                </Grid.RowDefinitions>
+                <Label Content="Informacije:" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="4" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="14"/>
+                <Label Content="Naziv:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Adresa:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Broj telefona:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Left" />
+                <Label Content="Email:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Web adresa:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Maticni broj:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Broj Racuna:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <Label Content="Pib:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left"/>
+                <TextBox Name="tbNaziv" Text="{Binding Naziv}" Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbAdresa" Text="{Binding Adresa}" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbBrojTelefona" Text="{Binding BrojTelefona}" Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbEmail" Text="{Binding Email}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbWebAdresa" Text="{Binding WebAdresa}" Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbMaticniBroj" Text="{Binding MaticniBr}" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbBrojRacuna" Text="{Binding BrRacuna}" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <TextBox Name="tbPib" Text="{Binding Pib}" Grid.Column="3" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
+                <Button Name="btnSnimi" Content="Snimi" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="9" Width="75" Height="21" Margin="35,0,0,0" Click="SnimiPromene"/>
+                <Button Name="btnIzadji" Content="Izadji" Grid.Column="4" Grid.Row="9" Width="75" Height="21" Margin="0,0,35,0" Click="Izadji"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

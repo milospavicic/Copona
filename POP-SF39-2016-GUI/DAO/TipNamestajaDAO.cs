@@ -203,7 +203,7 @@ namespace POP_SF39_2016_GUI.DAO
                         cmd.CommandText = "SELECT * FROM TipNamestaja WHERE Obrisan=0";
                         break;
                 }
-                
+
                 switch (sortBy)
                 {
                     case SortBy.Naziv_Opadajuce:

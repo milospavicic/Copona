@@ -14,29 +14,6 @@ namespace POP_SF39_2016_GUI.DAO
 {
     class NaAkcijiDAO
     {
-        /***
-        public static int Count()
-        {
-            int slIndex = 0;
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT COUNT(*) as BrRedova FROM NaAkciji";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "NaAkciji"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["NaAkciji"].Rows)
-                {
-                    slIndex = int.Parse(row["BrRedova"].ToString());
-                }
-            }
-            return slIndex;
-        }
-        ***/
         public static ObservableCollection<NaAkciji> GetAll()
         {
             var listaNaAkcija = new ObservableCollection<NaAkciji>();
@@ -191,7 +168,7 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
-                
+
                 cmd.CommandText = "SELECT * FROM NaAkciji WHERE IdNamestaja=@IdNamestaja";
                 cmd.CommandText += " Select SCOPE_IDENTITY();";
 

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
-        Title="ProdajaWindow" Height="800" Width="1200">
+        Title="ProdajaWindow" Height="800" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" >
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -24,7 +24,7 @@
         </Border>
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="1">
             <Grid>
-                <TabControl Name="tcProdaja" TabStripPlacement="left">
+                <TabControl Name="tcProdaja">
                     <TabItem Header="Namestaj" Selector.Selected="NamestajSelected">
                         <Grid Background="#FFE5E5E5">
                             <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdajaN_AutoGeneratingColumn" />

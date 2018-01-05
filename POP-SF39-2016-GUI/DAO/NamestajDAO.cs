@@ -149,7 +149,7 @@ namespace POP_SF39_2016_GUI.DAO
             Projekat.Instance.Namestaji.Add(nn);
             return nn;
         }
-        
+
         public static void Update(Namestaj nzu)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -239,7 +239,7 @@ namespace POP_SF39_2016_GUI.DAO
 
 
                 cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn ON n.TipNamestajaId = tn.Id WHERE n.Obrisan=0 AND (n.Naziv LIKE @parametar OR Sifra LIKE @parametar or tn.Naziv LIKE @parametar)";
-                cmd.Parameters.AddWithValue("parametar", "%" + parametar.Trim() +"%");
+                cmd.Parameters.AddWithValue("parametar", "%" + parametar.Trim() + "%");
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Namestaj"); //izvrsavanje upita
 
@@ -268,7 +268,7 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
-                
+
                 cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn on n.TipNamestajaId=tn.Id  WHERE n.Obrisan=0";
                 switch (sortBy)
                 {
@@ -378,7 +378,7 @@ namespace POP_SF39_2016_GUI.DAO
                 switch (doSearch)
                 {
                     case GlavniWindow.DoSearch.Other:
-                        
+
                         break;
                 }
                 da.SelectCommand = cmd;

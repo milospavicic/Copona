@@ -1,18 +1,8 @@
 ﻿using POP_SF39_2016.model;
-using POP_SF39_2016.util;
+using POP_SF39_2016_GUI.DAO;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -26,22 +16,21 @@ namespace POP_SF39_2016_GUI.gui
 
         private Korisnik korisnik;
         private Operacija operacija;
-        private int index;
+        private Korisnik logovaniKorisnik;
 
-        public KorisnikWindow(Korisnik korisnik, int index, Operacija operacija)
+        public KorisnikWindow(Korisnik korisnik, Operacija operacija, Korisnik logovaniKorisnik)
         {
             InitializeComponent();
             this.korisnik = korisnik;
             this.operacija = operacija;
-            this.index = index;
+            this.logovaniKorisnik = logovaniKorisnik;
             PopunjavanjePolja(korisnik);
-            
-            if (operacija == Operacija.IZMENA) {
+
+            if (operacija == Operacija.IZMENA)
+            {
                 tbKorisnickoIme.Focusable = false;
                 tbKorisnickoIme.IsHitTestVisible = false;
-                pbSifra.Focusable = false; // Nema bindinga = nema promene?
-                pbSifra.IsHitTestVisible = false;
-            }  
+            }
         }
 
         private void PopunjavanjePolja(Korisnik korisnik)
@@ -51,26 +40,22 @@ namespace POP_SF39_2016_GUI.gui
             tbPrezime.DataContext = korisnik;
             tbKorisnickoIme.DataContext = korisnik;
             cbPozicija.DataContext = korisnik;
-
-            pbSifra.Password = korisnik.Lozinka;
-
+            tbSifra.DataContext = korisnik;
+            if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac || logovaniKorisnik.Id == korisnik.Id)
+                cbPozicija.IsEnabled = false;
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-            var listaKorisnika = Projekat.Instance.Korisnici;
-            korisnik.Lozinka = this.pbSifra.Password; // NEMA BINDINGA ZA PWBOX
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
-                    korisnik.Id = listaKorisnika.Count + 1;
-                    listaKorisnika.Add(korisnik);
+                    KorisnikDAO.Create(korisnik);
                     break;
                 case Operacija.IZMENA:
-                    Projekat.Instance.Korisnici[index] = korisnik;
+                    KorisnikDAO.Update(korisnik);
                     break;
             }
-            GenericSerializer.Serialize("korisnici.xml", listaKorisnika);
             this.Close();
         }
         private void ZatvoriWindow(object sender, RoutedEventArgs e)

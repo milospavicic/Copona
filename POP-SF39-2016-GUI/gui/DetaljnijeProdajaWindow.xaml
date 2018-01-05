@@ -4,10 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
-        xmlns:igDP="http://infragistics.com/DataPresenter"
-        xmlns:igWPF="http://schemas.infragistics.com/xaml/wpf"
         mc:Ignorable="d"
-        Title="DetaljnijeProdajaWindow" Height="400" Width="500">
+        Title="DetaljnijeProdajaWindow" Height="400" Width="500" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -49,15 +47,6 @@
                         <DataGridTextColumn Header="Cena Ukupno" Binding="{Binding CenaUkupno}" MinWidth="85"/>
                         <DataGridTextColumn Header="Cena Ukupno + PDV" Binding="{Binding CenaUkupnoPDV}" MinWidth="125"/>
                     </DataGrid.Columns>
-                    <!--
-                    <DataGrid.Style>
-                        <Style TargetType="{x:Type igDP:DataRecordPresenter}">
-
-                            <Setter Property="IsEnabled" Value="False"/>
-
-                        </Style>
-                    </DataGrid.Style>
-                    -->
                 </DataGrid>
             </Grid>
         </Border>

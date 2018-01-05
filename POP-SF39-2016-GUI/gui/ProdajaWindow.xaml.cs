@@ -1,27 +1,16 @@
 ﻿using POP_SF39_2016.model;
-using POP_SF39_2016.util;
 using POP_SF39_2016_GUI.DAO;
 using POP_SF39_2016_GUI.model;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Globalization;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace POP_SF39_2016_GUI.gui
 {
-   
     public partial class ProdajaWindow : Window
     {
         public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<Object>();
@@ -41,14 +30,12 @@ namespace POP_SF39_2016_GUI.gui
         private ProdajaNamestaja prodajaNamestaja;
         private Operacija operacija;
         private RadSa radSa;
-        private int index;
 
-        public ProdajaWindow(ProdajaNamestaja prodajaNamestaja,int index,Operacija operacija)
+        public ProdajaWindow(ProdajaNamestaja prodajaNamestaja, Operacija operacija)
         {
             InitializeComponent();
             this.operacija = operacija;
             this.prodajaNamestaja = prodajaNamestaja;
-            this.index = index;
             dgProdajaN.IsReadOnly = true;
             dgProdajaN.IsSynchronizedWithCurrentItem = true;
             dgProdajaN.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -103,10 +90,10 @@ namespace POP_SF39_2016_GUI.gui
                     break;
                 case Operacija.IZMENA:
                     var temp = prodajaNamestaja.UkupnaCena;
-                    prodajaNamestaja.UkupnaCenaPdv =temp+ temp*ProdajaNamestaja.PDV;
+                    prodajaNamestaja.UkupnaCenaPdv = temp + temp * ProdajaNamestaja.PDV;
                     JedinicaProdajeDAO.GetAllForId(prodajaNamestaja.Id).ToList().ForEach(x => { Korpa.Add(x); });
                     ProdataDodatnaUslugaDAO.GetAllForId(prodajaNamestaja.Id).ToList().ForEach(x => { Korpa.Add(x); });
-                    ListaDU =  DodatnaUslugaDAO.GetAllNotSoldForId(prodajaNamestaja.Id);
+                    ListaDU = DodatnaUslugaDAO.GetAllNotSoldForId(prodajaNamestaja.Id);
                     break;
             }
             view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
@@ -144,12 +131,12 @@ namespace POP_SF39_2016_GUI.gui
 
         private void btnProdajFinal_Click(object sender, RoutedEventArgs e)
         {
-            if (tbKupac.Text=="")
+            if (tbKupac.Text == "")
             {
                 MessageBoxResult poruka = MessageBox.Show("Polja moraju biti popunjena. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
-            if (Korpa.Count()==0)
+            if (Korpa.Count() == 0)
             {
                 MessageBoxResult poruka = MessageBox.Show("Korpa je prazna.", "Upozorenje", MessageBoxButton.OK);
                 return;
@@ -200,7 +187,7 @@ namespace POP_SF39_2016_GUI.gui
                                 if (tempN.Id == tempItem.Id)
                                 {
                                     postoji = true;
-                                    listaJPZaBrisanje.ToList().ForEach(x => { if (x.Id == tempN.Id) listaJPZaBrisanje.Remove(x);return;});
+                                    listaJPZaBrisanje.ToList().ForEach(x => { if (x.Id == tempN.Id) listaJPZaBrisanje.Remove(x); return; });
                                     if (tempItem.Kolicina != tempN.Kolicina)
                                     {
                                         int temp = tempItem.Kolicina - tempN.Kolicina;
@@ -237,12 +224,12 @@ namespace POP_SF39_2016_GUI.gui
                             }
                         }
                     }
-                    foreach(JedinicaProdaje jpZaObrisati in listaJPZaBrisanje)
+                    foreach (JedinicaProdaje jpZaObrisati in listaJPZaBrisanje)
                     {
                         JedinicaProdajeDAO.Delete(jpZaObrisati);
                         Namestaj.GetById(jpZaObrisati.NamestajId).BrKomada += jpZaObrisati.Kolicina;
                     }
-                    foreach(ProdataDU duZaObrisati in listaDUZaBrisanje)
+                    foreach (ProdataDU duZaObrisati in listaDUZaBrisanje)
                     {
                         ProdataDodatnaUslugaDAO.Delete(duZaObrisati);
                     }
@@ -255,7 +242,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             double tempCena = 0;
             switch (radSa)
-            {  
+            {
                 case RadSa.NAMESTAJ:
                     if (dgProdajaN.SelectedItem == null)
                     {
@@ -264,7 +251,7 @@ namespace POP_SF39_2016_GUI.gui
                     }
                     Namestaj selektovaniNamestaj = (Namestaj)dgProdajaN.SelectedItem;
                     bool postoji = false;
-                    foreach(var item in Korpa)
+                    foreach (var item in Korpa)
                     {
                         if (item.GetType() == typeof(JedinicaProdaje))
                         {
@@ -278,7 +265,7 @@ namespace POP_SF39_2016_GUI.gui
                                     tempJP.Kolicina += unosKolicine.Kolicina;
                                 }
                                 else { return; }
-                                var tempCenaJP = tempJP.Kolicina * tempJP.Cena ;
+                                var tempCenaJP = tempJP.Kolicina * tempJP.Cena;
                                 tempJP.CenaUkupno = tempCenaJP;
                                 tempJP.CenaUkupnoPDV = tempCenaJP + tempCenaJP * ProdajaNamestaja.PDV;
                                 postoji = true;
@@ -311,7 +298,7 @@ namespace POP_SF39_2016_GUI.gui
                         return;
                     }
                     DodatnaUsluga selektovanaDodatnaUsluga = (DodatnaUsluga)dgProdajaDU.SelectedItem;
-                    tempCena = selektovanaDodatnaUsluga.Cena ;
+                    tempCena = selektovanaDodatnaUsluga.Cena;
                     prodajaNamestaja.UkupnaCena += tempCena;
                     prodajaNamestaja.UkupnaCenaPdv += tempCena + tempCena * ProdajaNamestaja.PDV;
                     var tempDU = new ProdataDU
@@ -364,7 +351,8 @@ namespace POP_SF39_2016_GUI.gui
             {
                 var itemSaRacuna = (ProdataDU)dgRacun.SelectedItem;
                 Korpa.RemoveAt(dgRacun.SelectedIndex);
-                ListaDU.Add(DodatnaUslugaDAO.GetById(itemSaRacuna.DodatnaUslugaId));
+                if (itemSaRacuna.Obrisan != true)
+                    ListaDU.Add(DodatnaUslugaDAO.GetById(itemSaRacuna.DodatnaUslugaId));
                 tempCena = itemSaRacuna.Cena;
                 prodajaNamestaja.UkupnaCena -= tempCena;
                 prodajaNamestaja.UkupnaCenaPdv -= tempCena + tempCena * ProdajaNamestaja.PDV;

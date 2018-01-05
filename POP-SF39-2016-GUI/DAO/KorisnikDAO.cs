@@ -59,7 +59,7 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return korisnici;
         }
-        
+
         public static Korisnik GetById(int Id)
         {
             var korisnik = new Korisnik();
@@ -92,7 +92,7 @@ namespace POP_SF39_2016_GUI.DAO
             }
             return korisnik;
         }
-        
+
         public static Korisnik Create(Korisnik nk)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -119,7 +119,7 @@ namespace POP_SF39_2016_GUI.DAO
             Projekat.Instance.Korisnici.Add(nk);
             return nk;
         }
-        
+
         public static void Update(Korisnik kzu)
         {
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
@@ -175,7 +175,7 @@ namespace POP_SF39_2016_GUI.DAO
 
 
                 cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0 AND (Ime LIKE @parametar OR Prezime LIKE @parametar OR KorisnickoIme LIKE @parametar";
-                cmd.Parameters.AddWithValue("parametar","%"+parametar+"%");
+                cmd.Parameters.AddWithValue("parametar", "%" + parametar + "%");
                 da.SelectCommand = cmd;
                 da.Fill(ds, "Korisnik"); //izvrsavanje upita
 
@@ -276,7 +276,7 @@ namespace POP_SF39_2016_GUI.DAO
                         cmd.CommandText = "SELECT * FROM Korisnik WHERE Obrisan=0";
                         break;
                 }
-                
+
                 switch (sortBy)
                 {
                     case SortBy.Ime_Opadajuce:

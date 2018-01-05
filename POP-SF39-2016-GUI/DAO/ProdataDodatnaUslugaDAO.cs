@@ -50,7 +50,7 @@ namespace POP_SF39_2016_GUI.DAO
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();
 
-                cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE Obrisan=0 AND ProdajaId=@ProdajaId";
+                cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE ProdajaId=@ProdajaId";
                 cmd.Parameters.AddWithValue("ProdajaId", Id);
                 da.SelectCommand = cmd;
                 da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
@@ -103,7 +103,7 @@ namespace POP_SF39_2016_GUI.DAO
 
                 cmd.Parameters.AddWithValue("Id", jp.Id);
                 cmd.Parameters.AddWithValue("DodatnaUslugaId", jp.DodatnaUslugaId);
-                cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId);;
+                cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId); ;
                 cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
 
                 cmd.ExecuteNonQuery();

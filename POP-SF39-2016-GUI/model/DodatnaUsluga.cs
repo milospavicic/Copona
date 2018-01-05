@@ -85,19 +85,5 @@ namespace POP_SF39_2016.model
                 return Cena + Cena * ProdajaNamestaja.PDV;
             }
         }
-        public double CenaUkupno
-        {
-            get
-            {
-                return Cena;
-            }
-        }
-        public double CenaUkupnoPDV
-        {
-            get
-            {
-                return Cena + Cena * ProdajaNamestaja.PDV;
-            }
-        }
     }
 }
