@@ -3,9 +3,27 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
-        Title="SalonWindow" Height="460" Width="360" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
+        Title="SalonWindow" Height="460" Width="390" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="StringError">
+            <DockPanel >
+                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Center" ToolTip="Ovo polje mora biti popunjeno" VerticalAlignment="Center" Margin="3,0,0,0">*</TextBlock>
+                <Border BorderBrush="Red" BorderThickness="0.5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <AdornedElementPlaceholder/>
+                </Border>
+            </DockPanel>
+        </ControlTemplate>
+        <ControlTemplate x:Key="IntError">
+            <DockPanel >
+                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Center" ToolTip="Ovo polje mora biti pozitivan broj" VerticalAlignment="Center" Margin="3,0,0,0">*</TextBlock>
+                <Border BorderBrush="Red" BorderThickness="0.5" VerticalAlignment="Center" HorizontalAlignment="Stretch">
+                    <AdornedElementPlaceholder/>
+                </Border>
+            </DockPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -14,7 +32,7 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="15*"/>
-            <RowDefinition Height="330*"/>
+            <RowDefinition Height="360*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
         <Border Grid.Row="1" Grid.Column="1" BorderBrush="Black" BorderThickness="1">
@@ -46,15 +64,100 @@
                 <Label Content="Maticni broj:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <Label Content="Broj Racuna:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Left"/>
                 <Label Content="Pib:" Grid.ColumnSpan="2" Grid.Column="1" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Left"/>
-                <TextBox Name="tbNaziv" Text="{Binding Naziv}" Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbAdresa" Text="{Binding Adresa}" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbBrojTelefona" Text="{Binding BrojTelefona}" Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbEmail" Text="{Binding Email}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbWebAdresa" Text="{Binding WebAdresa}" Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbMaticniBroj" Text="{Binding MaticniBr}" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbBrojRacuna" Text="{Binding BrRacuna}" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <TextBox Name="tbPib" Text="{Binding Pib}" Grid.Column="3" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0"/>
-                <Button Name="btnSnimi" Content="Snimi" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="9" Width="75" Height="21" Margin="35,0,0,0" Click="SnimiPromene"/>
+                <TextBox Name="tbNaziv" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="Naziv" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbAdresa" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="Adresa" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbBrojTelefona" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="3" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="BrojTelefona" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbEmail" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="4" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="Email" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbWebAdresa" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="5" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="WebAdresa" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbMaticniBroj" Validation.ErrorTemplate="{StaticResource ResourceKey=IntError}" Grid.Column="3" Grid.Row="6" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="MaticniBr" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:IntValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbBrojRacuna" Validation.ErrorTemplate="{StaticResource ResourceKey=StringError}" Grid.Column="3" Grid.Row="7" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="BrRacuna" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbPib" Validation.ErrorTemplate="{StaticResource ResourceKey=IntError}" Grid.Column="3" Grid.Row="8" VerticalAlignment="Center" HorizontalAlignment="Stretch" Margin="0,0,25,0">
+                    <TextBox.Text>
+                        <Binding Path="Pib" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:IntValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button Name="btnSnimi" Content="Snimi" Grid.Column="0" Grid.ColumnSpan="3" Grid.Row="9" Width="75" Height="21" Margin="35,0,0,0" Click="SnimiPromene">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbNaziv}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbAdresa}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbBrojTelefona}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbEmail}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbWebAdresa}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbBrojRacuna}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbMaticniBroj}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbPib}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Name="btnIzadji" Content="Izadji" Grid.Column="4" Grid.Row="9" Width="75" Height="21" Margin="0,0,35,0" Click="Izadji"/>
             </Grid>
         </Border>

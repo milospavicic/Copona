@@ -1,15 +1,10 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016_GUI.gui;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -28,6 +23,7 @@ namespace POP_SF39_2016_GUI.DAO
 
         public static ObservableCollection<Akcija> GetAll()
         {
+            StillActiveButPastEndDate();
             var listaAkcija = new ObservableCollection<Akcija>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -257,6 +253,40 @@ namespace POP_SF39_2016_GUI.DAO
                 }
             }
             return listaAkcija;
+        }
+        public static void StillActiveButPastEndDate()
+        {
+            var listaAkcija = new ObservableCollection<Akcija>();
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND DatumKraj < @DatumKraj";
+                cmd.Parameters.AddWithValue("DatumKraj",DateTime.Now);
+                da.SelectCommand = cmd;
+                da.Fill(ds, "Akcija"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                {
+                    var a = new Akcija();
+                    a.Id = (int)row["IdAkcije"];
+                    a.Naziv = row["Naziv"].ToString();
+                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
+                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
+                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                    listaAkcija.Add(a);
+                }
+            }
+            foreach(var akcijaZaBrisanje in listaAkcija)
+            {
+                foreach(var tempNa in NaAkcijiDAO.GetAllNAForActionId(akcijaZaBrisanje.Id))
+                    NaAkcijiDAO.Delete(tempNa);
+                AkcijaDAO.Delete(akcijaZaBrisanje);
+            }
         }
     }
 }

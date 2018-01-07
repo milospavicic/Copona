@@ -27,6 +27,7 @@ namespace POP_SF39_2016.model
         bool naAkciji;
         private double akcijskaCena;
         private int tempProcenat;
+
         public string Naziv
         {
             get { return naziv; }

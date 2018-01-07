@@ -3,6 +3,8 @@ using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Linq;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -47,9 +49,17 @@ namespace POP_SF39_2016_GUI.gui
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
+            if (ForceValidation() == true)
+                return;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
+                    foreach(var vecPostojeciKorisnik in Projekat.Instance.Korisnici)
+                        if (korisnik.KorisnickoIme == vecPostojeciKorisnik.KorisnickoIme)
+                        {
+                            MessageBoxResult poruka = MessageBox.Show("Vec postoji korisnik sa unetim korisnickim imenom.", "Upozorenje", MessageBoxButton.OK);
+                            return;
+                        }
                     KorisnikDAO.Create(korisnik);
                     break;
                 case Operacija.IZMENA:
@@ -61,6 +71,22 @@ namespace POP_SF39_2016_GUI.gui
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private bool ForceValidation()
+        {
+            BindingExpression be1 = tbIme.GetBindingExpression(TextBox.TextProperty);
+            be1.UpdateSource();
+            BindingExpression be2 = tbPrezime.GetBindingExpression(TextBox.TextProperty);
+            be2.UpdateSource();
+            BindingExpression be3 = tbKorisnickoIme.GetBindingExpression(TextBox.TextProperty);
+            be3.UpdateSource();
+            BindingExpression be4 = tbSifra.GetBindingExpression(TextBox.TextProperty);
+            be4.UpdateSource();
+            if (Validation.GetHasError(tbIme) == true || Validation.GetHasError(tbPrezime)==true || Validation.GetHasError(tbKorisnickoIme) == true || Validation.GetHasError(tbSifra) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

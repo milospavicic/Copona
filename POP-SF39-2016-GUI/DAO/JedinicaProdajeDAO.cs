@@ -133,5 +133,35 @@ namespace POP_SF39_2016_GUI.DAO
             jp.Obrisan = true;
             Update(jp);
         }
+
+        internal static JedinicaProdaje GetJPForJPId(int Id)
+        {
+            JedinicaProdaje jedProdaje = null;
+            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            {
+                SqlCommand cmd = con.CreateCommand();
+                SqlDataAdapter da = new SqlDataAdapter();
+                DataSet ds = new DataSet();
+
+
+                cmd.CommandText = "SELECT * FROM JedinicaProdaje WHERE Obrisan=0 AND Id=@Id";
+                cmd.Parameters.AddWithValue("Id", Id);
+                da.SelectCommand = cmd;
+                da.Fill(ds, "JedinicaProdaje"); //izvrsavanje upita
+
+                foreach (DataRow row in ds.Tables["JedinicaProdaje"].Rows)
+                {
+                    var njp = new JedinicaProdaje();
+                    njp.Id = (int)row["Id"];
+                    njp.ProdajaId = int.Parse(row["ProdajaId"].ToString());
+                    njp.NamestajId = int.Parse(row["NamestajId"].ToString());
+                    njp.Kolicina = int.Parse(row["Kolicina"].ToString());
+                    njp.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    njp.Cena = double.Parse(row["Cena"].ToString());
+                    jedProdaje = njp;
+                }
+            }
+            return jedProdaje;
+        }
     }
 }

@@ -3,11 +3,10 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
         mc:Ignorable="d"
         Title="GlavniMeniWindow" 
         Height="800" Width="1200" 
-        Closing="Window_Closing" ResizeMode="NoResize"
+        Closed="Izadji" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized">
     <Grid>
@@ -114,7 +113,8 @@
                         <Button Name="btnDodaj" Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="35,5,35,5" Click="DodajItem"/>
                         <Button Name="btnIzmeni" Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="35,5,35,5" Click="IzmeniItem"/>
                         <Button Name="btnObrisi" Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="35,5,35,5" Click="ObrisiItem"/>
-                        <TextBox Name="tbParametar" Grid.Row="0" Grid.Column="2"  Grid.ColumnSpan="2" Margin="2,5,35,5"/>
+                        <TextBox Name="tbParametar" Grid.Row="0" Grid.Column="2"  Grid.ColumnSpan="2" Margin="2,5,35,5" VerticalContentAlignment="Center"/>
+                        <DatePicker Name="dpParametar" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="2,5,35,5" Visibility="Hidden" VerticalContentAlignment="Center"/>
                         <Button Content="Pretrazi/Sortiraj" Grid.Row="2" Grid.Column="3" Margin="2,5,35,5" Click="SearchAndOrSort" />
                         <CheckBox Name="cbDatum" Grid.Column="2" Grid.Row="2" VerticalAlignment="Center" HorizontalAlignment="Center" ToolTip="Omogucava proveru formata datuma pri pretrazivanju. &#x0a;Odgovarajuci format datuma je (DD/MM/YYYY)" Checked="Oznaci" Unchecked="SkiniOznaku"/>
                         <ComboBox Name="cbZaSort" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="2,5,35,5"/>

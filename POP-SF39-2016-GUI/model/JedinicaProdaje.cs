@@ -74,6 +74,10 @@ namespace POP_SF39_2016_GUI.model
             set
             {
                 kolicina = value;
+
+                var tempUkupno = Cena * kolicina;
+                CenaUkupno = tempUkupno;
+                CenaUkupnoPDV = tempUkupno + tempUkupno * ProdajaNamestaja.PDV;
                 OnPropertyChanged("Kolicina");
             }
         }

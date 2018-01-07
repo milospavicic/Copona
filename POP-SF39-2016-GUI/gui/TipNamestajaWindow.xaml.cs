@@ -1,12 +1,11 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016_GUI.DAO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    /// <summary>
-    /// Interaction logic for TipNamestajaWindow.xaml
-    /// </summary>
     public partial class TipNamestajaWindow : Window
     {
         public enum Operacija
@@ -31,8 +30,8 @@ namespace POP_SF39_2016_GUI.gui
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-
-            var listaTipaNamestaja = Projekat.Instance.TipoviNamestaja;
+            if (ForceValidation() == true)
+                return;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
@@ -47,6 +46,17 @@ namespace POP_SF39_2016_GUI.gui
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private bool ForceValidation()
+        {
+            BindingExpression be1 = tbNaziv.GetBindingExpression(TextBox.TextProperty);
+            be1.UpdateSource();
+
+            if (Validation.GetHasError(tbNaziv) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

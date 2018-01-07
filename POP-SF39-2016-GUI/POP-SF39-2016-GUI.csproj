@@ -65,6 +65,7 @@
     <Compile Include="DAO\ProdataDodatnaUslugaDAO.cs" />
     <Compile Include="DAO\SalonDAO.cs" />
     <Compile Include="DAO\TipNamestajaDAO.cs" />
+    <Compile Include="DoubleValidation.cs" />
     <Compile Include="gui\AkcijaWindow.xaml.cs">
       <DependentUpon>AkcijaWindow.xaml</DependentUpon>
     </Compile>
@@ -86,6 +87,9 @@
     <Compile Include="gui\NamestajWindow.xaml.cs">
       <DependentUpon>NamestajWindow.xaml</DependentUpon>
     </Compile>
+    <Compile Include="gui\PopustWindow.xaml.cs">
+      <DependentUpon>PopustWindow.xaml</DependentUpon>
+    </Compile>
     <Compile Include="gui\ProdajaWindow.xaml.cs">
       <DependentUpon>ProdajaWindow.xaml</DependentUpon>
     </Compile>
@@ -95,8 +99,10 @@
     <Compile Include="gui\TipNamestajaWindow.xaml.cs">
       <DependentUpon>TipNamestajaWindow.xaml</DependentUpon>
     </Compile>
-    <Compile Include="gui\UnosWindow.xaml.cs">
-      <DependentUpon>UnosWindow.xaml</DependentUpon>
+    <Compile Include="IntValidation.cs" />
+    <Compile Include="KolicinaValidation.cs" />
+    <Compile Include="gui\KolicinaWindow.xaml.cs">
+      <DependentUpon>KolicinaWindow.xaml</DependentUpon>
     </Compile>
     <Compile Include="model\Akcija.cs" />
     <Compile Include="model\DodatnaUsluga.cs" />
@@ -109,6 +115,8 @@
     <Compile Include="model\Projekat.cs" />
     <Compile Include="model\Salon.cs" />
     <Compile Include="model\TipNamestaja.cs" />
+    <Compile Include="PopustValidation.cs" />
+    <Compile Include="StringValidation.cs" />
     <Page Include="gui\AkcijaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -137,6 +145,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="gui\PopustWindow.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="gui\ProdajaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -149,7 +161,7 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="gui\UnosWindow.xaml">
+    <Page Include="gui\KolicinaWindow.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

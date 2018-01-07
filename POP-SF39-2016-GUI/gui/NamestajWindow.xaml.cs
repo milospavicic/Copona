@@ -2,6 +2,8 @@
 using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -35,20 +37,8 @@ namespace POP_SF39_2016_GUI.gui
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-            try
+            if (ForceValidation() == true)
             {
-                double.Parse(tbBrojKomada.Text);
-
-                double.Parse(tbCena.Text);
-            }
-            catch
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
-                return;
-            }
-            if (cbTipNamestaja.SelectedItem == null)
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }
             switch (operacija)
@@ -69,6 +59,20 @@ namespace POP_SF39_2016_GUI.gui
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private bool ForceValidation()
+        {
+            BindingExpression be1 = tbNaziv.GetBindingExpression(TextBox.TextProperty);
+            be1.UpdateSource();
+            BindingExpression be2 = tbCena.GetBindingExpression(TextBox.TextProperty);
+            be2.UpdateSource();
+            BindingExpression be3 = tbBrojKomada.GetBindingExpression(TextBox.TextProperty);
+            be3.UpdateSource();
+            if (Validation.GetHasError(tbNaziv) == true || Validation.GetHasError(tbCena) == true || Validation.GetHasError(tbBrojKomada) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

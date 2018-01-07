@@ -1,6 +1,8 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016_GUI.DAO;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -30,15 +32,8 @@ namespace POP_SF39_2016_GUI.gui
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                int.Parse(tbCena.Text);
-            }
-            catch
-            {
-                MessageBoxResult poruka = MessageBox.Show("Polja moraju biti brojevi. ", "Upozorenje", MessageBoxButton.OK);
+            if (ForceValidation() == true)
                 return;
-            }
             var listaDodatnihUsluga = Projekat.Instance.DodatneUsluge;
             switch (operacija)
             {
@@ -54,6 +49,18 @@ namespace POP_SF39_2016_GUI.gui
         private void ZatvoriWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        private bool ForceValidation()
+        {
+            BindingExpression be1 = tbNaziv.GetBindingExpression(TextBox.TextProperty);
+            be1.UpdateSource();
+            BindingExpression be2 = tbCena.GetBindingExpression(TextBox.TextProperty);
+            be2.UpdateSource();
+            if (Validation.GetHasError(tbNaziv) == true || Validation.GetHasError(tbCena) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

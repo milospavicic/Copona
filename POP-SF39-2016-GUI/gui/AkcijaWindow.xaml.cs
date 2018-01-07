@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -51,11 +52,18 @@ namespace POP_SF39_2016_GUI.gui
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {
-
+            if (ForceValidation() == true)
+                return;
+            if(ListaNAZaDG2.Count==0)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Akcija mora sadrzati bar jedan namestaj", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
             var listaAkcija = Projekat.Instance.Akcija;
             switch (operacija)
             {
                 case Operacija.DODAVANJE:
+                    akcija.Naziv = akcija.Naziv.Trim();
                     var novaAkcija = AkcijaDAO.Create(akcija);
                     foreach (var tempNaZaCreate in ListaNAZaDG2)
                     {
@@ -108,15 +116,15 @@ namespace POP_SF39_2016_GUI.gui
 
         private void DodajAkciju(object sender, RoutedEventArgs e)
         {
-            var unesiPopust = new UnosWindow(UnosWindow.Opcija.POPUST, 0, 0);
-            unesiPopust.ShowDialog();
+            var popustProzor = new PopustWindow();
+            popustProzor.ShowDialog();
 
-            if (unesiPopust.DialogResult == true)
+            if (popustProzor.DialogResult == true)
             {
                 var tempNaAkciji = new NaAkciji
                 {
                     IdNamestaja = ((Namestaj)dgNamestaj.SelectedItem).Id,
-                    Popust = unesiPopust.PopustNamestaja,
+                    Popust = popustProzor.PopustNamestaja,
                 };
                 ListaNAZaDG2.Add(tempNaAkciji);
 
@@ -141,6 +149,16 @@ namespace POP_SF39_2016_GUI.gui
                 akcija.KrajAkcije = akcija.PocetakAkcije;
                 return;
             }
+        }
+        private bool ForceValidation()
+        {
+            BindingExpression be = tbNaziv.GetBindingExpression(TextBox.TextProperty);
+            be.UpdateSource();
+            if (Validation.GetHasError(tbNaziv) == true)
+            {
+                return true;
+            }
+            return false;
         }
     }
 }

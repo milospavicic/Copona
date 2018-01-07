@@ -45,36 +45,33 @@ namespace POP_SF39_2016_GUI.gui
             dgTabela.CanUserSortColumns = false;
         }
 
-        private bool obrisanFilter(object obj)
+        private bool ObrisanFilter(object obj)
         {
-            switch (izabranaOpcija)
+            try
             {
-                case Opcija.NAMESTAJ:
-                    return !((Namestaj)obj).Obrisan;
-                case Opcija.TIPNAMESTAJA:
-                    return !((TipNamestaja)obj).Obrisan;
-                case Opcija.KORISNIK:
-                    return !((Korisnik)obj).Obrisan;
-                case Opcija.AKCIJA:
-                    return !((Akcija)obj).Obrisan;
-                case Opcija.DODATNAUSLUGA:
-                    return !((DodatnaUsluga)obj).Obrisan;
-                case Opcija.PRODAJA:
-                    return !((ProdajaNamestaja)obj).Obrisan;
+                switch (izabranaOpcija)
+                {
+                    case Opcija.NAMESTAJ:
+                        return !((Namestaj)obj).Obrisan;
+                    case Opcija.TIPNAMESTAJA:
+                        return !((TipNamestaja)obj).Obrisan;
+                    case Opcija.KORISNIK:
+                        return !((Korisnik)obj).Obrisan;
+                    case Opcija.AKCIJA:
+                        return !((Akcija)obj).Obrisan;
+                    case Opcija.DODATNAUSLUGA:
+                        return !((DodatnaUsluga)obj).Obrisan;
+                    case Opcija.PRODAJA:
+                        return !((ProdajaNamestaja)obj).Obrisan;
+                }
+                return false;
             }
-        return false;
-        }
-
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
-        {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
+            catch
             {
-                // PROBLEM - ZATVARA I KAD KLIKNES NE/ NACI ALTERNATIVU ZA WINDOW_CLOSING
-                Environment.Exit(0);
-            };
+                return false;
+            }
         }
-        //-------------------------------------------------------------------
+#region Kompletan Prikaz
         private void SkloniSve()
         {
             borderCentarInfo.Visibility = Visibility.Hidden;
@@ -99,7 +96,7 @@ namespace POP_SF39_2016_GUI.gui
                 btnObrisi.Visibility = Visibility.Hidden;
             }
         }
-        //-------------------------------------------------------------------
+       
         public void OsnovniPrikazTabela()
         {
             cbDatum.IsEnabled = false;
@@ -111,65 +108,52 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Opcija.NAMESTAJ:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(NamestajDAO.SortBy));
+                    cbZaSort.SelectedItem = NamestajDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Namestaji);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.TIPNAMESTAJA:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(TipNamestajaDAO.SortBy));
+                    cbZaSort.SelectedItem = TipNamestajaDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.TipoviNamestaja);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.KORISNIK:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(KorisnikDAO.SortBy));
+                    cbZaSort.SelectedItem = KorisnikDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Korisnici);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.AKCIJA:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(AkcijaDAO.SortBy));
+                    cbZaSort.SelectedItem = AkcijaDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Akcija);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     cbDatum.IsEnabled = true;
                     btnDetaljnije.IsEnabled = true;
                     break;
                 case Opcija.DODATNAUSLUGA:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(DodatnaUslugaDAO.SortBy));
+                    cbZaSort.SelectedItem = DodatnaUslugaDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.DodatneUsluge);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.PRODAJA:
                     cbZaSort.ItemsSource = Enum.GetValues(typeof(ProdajaDAO.SortBy));
+                    cbZaSort.SelectedItem = ProdajaDAO.SortBy.Nesortirano;
                     view = CollectionViewSource.GetDefaultView(Projekat.Instance.Prodaja);
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     cbDatum.IsEnabled = true;
                     btnDetaljnije.IsEnabled = true;
                     break;
             }
             return;
-        }
-        //-------------------------------------------------------------------
-        private void Logout(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
-            {
-                var MainWindow = new MainWindow();
-                MainWindow.Show();
-                this.Hide();
-            };
-        }
-        private void Izlaz(object sender, RoutedEventArgs e)
-        {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
-            {
-                Environment.Exit(0);
-            };
         }
 
         private void PrikaziSakrij(object sender, RoutedEventArgs e)
@@ -197,11 +181,6 @@ namespace POP_SF39_2016_GUI.gui
             }
         }
 
-        private void IzmenaPodataka(object sender, RoutedEventArgs e)
-        {
-            var korisnikProzor = new KorisnikWindow(LogovaniKorisnik, KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
-            korisnikProzor.ShowDialog();
-        }
         public void PrikazNamestaja(object sender, RoutedEventArgs e)
         {
             izabranaOpcija = Opcija.NAMESTAJ;
@@ -244,6 +223,7 @@ namespace POP_SF39_2016_GUI.gui
             Prikaz();
             OsnovniPrikazTabela();
         }
+#endregion
 #region Dodavanje
         private void DodajItem(object sender, RoutedEventArgs e)
         {
@@ -495,12 +475,15 @@ namespace POP_SF39_2016_GUI.gui
 
         private void Oznaci(object sender, RoutedEventArgs e)
         {
-            tbParametar.BorderThickness = new Thickness(2);
+            dpParametar.Visibility = Visibility.Visible;
+            tbParametar.Visibility = Visibility.Hidden;
+            tbParametar.Text = "";
         }
 
         private void SkiniOznaku(object sender, RoutedEventArgs e)
         {
-            tbParametar.BorderThickness = new Thickness(1);
+            tbParametar.Visibility = Visibility.Visible;
+            dpParametar.Visibility = Visibility.Hidden;
         }
         public void SearchAndOrSort(object sender, RoutedEventArgs e)
         {
@@ -508,14 +491,14 @@ namespace POP_SF39_2016_GUI.gui
             DateTime datumZaPretragu = DateTime.Today;
             if (cbDatum.IsChecked == true)
             {
+                doSearch = DoSearch.Date;
                 try
-                {
-                    datumZaPretragu = DateTime.Parse(tbParametar.Text);
-                    doSearch = DoSearch.Date;
+                { 
+                datumZaPretragu =(DateTime)dpParametar.SelectedDate;
                 }
                 catch
                 {
-                    MessageBoxResult poruka = MessageBox.Show("Pogresan format datuma.", "Upozorenje!", MessageBoxButton.OK);
+                    MessageBoxResult poruka = MessageBox.Show("Neodgovarajuci format datuma.\nPokusajte DD/MM/YYYY format.", "Upozorenje", MessageBoxButton.OK);
                     return;
                 }
             }
@@ -534,7 +517,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(NamestajDAO.SearchAndOrSort(doSearch, tbParametar.Text, NamestajDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(NamestajDAO.SearchAndOrSort(doSearch, tbParametar.Text, (NamestajDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.TIPNAMESTAJA:
@@ -542,7 +525,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(TipNamestajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, TipNamestajaDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(TipNamestajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, (TipNamestajaDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.KORISNIK:
@@ -550,7 +533,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(KorisnikDAO.SearchAndOrSort(doSearch, tbParametar.Text, KorisnikDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(KorisnikDAO.SearchAndOrSort(doSearch, tbParametar.Text, (KorisnikDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.DODATNAUSLUGA:
@@ -558,7 +541,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(DodatnaUslugaDAO.SearchAndOrSort(doSearch, tbParametar.Text, DodatnaUslugaDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(DodatnaUslugaDAO.SearchAndOrSort(doSearch, tbParametar.Text, (DodatnaUslugaDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.AKCIJA:
@@ -566,7 +549,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(AkcijaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, AkcijaDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(AkcijaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, (AkcijaDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
                 case Opcija.PRODAJA:
@@ -574,7 +557,7 @@ namespace POP_SF39_2016_GUI.gui
                         view = CollectionViewSource.GetDefaultView(ProdajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, ProdajaDAO.SortBy.Nesortirano));
                     else
                         view = CollectionViewSource.GetDefaultView(ProdajaDAO.SearchAndOrSort(doSearch, tbParametar.Text, datumZaPretragu, (ProdajaDAO.SortBy)cbZaSort.SelectedValue));
-                    view.Filter = obrisanFilter;
+                    view.Filter = ObrisanFilter;
                     dgTabela.ItemsSource = view;
                     break;
             }
@@ -587,6 +570,33 @@ namespace POP_SF39_2016_GUI.gui
         {
             var salonProzor = new SalonWindow(LogovaniKorisnik);
             salonProzor.ShowDialog();
+        }
+        private void IzmenaPodataka(object sender, RoutedEventArgs e)
+        {
+            var korisnikProzor = new KorisnikWindow(LogovaniKorisnik, KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
+            korisnikProzor.ShowDialog();
+        }
+        private void Logout(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.Yes)
+            {
+                var MainWindow = new MainWindow();
+                MainWindow.Show();
+                this.Hide();
+            };
+        }
+        private void Izlaz(object sender, RoutedEventArgs e)
+        {
+            this.Close();
+        }
+        private void Izadji(object sender, EventArgs e)
+        {
+            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            if (r == MessageBoxResult.Yes)
+            {
+                Environment.Exit(0);
+            };
         }
     }
 }

@@ -3,9 +3,19 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:POP_SF39_2016_GUI.gui"
+        xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
         Title="DodatnaUslugaWindow" Height="200" Width="300" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
+    <Window.Resources>
+        <ControlTemplate x:Key="validationError">
+            <DockPanel >
+                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Center" ToolTip="Ovo polje mora biti popunjeno" Margin="0,11,0,0">!</TextBlock>
+                <Border BorderBrush="Red" BorderThickness="0.5" Margin="0,0,0,10">
+                    <AdornedElementPlaceholder/>
+                </Border>
+            </DockPanel>
+        </ControlTemplate>
+    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -30,9 +40,40 @@
                 </Grid.RowDefinitions>
                 <Label Content="Naziv:" Grid.Column="0" Grid.Row="0" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
                 <Label Content="Cena:" Grid.Column="0" Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
-                <TextBox Name="tbNaziv" Text="{Binding Path=Naziv}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
-                <TextBox Name="tbCena" Text="{Binding Path=Cena}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10"/>
-                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="2" Margin="25,10,25,10" Click="SacuvajIzmene" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
+                <TextBox Name="tbNaziv" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" Grid.Column="1" Grid.Row="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                    <TextBox.Text>
+                        <Binding Path="Naziv" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:StringValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <TextBox Name="tbCena" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" Grid.Column="1" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Margin="10">
+                    <TextBox.Text>
+                        <Binding Path="Cena" UpdateSourceTrigger="PropertyChanged">
+                            <Binding.ValidationRules>
+                                <local:DoubleValidation/>
+                            </Binding.ValidationRules>
+                        </Binding>
+                    </TextBox.Text>
+                </TextBox>
+                <Button Name= "btnSnimi" Content="Snimi" Grid.Column="0" Grid.Row="2" Margin="25,10,25,10" Click="SacuvajIzmene" HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="IsEnabled" Value="False"/>
+                            <Style.Triggers>
+                                <MultiDataTrigger>
+                                    <MultiDataTrigger.Conditions>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbNaziv}" Value="False"/>
+                                        <Condition Binding="{Binding Path=(Validation.HasError), ElementName=tbCena}" Value="False"/>
+                                    </MultiDataTrigger.Conditions>
+                                    <Setter Property="IsEnabled" Value="True"/>
+                                </MultiDataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
+                </Button>
                 <Button Name= "btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="2" Margin="25,10,25,10" Click="ZatvoriWindow" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
             </Grid>
         </Border>
