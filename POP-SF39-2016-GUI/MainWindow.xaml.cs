@@ -2,10 +2,11 @@
 using POP_SF39_2016_GUI.gui;
 using System;
 using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : MetroWindow
     {
         public Korisnik logovaniKorisnik { get; set; } = new Korisnik();
         public MainWindow()
@@ -25,7 +26,6 @@ namespace POP_SF39_2016_GUI
         {
             if (tbKorisnickoIme.Text.Equals("") || passboxSifra.Password.Equals(""))
             {
-
                 MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
                 return;
             }

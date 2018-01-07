@@ -7,10 +7,11 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
 using System.Linq;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class GlavniWindow : Window
+    public partial class GlavniWindow : MetroWindow
     {
         ICollectionView view;
         public Korisnik LogovaniKorisnik { get; set; } = new Korisnik();
@@ -39,6 +40,7 @@ namespace POP_SF39_2016_GUI.gui
             
             InitializeComponent();
             this.LogovaniKorisnik = logovaniKorisnik;
+            AkcijaDAO.StillActiveButPastEndDate();
             dgTabela.IsSynchronizedWithCurrentItem = true;
             dgTabela.IsReadOnly = true;
             dgTabela.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
@@ -74,7 +76,6 @@ namespace POP_SF39_2016_GUI.gui
 #region Kompletan Prikaz
         private void SkloniSve()
         {
-            borderCentarInfo.Visibility = Visibility.Hidden;
             borderAddEditDelItem.Visibility = Visibility.Hidden;
             dgTabela.Visibility = Visibility.Hidden;
         }

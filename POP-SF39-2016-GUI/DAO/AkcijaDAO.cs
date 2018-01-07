@@ -23,7 +23,6 @@ namespace POP_SF39_2016_GUI.DAO
 
         public static ObservableCollection<Akcija> GetAll()
         {
-            StillActiveButPastEndDate();
             var listaAkcija = new ObservableCollection<Akcija>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
             {
@@ -281,11 +280,14 @@ namespace POP_SF39_2016_GUI.DAO
                     listaAkcija.Add(a);
                 }
             }
-            foreach(var akcijaZaBrisanje in listaAkcija)
+            if (listaAkcija.Count != 0)
             {
-                foreach(var tempNa in NaAkcijiDAO.GetAllNAForActionId(akcijaZaBrisanje.Id))
-                    NaAkcijiDAO.Delete(tempNa);
-                AkcijaDAO.Delete(akcijaZaBrisanje);
+                foreach (var akcijaZaBrisanje in listaAkcija)
+                {
+                    foreach (var tempNa in NaAkcijiDAO.GetAllNAForActionId(akcijaZaBrisanje.Id))
+                        NaAkcijiDAO.Delete(tempNa);
+                    AkcijaDAO.Delete(akcijaZaBrisanje);
+                }
             }
         }
     }

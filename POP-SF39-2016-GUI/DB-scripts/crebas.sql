@@ -78,8 +78,8 @@ CREATE TABLE ProdataDodatnaUsluga(
 	DodatnaUslugaId INT,
 	Obrisan BIT
 );
-DROP TABLE Akcija
 DROP TABLE NaAkciji
+DROP TABLE Akcija
 DROP TABLE Namestaj
 DROP TABLE ProdataDodatnaUsluga
 DROP TABLE JedinicaProdaje
@@ -89,7 +89,8 @@ DROP TABLE KORISNIK
 
 
 SELECT * FROM NaAkciji na INNER JOIN Akcija a ON na.IdAkcije = a.IdAkcije WHERE na.Obrisan = 0 and na.IdNamestaja = 2  AND DatumKraj>='2017.12.31'
-
+UPDATE Akcija SET Obrisan = 0
+UPDATE NaAkciji SET Obrisan = 0
 UPDATE TipNamestaja SET Obrisan = 0 where Id = 8
 UPDATE TipNamestaja SET Obrisan = 0 where Id = 3
 UPDATE NAMESTAj SET Obrisan =0

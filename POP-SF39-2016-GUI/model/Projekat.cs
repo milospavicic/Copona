@@ -26,9 +26,9 @@ namespace POP_SF39_2016.model
             Korisnici = KorisnikDAO.GetAll();
             NaAkciji = NaAkcijiDAO.GetAll();
             JediniceProdaje = JedinicaProdajeDAO.GetAll();
-            Akcija = AkcijaDAO.GetAll();
             DodatneUsluge = DodatnaUslugaDAO.GetAll();
             Prodaja = ProdajaDAO.GetAll();
+            Akcija = AkcijaDAO.GetAll();
 
         }
     }
