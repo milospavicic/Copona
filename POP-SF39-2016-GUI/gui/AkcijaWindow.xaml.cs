@@ -6,10 +6,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class AkcijaWindow : Window
+    public partial class AkcijaWindow : MetroWindow
     {
         public enum Operacija
         {
@@ -46,8 +48,18 @@ namespace POP_SF39_2016_GUI.gui
                 dgZaAkciju.IsReadOnly = true;
                 dpPocetniDatum.IsHitTestVisible = false;
             }
+            dgNamestaj.CanUserSortColumns = false;
+            dgNamestaj.CanUserAddRows = false;
+            dgNamestaj.CanUserDeleteRows = false;
+            dgZaAkciju.CanUserSortColumns = false;
+            dgZaAkciju.CanUserAddRows = false;
+            dgZaAkciju.CanUserDeleteRows = false;
             dgNamestaj.ItemsSource = ListaNamestajaZaDG1;
             dgZaAkciju.ItemsSource = ListaNAZaDG2;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -56,7 +68,7 @@ namespace POP_SF39_2016_GUI.gui
                 return;
             if(ListaNAZaDG2.Count==0)
             {
-                MessageBoxResult poruka = MessageBox.Show("Akcija mora sadrzati bar jedan namestaj", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Akcija mora sadrzati bar jedan namestaj", "Upozorenje");
                 return;
             }
             var listaAkcija = Projekat.Instance.Akcija;
@@ -145,7 +157,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             if (akcija.PocetakAkcije > akcija.KrajAkcije)
             {
-                MessageBoxResult poruka = MessageBox.Show("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Krajnji datum ne moze biti veci od pocetnog. ", "Upozorenje");
                 akcija.KrajAkcije = akcija.PocetakAkcije;
                 return;
             }
@@ -159,6 +171,14 @@ namespace POP_SF39_2016_GUI.gui
                 return true;
             }
             return false;
+        }
+        private void Indexiranje(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex()).ToString();
+        }
+        public async void ErrorMessagePrint(string message, string title)
+        {
+            await this.ShowMessageAsync(title, message);
         }
     }
 }

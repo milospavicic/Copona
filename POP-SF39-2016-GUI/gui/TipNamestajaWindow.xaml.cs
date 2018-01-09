@@ -3,10 +3,11 @@ using POP_SF39_2016_GUI.DAO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class TipNamestajaWindow : Window
+    public partial class TipNamestajaWindow : MetroWindow
     {
         public enum Operacija
         {
@@ -27,6 +28,10 @@ namespace POP_SF39_2016_GUI.gui
         public void PopunjavanjePolja(TipNamestaja tipNamestaja)
         {
             tbNaziv.DataContext = tipNamestaja;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {

@@ -22,6 +22,7 @@
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
+        <Border BorderBrush="#68c0e8" Grid.ColumnSpan="3" Grid.RowSpan="6" BorderThickness="1"/>
         <Label Content="~ SALON NAMESTAJA ~" HorizontalAlignment="Stretch"  VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" FontSize="20"/>
         <Label Content="Korisnicko ime:" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="2"/>
         <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" Margin="0,0,35,0"/>
@@ -29,43 +30,15 @@
         <PasswordBox Name="passboxSifra" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="3" Margin="0,0,35,0"/>
         <Button Name="btnPrijava" Content="Prijavi se" Grid.Row="5" Grid.ColumnSpan="2" Width="75" Height="23" Margin="35,0,0,10" Click="Button_Click_1">
             <Button.Style>
-                <Style TargetType="{x:Type Button}">
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                     <Setter Property="Background" Value="#68c0e8"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#4a97bf"/>
-                        </Trigger>
-                    </Style.Triggers>
                 </Style>
             </Button.Style>
         </Button>
         <Button Name="btnIzadji" Content="Izadji" Grid.Row="5" Grid.Column="2" Width="75" Height="23" Margin="0,0,35,10" Click="Button_Click">
             <Button.Style>
-                <Style TargetType="{x:Type Button}">
+                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                     <Setter Property="Background" Value="#68c0e8"/>
-                    <Setter Property="Template">
-                        <Setter.Value>
-                            <ControlTemplate TargetType="{x:Type Button}">
-                                <Border Background="{TemplateBinding Background}">
-                                    <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                </Border>
-                            </ControlTemplate>
-                        </Setter.Value>
-                    </Setter>
-                    <Style.Triggers>
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter Property="Background" Value="#4a97bf"/>
-                        </Trigger>
-                    </Style.Triggers>
                 </Style>
             </Button.Style>
         </Button>

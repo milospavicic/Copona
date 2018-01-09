@@ -6,8 +6,8 @@ using System.ComponentModel;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
-using System.Linq;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace POP_SF39_2016_GUI.gui
 {
@@ -68,8 +68,9 @@ namespace POP_SF39_2016_GUI.gui
                 }
                 return false;
             }
-            catch
+            catch(Exception ex)
             {
+                Console.WriteLine("FilterObrisan"+ex.Message);
                 return false;
             }
         }
@@ -267,7 +268,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             if (dgTabela.SelectedItem == null)
             {
-                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Niste nista izabrali. ", "Upozorenje");
                 return;
             }
             switch (izabranaOpcija)
@@ -311,7 +312,7 @@ namespace POP_SF39_2016_GUI.gui
         {
             if (dgTabela.SelectedItem == null)
             {
-                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Niste nista izabrali. ", "Upozorenje");
                 return;
             }
             switch (izabranaOpcija)
@@ -499,7 +500,7 @@ namespace POP_SF39_2016_GUI.gui
                 }
                 catch
                 {
-                    MessageBoxResult poruka = MessageBox.Show("Neodgovarajuci format datuma.\nPokusajte DD/MM/YYYY format.", "Upozorenje", MessageBoxButton.OK);
+                    ErrorMessagePrint("Neodgovarajuci format datuma.\nPokusajte DD/MM/YYYY format.", "Upozorenje");
                     return;
                 }
             }
@@ -598,6 +599,14 @@ namespace POP_SF39_2016_GUI.gui
             {
                 Environment.Exit(0);
             };
+        }
+        private void Indexiranje(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex()).ToString();
+        }
+        public async void ErrorMessagePrint(string message, string title)
+        {
+            await this.ShowMessageAsync(title, message);
         }
     }
 }

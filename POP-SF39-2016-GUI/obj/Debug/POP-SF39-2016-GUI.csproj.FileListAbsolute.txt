@@ -19,7 +19,6 @@ D:\Skola\Fax\VisualStudioWorkspace\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe.config
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.exe
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\POP-SF39-2016-GUI.pdb
-D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csprojResolveAssemblyReference.cache
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\GlavniWindow.g.cs
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\NamestajWindow.g.cs
 D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\MainWindow.g.cs
@@ -78,3 +77,16 @@ D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\Sys
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\MahApps.Metro.pdb
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\bin\Debug\MahApps.Metro.xml
 D:\Skola\Fax\VisualStudioWorkspace\POP-sf39-2016\POP-SF39-2016-GUI\obj\Debug\App.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\MahApps.Metro.dll
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\System.Windows.Interactivity.dll
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\MahApps.Metro.pdb
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\bin\Debug\MahApps.Metro.xml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\PopustWindow.g.cs
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\SalonWindow.g.cs
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\KolicinaWindow.g.cs
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\GeneratedInternalTypeHelper.g.cs
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\App.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\PopustWindow.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\SalonWindow.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\gui\KolicinaWindow.baml
+D:\Workspaces\workspacePOP\POP-SF39-2016\POP-SF39-2016-GUI\obj\Debug\POP-SF39-2016-GUI.csprojResolveAssemblyReference.cache

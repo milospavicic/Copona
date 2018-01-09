@@ -4,10 +4,11 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class NamestajWindow : Window
+    public partial class NamestajWindow : MetroWindow
     {
         public enum Operacija
         {
@@ -34,6 +35,10 @@ namespace POP_SF39_2016_GUI.gui
             tbCena.DataContext = namestaj;
             tbBrojKomada.DataContext = namestaj;
             cbTipNamestaja.DataContext = namestaj;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {

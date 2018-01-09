@@ -1,11 +1,12 @@
-﻿<Window x:Class="POP_SF39_2016_GUI.gui.ProdajaWindow"
+﻿<Controls:MetroWindow x:Class="POP_SF39_2016_GUI.gui.ProdajaWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
-        Title="ProdajaWindow" Height="800" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closed="Window_Closed" >
+        Title="Prodaja" Height="800" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closed="Window_Closed" ShowTitleBar="False">
     <Window.Resources>
         <ControlTemplate x:Key="validationError">
             <DockPanel >
@@ -30,19 +31,19 @@
             <RowDefinition Height="300*"/>
             <RowDefinition Height="15*"/>
         </Grid.RowDefinitions>
-        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="1">
-        </Border>
+        <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="3" BorderBrush="Black" BorderThickness="1"/>
+
         <Border Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" Grid.ColumnSpan="1">
             <Grid>
                 <TabControl Name="tcProdaja">
                     <TabItem Header="Namestaj" Selector.Selected="NamestajSelected">
                         <Grid Background="#FFE5E5E5">
-                            <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdajaN_AutoGeneratingColumn" />
+                            <DataGrid Name="dgProdajaN" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGeneratingColumn="dgProdajaN_AutoGeneratingColumn" SelectionMode="Single" LoadingRow="Indexiranje"/>
                         </Grid>
                     </TabItem>
                     <TabItem Header="Dodatne U." Selector.Selected="DodatnaUslugaSelected">
                         <Grid Background="#FFE5E5E5">
-                            <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdajaDU_AutoGeneratingColumn" />
+                            <DataGrid Name="dgProdajaDU" Grid.Column="0" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="5" AutoGeneratingColumn="dgProdajaDU_AutoGeneratingColumn" SelectionMode="Single" LoadingRow="Indexiranje"/>
                         </Grid>
                     </TabItem>
                 </TabControl>
@@ -50,7 +51,7 @@
         </Border>
         <Border Grid.Row="1" Grid.Column="3" BorderBrush="Black" BorderThickness="1">
             <Grid>
-                <DataGrid Name="dgRacun" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGenerateColumns="False">
+                <DataGrid Name="dgRacun" Grid.Column="2" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.RowSpan="6" AutoGenerateColumns="False" SelectionMode="Single" LoadingRow="Indexiranje">
                     <DataGrid.Columns>
                         <DataGridTextColumn Header="Naziv" Binding="{Binding Naziv}" MinWidth="130"/>
                         <DataGridTextColumn Header="Cena Komad" Binding="{Binding Cena}" MinWidth="80"/>
@@ -71,8 +72,8 @@
                     <RowDefinition Height="1*"/>
                     <RowDefinition Height="8*"/>
                 </Grid.RowDefinitions>
-                <Button Name="btnDodaj" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="btnDodaj_Click" />
-                <Button Name="btnIzbaci" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Click="btnIzbaci_Click" />
+                <Button Name="btnDodaj" Content="Dodaj" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="1" VerticalAlignment="Stretch" Click="btnDodaj_Click" Background="#68c0e8" Width="75" Height="23"/>
+                <Button Name="btnIzbaci" Content="Izbaci" Grid.Column="1" HorizontalAlignment="Stretch" Grid.Row="3" VerticalAlignment="Stretch" Click="btnIzbaci_Click" Background="#68c0e8" Width="75" Height="23"/>
             </Grid>
         </Border>
         <Border BorderBrush="Black" BorderThickness="2" Grid.Column="3" Grid.Row="2" Margin="5">
@@ -104,10 +105,11 @@
                 <TextBlock Name="tbDatum" Text="{Binding Path=DatumProdaje}" Grid.Column="1" Grid.Row="1"  Margin="0,0,25,0" FontSize="14" VerticalAlignment="Center" />
                 <TextBlock Name="tbUkupnaCena" Text="{Binding Path=UkupnaCena}" Grid.Column="1" Grid.Row="2"  Margin="0,0,25,0" FontSize="14" VerticalAlignment="Center"/>
                 <TextBlock Name="tbUkupnaCenaPdv" Text="{Binding Path=UkupnaCenaPdv}" Grid.Column="1" Grid.Row="3"  Margin="0,0,25,0" FontSize="14" VerticalAlignment="Center"/>
-                <Button Name="btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="4"  Margin="35,10,75,10" Click="btnIzadji_Click"/>
-                <Button Name="btnProdajFinal" Content="Prodaj" Grid.Column="0" Grid.Row="4"  Margin="75,10,35,10" Click="btnProdajFinal_Click">
+                <Button Name="btnIzadji" Content="Izadji" Grid.Column="1" Grid.Row="4"  Margin="35,10,75,10"  Width="75" Height="23" Click="btnIzadji_Click" Background="#68c0e8"/>
+                <Button Name="btnProdajFinal" Content="Prodaj" Grid.Column="0" Grid.Row="4"  Margin="75,10,35,10"  Width="75" Height="23" Click="btnProdajFinal_Click">
                     <Button.Style>
-                        <Style TargetType="Button">
+                        <Style TargetType="Button" BasedOn="{StaticResource MetroButton}">
+                            <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="IsEnabled" Value="False"/>
                             <Style.Triggers>
                                 <MultiDataTrigger>
@@ -123,4 +125,4 @@
             </Grid>
         </Border>
     </Grid>
-</Window>
+</Controls:MetroWindow>

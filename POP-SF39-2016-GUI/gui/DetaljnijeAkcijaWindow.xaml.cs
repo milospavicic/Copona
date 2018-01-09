@@ -13,31 +13,35 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
     /// <summary>
     /// Interaction logic for DetaljnijeAkcijaWindow.xaml
     /// </summary>
-    public partial class DetaljnijeAkcijaWindow : Window
+    public partial class DetaljnijeAkcijaWindow : MetroWindow
     {
         private Akcija trenutnaAkcija;
         public DetaljnijeAkcijaWindow(Akcija trenutnaAkcija)
         {
             InitializeComponent();
             this.trenutnaAkcija = trenutnaAkcija;
-            tbPocetniDatum.DataContext = trenutnaAkcija;
-            tbKrajnjiDatum.DataContext = trenutnaAkcija;
-            tbNaziv.DataContext = trenutnaAkcija;
+            dgNamestajNaAkciji.CanUserSortColumns = false;
+            dgNamestajNaAkciji.CanUserAddRows = false;
+            dgNamestajNaAkciji.CanUserDeleteRows = false;
             dgNamestajNaAkciji.IsReadOnly = true;
             dgNamestajNaAkciji.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             PopunjavanjePolja();
-            
         }
 
         private void PopunjavanjePolja()
         {
+            tbPocetniDatum.DataContext = trenutnaAkcija;
+            tbKrajnjiDatum.DataContext = trenutnaAkcija;
+            tbNaziv.DataContext = trenutnaAkcija;
             dgNamestajNaAkciji.ItemsSource = NaAkcijiDAO.GetAllNAForActionId(trenutnaAkcija.Id);
+            this.Title += trenutnaAkcija.Naziv;
         }
 
         private void PrikazivanjeKolona(object sender, DataGridAutoGeneratingColumnEventArgs e)

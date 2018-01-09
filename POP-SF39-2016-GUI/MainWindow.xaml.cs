@@ -3,6 +3,7 @@ using POP_SF39_2016_GUI.gui;
 using System;
 using System.Windows;
 using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace POP_SF39_2016_GUI
 {
@@ -26,7 +27,7 @@ namespace POP_SF39_2016_GUI
         {
             if (tbKorisnickoIme.Text.Equals("") || passboxSifra.Password.Equals(""))
             {
-                MessageBoxResult poruka = MessageBox.Show("Polja ne smeju biti prazna. ", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Polja ne smeju biti prazna. ", "Upozorenje");
                 return;
             }
             foreach(Korisnik korisnik in Projekat.Instance.Korisnici)
@@ -40,6 +41,10 @@ namespace POP_SF39_2016_GUI
                     break;
                 }
             }
+        }
+        public async void ErrorMessagePrint(string message,string title)
+        {
+            await this.ShowMessageAsync(title, message);
         }
     }
 }

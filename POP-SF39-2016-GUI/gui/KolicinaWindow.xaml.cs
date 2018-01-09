@@ -11,13 +11,14 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI
 {
     /// <summary>
     /// Interaction logic for KolicinaWindow.xaml
     /// </summary>
-    public partial class KolicinaWindow : Window
+    public partial class KolicinaWindow : MetroWindow
     {
         public int Kolicina { get; set; }
 

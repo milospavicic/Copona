@@ -10,6 +10,7 @@
         Closed="Izadji" ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized"
+        IgnoreTaskbarOnMaximize="True"
         ShowTitleBar="False">
     <Grid>
         <!-- Osnovna mreze-->
@@ -45,7 +46,7 @@
                 </Grid.RowDefinitions>
                 <Button Content="Prodaja" Grid.Row="0" Grid.Column="1" Click="ProdajaBtnOnClick" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -66,7 +67,7 @@
                 </Button>
                 <Button Content="O Salonu" Grid.Row="1" Grid.Column="1" Click="SalonEditView" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -88,7 +89,7 @@
                 <!-- ADMIN OPCIJE-->
                 <Button Name="btnAdmin" Content="Pregled" Grid.Row="2" Grid.Column="1" Click="PrikaziSakrij" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -109,7 +110,7 @@
                 </Button>
                 <Button Name="btnProdaje" Content="Prodaje" Grid.Row="3" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazProdaja" >
                 <Button.Style>
-                    <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                         <Setter Property="Template">
                             <Setter.Value>
@@ -130,7 +131,7 @@
                 </Button>
                 <Button Name="btnAkcije" Content="Akcije" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -151,7 +152,7 @@
                 </Button>
                 <Button Name="btnNamestaj" Content="Namestaj" Grid.Row="5" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazNamestaja">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -172,7 +173,7 @@
                 </Button>
                 <Button Name="btnTipNamestaj" Content="Tip namestaja" Grid.Row="6" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazTipovaNamestaja">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -193,7 +194,7 @@
                 </Button>
                 <Button Name="btnDodatneUsluge" Content="Dodatna usluge" Grid.Row="7" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazDodatnihUsluga">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -214,7 +215,7 @@
                 </Button>
                 <Button Name="btnKorisnici" Content="Korisnici" Grid.Row="8" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazKorisnika">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -237,7 +238,7 @@
                 <!-- / ADMIN OPCIJE-->
                 <Button Content="Izmena naloga" Grid.Row="11" Grid.Column="1" Click="IzmenaPodataka" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -258,7 +259,7 @@
                 </Button>
                 <Button Content="Logout " Grid.Row="12" Grid.Column="1" Click="Logout" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -279,7 +280,7 @@
                 </Button>
                 <Button Content="Izlaz" Grid.Row="13" Grid.Column="1" Click="Izlaz" Margin="1">
                     <Button.Style>
-                        <Style TargetType="{x:Type Button}">
+                        <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
                             <Setter Property="Template">
                                 <Setter.Value>
@@ -300,9 +301,9 @@
                 </Button>
             </Grid>
         </Border>
-        <Border Name="glavniBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#def2fc">
+        <Border Name="glavniBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#eff5f9">
             <Grid>
-                <!-- glavna mreza (za tabele i ostali ispis)-->
+                <!-- glavna tabela-->
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="260*"/>
                     <ColumnDefinition Width="430*"/>
@@ -314,8 +315,8 @@
                     <RowDefinition Height="120*"/>
 
                 </Grid.RowDefinitions>
-                <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" VerticalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden"/>
-                <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden">
+                <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden" SelectionMode="Single" LoadingRow="Indexiranje"/>
+                <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" Background="#ceeeff">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="235*"/>
@@ -339,7 +340,7 @@
 
                         <Button Name="btnDodaj" Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="35,5,35,5" Click="DodajItem">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                                     <Setter Property="Background" Value="#68c0e8"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -360,7 +361,7 @@
                         </Button>
                         <Button Name="btnIzmeni" Content="Izmeni" Grid.Row="1" Grid.Column="0" Margin="35,5,35,5" Click="IzmeniItem">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                                     <Setter Property="Background" Value="#68c0e8"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -381,7 +382,7 @@
                         </Button>
                         <Button Name="btnObrisi" Content="Obrisi" Grid.Row="2" Grid.Column="0" Margin="35,5,35,5" Click="ObrisiItem">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                                     <Setter Property="Background" Value="#68c0e8"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -404,7 +405,7 @@
                         <DatePicker Name="dpParametar" Grid.Row="0" Grid.Column="2" Grid.ColumnSpan="2" Margin="2,5,35,5" Visibility="Hidden" VerticalContentAlignment="Center"/>
                         <Button Content="Pretrazi/Sortiraj" Grid.Row="2" Grid.Column="3" Margin="2,5,35,5" Click="SearchAndOrSort">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                                     <Setter Property="Background" Value="#68c0e8"/>
                                     <Setter Property="Template">
                                         <Setter.Value>
@@ -427,7 +428,7 @@
                         <ComboBox Name="cbZaSort" Grid.Row="1" Grid.Column="2" Grid.ColumnSpan="2" Margin="2,5,35,5"/>
                         <Button Name="btnDetaljnije" Content="Detaljnije" Grid.Row="0" Grid.Column="4" Margin="35,5,35,5" Click="DetaljnijeOnClick">
                             <Button.Style>
-                                <Style TargetType="{x:Type Button}">
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                                     <Setter Property="Background" Value="#68c0e8"/>
                                     <Setter Property="Template">
                                         <Setter.Value>

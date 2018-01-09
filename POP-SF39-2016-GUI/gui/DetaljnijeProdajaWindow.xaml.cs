@@ -5,20 +5,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Windows;
 using System.Windows.Input;
+using MahApps.Metro.Controls;
+using System.Windows.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class DetaljnijeProdajaWindow : Window
+    public partial class DetaljnijeProdajaWindow : MetroWindow
     {
         public ProdajaNamestaja ProdajaIzabraniRed;
         public DetaljnijeProdajaWindow(ProdajaNamestaja ProdajaIzabraniRed)
         {
             InitializeComponent();
             this.ProdajaIzabraniRed = ProdajaIzabraniRed;
-            tbKupac.IsReadOnly = true;
-            tbBrojRacuna.IsReadOnly = true;
-            tbDatum.IsReadOnly = true;
-            tbUkupnaCena.IsReadOnly = true;
+            dgRacun.CanUserSortColumns = false;
+            dgRacun.CanUserAddRows = false;
+            dgRacun.CanUserDeleteRows = false;
             dgRacun.IsReadOnly = true;
             PopuniPolja();
         }
@@ -33,12 +34,17 @@ namespace POP_SF39_2016_GUI.gui
             List<Object> tempListDU = (List<Object>)ProdataDodatnaUslugaDAO.GetAllForId(ProdajaIzabraniRed.Id).ToList<Object>();
             var Korpa = tempListJP.Concat(tempListDU);
             dgRacun.ItemsSource = Korpa;
+            this.Title += ProdajaIzabraniRed.BrRacuna;
 
         }
 
         private void IgnoreDoubleclick(object sender, MouseButtonEventArgs e)
         {
             return;
+        }
+        private void Indexiranje(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex()).ToString();
         }
     }
 }

@@ -3,10 +3,11 @@ using POP_SF39_2016_GUI.DAO;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class DodatnaUslugaWindow : Window
+    public partial class DodatnaUslugaWindow : MetroWindow
     {
         public enum Operacija
         {
@@ -29,6 +30,10 @@ namespace POP_SF39_2016_GUI.gui
         {
             tbNaziv.DataContext = dodatnaUsluga;
             tbCena.DataContext = dodatnaUsluga;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
         }
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
         {

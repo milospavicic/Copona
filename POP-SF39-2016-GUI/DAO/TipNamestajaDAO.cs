@@ -24,7 +24,7 @@ namespace POP_SF39_2016_GUI.DAO
         {
             var tipoviNamestaja = new ObservableCollection<TipNamestaja>();
             using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
+            {   
                 SqlCommand cmd = con.CreateCommand();
                 SqlDataAdapter da = new SqlDataAdapter();
                 DataSet ds = new DataSet();

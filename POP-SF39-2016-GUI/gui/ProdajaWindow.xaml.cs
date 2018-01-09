@@ -8,10 +8,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class ProdajaWindow : Window
+    public partial class ProdajaWindow : MetroWindow
     {
         public ObservableCollection<Object> Korpa { get; set; } = new ObservableCollection<Object>();
         public ObservableCollection<DodatnaUsluga> ListaDU { get; set; } = new ObservableCollection<DodatnaUsluga>();
@@ -37,6 +39,10 @@ namespace POP_SF39_2016_GUI.gui
             InitializeComponent();
             this.operacija = operacija;
             this.prodajaNamestaja = prodajaNamestaja;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
             PopuniTabele();
         }
 
@@ -101,13 +107,21 @@ namespace POP_SF39_2016_GUI.gui
             dgProdajaN.IsSynchronizedWithCurrentItem = true;
             dgProdajaN.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgProdajaN.CanUserSortColumns = false;
+            dgProdajaN.CanUserAddRows = false;
+            dgProdajaN.CanUserDeleteRows = false;
+            //--
             dgProdajaDU.IsReadOnly = true;
             dgProdajaDU.IsSynchronizedWithCurrentItem = true;
             dgProdajaDU.ColumnWidth = new DataGridLength(1, DataGridLengthUnitType.Star);
             dgProdajaDU.CanUserSortColumns = false;
+            dgProdajaDU.CanUserAddRows = false;
+            dgProdajaDU.CanUserDeleteRows = false;
+            //--
             dgRacun.IsReadOnly = true;
             dgRacun.IsSynchronizedWithCurrentItem = true;
             dgRacun.CanUserSortColumns = false;
+            dgRacun.CanUserAddRows = false;
+            dgRacun.CanUserDeleteRows = false;
         }
 
         private void dgProdajaN_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
@@ -142,13 +156,13 @@ namespace POP_SF39_2016_GUI.gui
 
                 if(postojiJP == false)
                 {
-                    MessageBoxResult poruka = MessageBox.Show("Ne mozete prodati samo dodatne usluge.", "Upozorenje", MessageBoxButton.OK);
+                    ErrorMessagePrint("Ne mozete prodati samo dodatne usluge.", "Upozorenje");
                     return;
                 }
             }
             else
             {
-                MessageBoxResult poruka = MessageBox.Show("Korpa je prazna.", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Korpa je prazna.", "Upozorenje");
                 return;
             }
             switch (operacija)
@@ -260,13 +274,13 @@ namespace POP_SF39_2016_GUI.gui
                 case RadSa.NAMESTAJ:
                     if (dgProdajaN.SelectedItem == null)
                     {
-                        MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                        ErrorMessagePrint("Niste nista izabrali. ", "Upozorenje");
                         return;
                     }
                     Namestaj selektovaniNamestaj = (Namestaj)dgProdajaN.SelectedItem;
                     if (selektovaniNamestaj.BrKomada == 0)
                     {
-                        MessageBoxResult poruka = MessageBox.Show("Namestaj je rasprodat.", "Upozorenje", MessageBoxButton.OK);
+                        ErrorMessagePrint("Namestaj je rasprodat.", "Upozorenje");
                         return;
                     }
                     bool postoji = false;
@@ -317,7 +331,7 @@ namespace POP_SF39_2016_GUI.gui
                 case RadSa.DODATNAUSLUGA:
                     if (dgProdajaDU.SelectedItem == null)
                     {
-                        MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                        ErrorMessagePrint("Niste nista izabrali. ", "Upozorenje");
                         return;
                     }
                     DodatnaUsluga selektovanaDodatnaUsluga = (DodatnaUsluga)dgProdajaDU.SelectedItem;
@@ -340,7 +354,7 @@ namespace POP_SF39_2016_GUI.gui
             double tempCena = 0;
             if (dgRacun.SelectedItem == null)
             {
-                MessageBoxResult poruka = MessageBox.Show("Niste nista izabrali. ", "Upozorenje", MessageBoxButton.OK);
+                ErrorMessagePrint("Niste nista izabrali. ", "Upozorenje");
                 return;
             }
             if (dgRacun.SelectedItem.GetType() == typeof(JedinicaProdaje))
@@ -390,9 +404,17 @@ namespace POP_SF39_2016_GUI.gui
             }
             return false;
         }
+        private void Indexiranje(object sender, DataGridRowEventArgs e)
+        {
+            e.Row.Header = (e.Row.GetIndex()).ToString();
+        }
         private void btnIzadji_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+        public async void ErrorMessagePrint(string message, string title)
+        {
+            await this.ShowMessageAsync(title, message);
         }
         private void Window_Closed(object sender, EventArgs e)
         {

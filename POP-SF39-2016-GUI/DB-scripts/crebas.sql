@@ -83,6 +83,7 @@ DROP TABLE Akcija
 DROP TABLE Namestaj
 DROP TABLE ProdataDodatnaUsluga
 DROP TABLE JedinicaProdaje
+DROP TABLE ProdajaNamestaja
 Drop TaBLE TipNamestaja
 DROP TABLE NAMESTAJ
 DROP TABLE KORISNIK

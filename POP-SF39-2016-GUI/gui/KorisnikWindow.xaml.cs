@@ -5,10 +5,12 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
+using MahApps.Metro.Controls;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class KorisnikWindow : Window
+    public partial class KorisnikWindow : MetroWindow
     {
         public enum Operacija
         {
@@ -45,6 +47,10 @@ namespace POP_SF39_2016_GUI.gui
             tbSifra.DataContext = korisnik;
             if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac || logovaniKorisnik.Id == korisnik.Id)
                 cbPozicija.IsEnabled = false;
+            if (operacija == Operacija.DODAVANJE)
+                this.Title += " - Dodavanje";
+            else
+                this.Title += " - Izmena";
         }
 
         private void SacuvajIzmene(object sender, RoutedEventArgs e)
@@ -57,7 +63,7 @@ namespace POP_SF39_2016_GUI.gui
                     foreach(var vecPostojeciKorisnik in Projekat.Instance.Korisnici)
                         if (korisnik.KorisnickoIme == vecPostojeciKorisnik.KorisnickoIme)
                         {
-                            MessageBoxResult poruka = MessageBox.Show("Vec postoji korisnik sa unetim korisnickim imenom.", "Upozorenje", MessageBoxButton.OK);
+                            ErrorMessagePrint("Vec postoji korisnik sa unetim korisnickim imenom.", "Upozorenje");
                             return;
                         }
                     KorisnikDAO.Create(korisnik);
@@ -87,6 +93,10 @@ namespace POP_SF39_2016_GUI.gui
                 return true;
             }
             return false;
+        }
+        public async void ErrorMessagePrint(string message, string title)
+        {
+            await this.ShowMessageAsync(title, message);
         }
     }
 }

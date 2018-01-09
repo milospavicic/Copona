@@ -1,10 +1,11 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016_GUI.DAO;
 using System.Windows;
+using MahApps.Metro.Controls;
 
 namespace POP_SF39_2016_GUI.gui
 {
-    public partial class SalonWindow : Window
+    public partial class SalonWindow : MetroWindow
     {
         public Korisnik logovaniKorisnik;
         public Salon mojSalon;
