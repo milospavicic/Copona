@@ -302,6 +302,7 @@ namespace POP_SF39_2016_GUI.gui
                                 {
                                     tempJP.Kolicina += unosKolicine.Kolicina;
                                     selektovaniNamestaj.BrKomada -= unosKolicine.Kolicina;
+                                    tempCena = selektovaniNamestaj.AkcijskaCena * unosKolicine.Kolicina;
                                     postoji = true;
                                     break;
                                 }
@@ -322,7 +323,7 @@ namespace POP_SF39_2016_GUI.gui
                             };
                             Korpa.Add(jd);
                             selektovaniNamestaj.BrKomada -= unosKolicine.Kolicina;
-                            tempCena = selektovaniNamestaj.Cena * unosKolicine.Kolicina;
+                            tempCena = selektovaniNamestaj.AkcijskaCena * unosKolicine.Kolicina;
                         }
                         else { return; }
                     }
