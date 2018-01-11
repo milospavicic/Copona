@@ -130,12 +130,10 @@ namespace POP_SF39_2016_GUI.model
         public double CenaUkupno
         {
             get
-            {  
-                if (cenaUkupno == 0)
-                {
-                    cenaUkupno = Cena * Kolicina;
-                }
+            {
+                cenaUkupno = Cena * Kolicina;
                 return cenaUkupno;
+
             }
             set
             {
@@ -148,10 +146,7 @@ namespace POP_SF39_2016_GUI.model
         {
             get
             {
-                if (cenaUkupnoPdv == 0)
-                {
-                    cenaUkupnoPdv = (Cena + Cena * ProdajaNamestaja.PDV) * Kolicina;
-                }
+                cenaUkupnoPdv = (Cena + Cena * ProdajaNamestaja.PDV) * Kolicina;    
                 return cenaUkupnoPdv;
             }
             set

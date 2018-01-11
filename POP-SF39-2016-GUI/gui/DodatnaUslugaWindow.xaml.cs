@@ -29,7 +29,9 @@ namespace POP_SF39_2016_GUI.gui
         private void PopunjavanjePolja(DodatnaUsluga dodatnaUsluga)
         {
             tbNaziv.DataContext = dodatnaUsluga;
+            tbNaziv.MaxLength = 100;
             tbCena.DataContext = dodatnaUsluga;
+            tbCena.MaxLength = 9;
             if (operacija == Operacija.DODAVANJE)
                 this.Title += " - Dodavanje";
             else

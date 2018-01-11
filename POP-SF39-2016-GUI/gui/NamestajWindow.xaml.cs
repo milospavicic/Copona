@@ -32,8 +32,11 @@ namespace POP_SF39_2016_GUI.gui
             if (operacija == Operacija.DODAVANJE)
                 namestaj.TipNamestaja = Projekat.Instance.TipoviNamestaja[0];
             tbNaziv.DataContext = namestaj;
+            tbNaziv.MaxLength = 100;
             tbCena.DataContext = namestaj;
+            tbCena.MaxLength = 9;
             tbBrojKomada.DataContext = namestaj;
+            tbBrojKomada.MaxLength = 9;
             cbTipNamestaja.DataContext = namestaj;
             if (operacija == Operacija.DODAVANJE)
                 this.Title += " - Dodavanje";
@@ -50,7 +53,10 @@ namespace POP_SF39_2016_GUI.gui
             {
                 case Operacija.DODAVANJE:
                     string sifraNamestaja = "";
-                    sifraNamestaja += namestaj.Naziv.Substring(0, 2) + new Random().Next(1, 100) + namestaj.TipNamestaja.Naziv.Substring(0, 2);
+                    if(namestaj.Naziv.Length>=2)
+                        sifraNamestaja += namestaj.Naziv.Substring(0, 2);
+                    sifraNamestaja += new Random().Next(1, 1000);
+                    sifraNamestaja += namestaj.TipNamestaja.Naziv.Substring(0, 2);
                     namestaj.Sifra = sifraNamestaja.ToUpper();
                     NamestajDAO.Create(namestaj);
                     break;

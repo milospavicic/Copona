@@ -23,7 +23,7 @@ namespace POP_SF39_2016_GUI
             }
             catch
             {
-                return new ValidationResult(false, "Ovo polje mora biti pozitivan broj manji od 100.");
+                return new ValidationResult(false, "Ovo polje mora biti broj izmedju 1 i 99.");
             }
             return new ValidationResult(true, null);
         }

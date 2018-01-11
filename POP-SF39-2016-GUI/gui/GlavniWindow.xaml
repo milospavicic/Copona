@@ -7,9 +7,10 @@
         mc:Ignorable="d"
         Title="Glavni Meni" 
         Height="800" Width="1200" 
-        Closed="Izadji" ResizeMode="NoResize"
+        ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen" 
         WindowState="Maximized"
+        Closed="MetroWindow_Closed"
         IgnoreTaskbarOnMaximize="True"
         ShowTitleBar="False">
     <Grid>

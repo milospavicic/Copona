@@ -34,13 +34,13 @@ namespace POP_SF39_2016_GUI
                 intValue = int.Parse(strValue);
                 if (intValue <= 0)
                     throw new Exception();
-                if (intValue + VecUneto > Max)
-                    throw new Exception();
             }
             catch
             {
                 return new ValidationResult(false, "Ovo polje mora biti pozitivan broj.");
             }
+            if (intValue + VecUneto > Max)
+                return new ValidationResult(false," Nema dovoljno komada ovog namestaja.");
             return new ValidationResult(true, null);
         }
     }

@@ -320,7 +320,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.NAMESTAJ:
                     var izabraniNamestaj = (Namestaj)dgTabela.SelectedItem;
 
-                    MessageBoxResult namestajMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult namestajMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovaj namestaj?", "Brisanje", MessageBoxButton.YesNo);
                     if (namestajMessage == MessageBoxResult.Yes)
                     {
                         NamestajDAO.Delete(izabraniNamestaj);
@@ -333,7 +333,7 @@ namespace POP_SF39_2016_GUI.gui
                         MessageBoxResult poruka = MessageBox.Show("Ovaj tip se ne moze obrisati!", "Upozorenje", MessageBoxButton.OK);
                         return;
                     }
-                    MessageBoxResult tipNamestajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult tipNamestajaMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovaj tip namestaja?", "Brisanje", MessageBoxButton.YesNo);
                     if (tipNamestajaMessage == MessageBoxResult.Yes)
                     {
                         var tempListaZaBrisanje = NamestajDAO.GetAllForTipId(izabraniTipNamestaja.Id);
@@ -348,7 +348,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.KORISNIK:
                     var izabraniKorisnik = (Korisnik)dgTabela.SelectedItem;
                     
-                    MessageBoxResult korisnikMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult korisnikMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovog korisnika?", "Brisanje", MessageBoxButton.YesNo);
                     if (korisnikMessage == MessageBoxResult.Yes)
                     {
                         KorisnikDAO.Delete(izabraniKorisnik);
@@ -357,7 +357,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.AKCIJA:
                     var izabranaAkcija = (Akcija)dgTabela.SelectedItem;
 
-                    MessageBoxResult akcijaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult akcijaMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovu akciju?", "Brisanje", MessageBoxButton.YesNo);
                     if (akcijaMessage == MessageBoxResult.Yes)
                     {
                         var listaZaBrisanje = NaAkcijiDAO.GetAllNAForActionId(izabranaAkcija.Id);
@@ -371,7 +371,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.DODATNAUSLUGA:
                     var izabranaDodatnaUsluga = (DodatnaUsluga)dgTabela.SelectedItem;
 
-                    MessageBoxResult dodatnaUslugaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult dodatnaUslugaMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovu dodatnu uslugu?", "Brisanje", MessageBoxButton.YesNo);
                     if (dodatnaUslugaMessage == MessageBoxResult.Yes)
                     {
                         DodatnaUslugaDAO.Delete(izabranaDodatnaUsluga);
@@ -380,7 +380,7 @@ namespace POP_SF39_2016_GUI.gui
                 case Opcija.PRODAJA:
                     var izabranaProdaja = (ProdajaNamestaja)dgTabela.SelectedItem;
 
-                    MessageBoxResult prodajaMessage = MessageBox.Show("Da li ste sigurni?", "Brisanje", MessageBoxButton.YesNo);
+                    MessageBoxResult prodajaMessage = MessageBox.Show("Da li ste sigurni da zelite da obrisete ovu prodaju?", "Brisanje", MessageBoxButton.YesNo);
                     if (prodajaMessage == MessageBoxResult.Yes)
                     {
                         var listaZaBrisanje = JedinicaProdajeDAO.GetAllForId(izabranaProdaja.Id);
@@ -407,13 +407,9 @@ namespace POP_SF39_2016_GUI.gui
             switch (izabranaOpcija)
             {
                 case Opcija.NAMESTAJ:
-                    if ( (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv" || (string)e.Column.Header == "Cena")
+                    if ( (string)e.Column.Header == "TipNamestajaId" || (string)e.Column.Header == "CenaSaPdv")
                     {
                         e.Cancel = true;
-                    }
-                    if((string)e.Column.Header == "AkcijskaCena")
-                    {
-                        e.Column.Header = "Cena";
                     }
                     break;
                 case Opcija.KORISNIK:
@@ -575,12 +571,12 @@ namespace POP_SF39_2016_GUI.gui
         }
         private void IzmenaPodataka(object sender, RoutedEventArgs e)
         {
-            var korisnikProzor = new KorisnikWindow(LogovaniKorisnik, KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
+            var korisnikProzor = new KorisnikWindow((Korisnik)LogovaniKorisnik.Clone(), KorisnikWindow.Operacija.IZMENA, LogovaniKorisnik);
             korisnikProzor.ShowDialog();
         }
         private void Logout(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            MessageBoxResult r = MessageBox.Show("Da li ste sigurni da zelite da se izlogujete?", "Izlazak", MessageBoxButton.YesNo);
             if (r == MessageBoxResult.Yes)
             {
                 var MainWindow = new MainWindow();
@@ -592,14 +588,6 @@ namespace POP_SF39_2016_GUI.gui
         {
             this.Close();
         }
-        private void Izadji(object sender, EventArgs e)
-        {
-            MessageBoxResult r = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
-            if (r == MessageBoxResult.Yes)
-            {
-                Environment.Exit(0);
-            };
-        }
         private void Indexiranje(object sender, DataGridRowEventArgs e)
         {
             e.Row.Header = (e.Row.GetIndex()).ToString();
@@ -607,6 +595,11 @@ namespace POP_SF39_2016_GUI.gui
         public async void ErrorMessagePrint(string message, string title)
         {
             await this.ShowMessageAsync(title, message);
+        }
+
+        private void MetroWindow_Closed(object sender, EventArgs e)
+        {
+            Environment.Exit(0);
         }
     }
 }

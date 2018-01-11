@@ -41,10 +41,14 @@ namespace POP_SF39_2016_GUI.gui
         {
             cbPozicija.ItemsSource = Enum.GetValues(typeof(TipKorisnika)).Cast<TipKorisnika>();
             tbIme.DataContext = korisnik;
+            tbIme.MaxLength = 30;
             tbPrezime.DataContext = korisnik;
+            tbPrezime.MaxLength = 30;
             tbKorisnickoIme.DataContext = korisnik;
+            tbKorisnickoIme.MaxLength = 30;
             cbPozicija.DataContext = korisnik;
             tbSifra.DataContext = korisnik;
+            tbSifra.MaxLength = 30;
             if (logovaniKorisnik.TipKorisnika == TipKorisnika.Prodavac || logovaniKorisnik.Id == korisnik.Id)
                 cbPozicija.IsEnabled = false;
             if (operacija == Operacija.DODAVANJE)

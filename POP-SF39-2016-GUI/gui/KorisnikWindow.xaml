@@ -7,16 +7,6 @@
         xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
         Title="Korisnik" Height="400" Width="330" ResizeMode="NoResize" WindowStartupLocation="CenterScreen">
-    <Window.Resources>
-        <ControlTemplate x:Key="validationError">
-            <DockPanel >
-                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Center" ToolTip="Ovo polje mora biti popunjeno" Margin="0,11,0,0">!</TextBlock>
-                <Border BorderBrush="Red" BorderThickness="0.5" Margin="0,0,0,10">
-                    <AdornedElementPlaceholder/>
-                </Border>
-            </DockPanel>
-        </ControlTemplate>
-    </Window.Resources>
     <Grid>
         <Border BorderBrush="#68c0e8" BorderThickness="1">
             <Grid>
@@ -39,7 +29,7 @@
                 <Label Content="Korisnicko ime" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="2" Grid.Column="1" Grid.ColumnSpan="2" />
                 <Label Content="Sifra" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="3" Grid.Column="1" Grid.ColumnSpan="2" />
                 <Label Content="Pozicija" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Row="4" Grid.Column="1" Grid.ColumnSpan="2" />
-                <TextBox Name="tbIme" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" Margin="0,0,30,0" >
+                <TextBox Name="tbIme" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="0" Grid.Column="3" Margin="0,0,30,0" >
                     <TextBox.Text>
                         <Binding Path="Ime" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -48,7 +38,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Name="tbPrezime" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Margin="0,0,30,0">
+                <TextBox Name="tbPrezime" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="1" Grid.Column="3" Margin="0,0,30,0">
                     <TextBox.Text>
                         <Binding Path="Prezime" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -57,7 +47,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Name="tbKorisnickoIme" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Margin="0,0,30,0" >
+                <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="2" Grid.Column="3" Margin="0,0,30,0" >
                     <TextBox.Text>
                         <Binding Path="KorisnickoIme" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -66,7 +56,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <TextBox Name="tbSifra" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Margin="0,0,30,0" >
+                <TextBox Name="tbSifra" HorizontalAlignment="Stretch" VerticalAlignment="Center" Grid.Row="3" Grid.Column="3" Margin="0,0,30,0" >
                     <TextBox.Text>
                         <Binding Path="Lozinka" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

@@ -28,6 +28,8 @@ namespace POP_SF39_2016_GUI
             KolicinaValidation.Max = max;
             KolicinaValidation.VecUneto = vecUneto;
             tbUnos.Focus();
+            tbUnos.MaxLength = 9;
+            btnUnesi.IsDefault = true;
         }
 
         private void Izadji(object sender, RoutedEventArgs e)

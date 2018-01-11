@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -26,263 +27,239 @@ namespace POP_SF39_2016_GUI.DAO
             UkupnaCena_Rastuce,
             Nesortirano
         }
-
         public static ObservableCollection<ProdajaNamestaja> GetAll()
         {
-            var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
+                var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var np = new ProdajaNamestaja();
-                    np.Id = (int)row["Id"];
-                    np.Kupac = row["Kupac"].ToString();
-                    np.BrRacuna = row["BrRacuna"].ToString();
-                    np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
-                    np.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    listaProdaja.Add(np);
+
+                    cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
+                    {
+                        var np = new ProdajaNamestaja();
+                        np.Id = (int)row["Id"];
+                        np.Kupac = row["Kupac"].ToString();
+                        np.BrRacuna = row["BrRacuna"].ToString();
+                        np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
+                        np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
+                        np.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaProdaja.Add(np);
+                    }
                 }
+                return listaProdaja;
             }
-            return listaProdaja;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodaje. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message + "\nPokusajte ponovo pokrenuti program za koji trenutak.", "Upozorenje", MessageBoxButton.OK);
+                Environment.Exit(0);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
-
         public static ProdajaNamestaja Create(ProdajaNamestaja npn)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,UkupnaCena,Obrisan) VALUES (@Kupac,@BrRacuna,@DatumProdaje,@UkupnaCena,@Obrisan)";
-                cmd.CommandText += " Select SCOPE_IDENTITY();";
+                    cmd.CommandText = "INSERT INTO ProdajaNamestaja(Kupac,BrRacuna,DatumProdaje,UkupnaCena,Obrisan) VALUES (@Kupac,@BrRacuna,@DatumProdaje,@UkupnaCena,@Obrisan)";
+                    cmd.CommandText += " Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
-                cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
-                cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
-                cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
-                cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
+                    cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
+                    cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
+                    cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
+                    cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
+                    cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
 
-                npn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                    npn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                }
+                Projekat.Instance.Prodaja.Add(npn);
+                return npn;
             }
-            Projekat.Instance.Prodaja.Add(npn);
-            return npn;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodaje. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
-
         public static void Update(ProdajaNamestaja npn)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "UPDATE ProdajaNamestaja SET Kupac=@Kupac,BrRacuna=@BrRacuna,DatumProdaje=@DatumProdaje,UkupnaCena=@UkupnaCena,Obrisan=@Obrisan WHERE Id = @Id";
-                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
-
-                cmd.Parameters.AddWithValue("Id", npn.Id);
-                cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
-                cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
-                cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
-                cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
-                cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
-
-                cmd.ExecuteNonQuery();
-            }
-            foreach (var prodaja in Projekat.Instance.Prodaja)
-            {
-                if (prodaja.Id == npn.Id)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    prodaja.Kupac = npn.Kupac;
-                    prodaja.BrRacuna = npn.BrRacuna;
-                    prodaja.DatumProdaje = npn.DatumProdaje;
-                    prodaja.UkupnaCena = npn.UkupnaCena;
-                    prodaja.Obrisan = npn.Obrisan;
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+                    DataSet ds = new DataSet();
+
+
+                    cmd.CommandText = "UPDATE ProdajaNamestaja SET Kupac=@Kupac,BrRacuna=@BrRacuna,DatumProdaje=@DatumProdaje,UkupnaCena=@UkupnaCena,Obrisan=@Obrisan WHERE Id = @Id";
+                    cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                    cmd.Parameters.AddWithValue("Id", npn.Id);
+                    cmd.Parameters.AddWithValue("Kupac", npn.Kupac);
+                    cmd.Parameters.AddWithValue("BrRacuna", npn.BrRacuna);
+                    cmd.Parameters.AddWithValue("DatumProdaje", npn.DatumProdaje);
+                    cmd.Parameters.AddWithValue("UkupnaCena", npn.UkupnaCena);
+                    cmd.Parameters.AddWithValue("Obrisan", npn.Obrisan);
+
+                    cmd.ExecuteNonQuery();
+                }
+                foreach (var prodaja in Projekat.Instance.Prodaja)
+                {
+                    if (prodaja.Id == npn.Id)
+                    {
+                        prodaja.Kupac = npn.Kupac;
+                        prodaja.BrRacuna = npn.BrRacuna;
+                        prodaja.DatumProdaje = npn.DatumProdaje;
+                        prodaja.UkupnaCena = npn.UkupnaCena;
+                        prodaja.Obrisan = npn.Obrisan;
+                    }
                 }
             }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodaje. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
         }
-
         public static void Delete(ProdajaNamestaja prodaja)
         {
-            prodaja.Obrisan = true;
-            Update(prodaja);
-        }
-
-        public static ObservableCollection<ProdajaNamestaja> Search(string parametarS, DateTime parametarDT, GlavniWindow.DoSearch tipPretrage)
-        {
-            var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            if (prodaja != null)
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                switch (tipPretrage)
-                {
-                    case GlavniWindow.DoSearch.Date:
-                        cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0 AND DatumProdaje = @parametarDT";
-                        cmd.Parameters.AddWithValue("parametarDT", parametarDT);
-                        break;
-                    case GlavniWindow.DoSearch.Other:
-                        cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE (Id IN(SELECT ProdajaId FROM JedinicaProdaje WHERE Obrisan=0 AND NamestajId IN (SELECT Id FROM Namestaj WHERE Naziv LIKE @parametarS))OR Kupac LIKE @parametarS OR BrRacuna LIKE @parametarS) AND Obrisan=0";
-                        cmd.Parameters.AddWithValue("parametarS", "%" + parametarS + "%");
-                        break;
-                }
-
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
-                {
-                    var np = new ProdajaNamestaja();
-                    np.Id = (int)row["Id"];
-                    np.Kupac = row["Kupac"].ToString();
-                    np.BrRacuna = row["BrRacuna"].ToString();
-                    np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
-                    np.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaProdaja.Add(np);
-                }
+                prodaja.Obrisan = true;
+                Update(prodaja);
             }
-            return listaProdaja;
-        }
-        public static ObservableCollection<ProdajaNamestaja> Sort(SortBy sortBy)
-        {
-            var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
-            {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
-                switch (sortBy)
-                {
-                    case SortBy.Kupac_Opadajuce:
-                        cmd.CommandText += " ORDER BY Kupac DESC";
-                        break;
-                    case SortBy.Kupac_Rastuce:
-                        cmd.CommandText += " ORDER BY Kupac ASC";
-                        break;
-                    case SortBy.BrRacuna_Opadajuce:
-                        cmd.CommandText += " ORDER BY BrRacuna DESC";
-                        break;
-                    case SortBy.BrRacuna_Rastuce:
-                        cmd.CommandText += " ORDER BY BrRacuna ASC";
-                        break;
-                    case SortBy.DatumProdaje_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumProdaje DESC";
-                        break;
-                    case SortBy.DatumProdaje_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumProdaje ASC";
-                        break;
-                    case SortBy.UkupnaCena_Opadajuce:
-                        cmd.CommandText += " ORDER BY UkupnaCena DESC";
-                        break;
-                    case SortBy.UkupnaCena_Rastuce:
-                        cmd.CommandText += " ORDER BY UkupnaCena ASC";
-                        break;
-                }
-
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
-                {
-                    var np = new ProdajaNamestaja();
-                    np.Id = (int)row["Id"];
-                    np.Kupac = row["Kupac"].ToString();
-                    np.BrRacuna = row["BrRacuna"].ToString();
-                    np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
-                    np.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaProdaja.Add(np);
-                }
-            }
-            return listaProdaja;
         }
         public static ObservableCollection<ProdajaNamestaja> SearchAndOrSort(GlavniWindow.DoSearch doSearch, string parametarS, DateTime parametarDT, SortBy sortBy)
         {
-            var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                switch (doSearch)
+                var listaProdaja = new ObservableCollection<ProdajaNamestaja>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    case GlavniWindow.DoSearch.Date:
-                        cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0 AND DatumProdaje = @parametarDT";
-                        cmd.Parameters.AddWithValue("parametarDT", parametarDT);
-                        break;
-                    case GlavniWindow.DoSearch.Other:
-                        cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE (Id IN(SELECT ProdajaId FROM JedinicaProdaje WHERE Obrisan=0 AND NamestajId IN (SELECT Id FROM Namestaj WHERE Naziv LIKE @parametarS))OR Kupac LIKE @parametarS OR BrRacuna LIKE @parametarS) AND Obrisan=0";
-                        cmd.Parameters.AddWithValue("parametarS", "%" + parametarS + "%");
-                        break;
-                    case GlavniWindow.DoSearch.No:
-                        cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
-                        break;
-                }
-                switch (sortBy)
-                {
-                    case SortBy.Kupac_Opadajuce:
-                        cmd.CommandText += " ORDER BY Kupac DESC";
-                        break;
-                    case SortBy.Kupac_Rastuce:
-                        cmd.CommandText += " ORDER BY Kupac ASC";
-                        break;
-                    case SortBy.BrRacuna_Opadajuce:
-                        cmd.CommandText += " ORDER BY BrRacuna DESC";
-                        break;
-                    case SortBy.BrRacuna_Rastuce:
-                        cmd.CommandText += " ORDER BY BrRacuna ASC";
-                        break;
-                    case SortBy.DatumProdaje_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumProdaje DESC";
-                        break;
-                    case SortBy.DatumProdaje_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumProdaje ASC";
-                        break;
-                    case SortBy.UkupnaCena_Opadajuce:
-                        cmd.CommandText += " ORDER BY UkupnaCena DESC";
-                        break;
-                    case SortBy.UkupnaCena_Rastuce:
-                        cmd.CommandText += " ORDER BY UkupnaCena ASC";
-                        break;
-                }
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
+                    switch (doSearch)
+                    {
+                        case GlavniWindow.DoSearch.Date:
+                            cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0 AND DatumProdaje = @parametarDT";
+                            cmd.Parameters.AddWithValue("parametarDT", parametarDT);
+                            break;
+                        case GlavniWindow.DoSearch.Other:
+                            cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE (Id IN(SELECT ProdajaId FROM JedinicaProdaje WHERE Obrisan=0 AND NamestajId IN (SELECT Id FROM Namestaj WHERE Naziv LIKE @parametarS))OR Kupac LIKE @parametarS OR BrRacuna LIKE @parametarS) AND Obrisan=0";
+                            cmd.Parameters.AddWithValue("parametarS", "%" + parametarS + "%");
+                            break;
+                        case GlavniWindow.DoSearch.No:
+                            cmd.CommandText = "SELECT * FROM ProdajaNamestaja WHERE Obrisan=0";
+                            break;
+                    }
+                    switch (sortBy)
+                    {
+                        case SortBy.Kupac_Opadajuce:
+                            cmd.CommandText += " ORDER BY Kupac DESC";
+                            break;
+                        case SortBy.Kupac_Rastuce:
+                            cmd.CommandText += " ORDER BY Kupac ASC";
+                            break;
+                        case SortBy.BrRacuna_Opadajuce:
+                            cmd.CommandText += " ORDER BY BrRacuna DESC";
+                            break;
+                        case SortBy.BrRacuna_Rastuce:
+                            cmd.CommandText += " ORDER BY BrRacuna ASC";
+                            break;
+                        case SortBy.DatumProdaje_Opadajuce:
+                            cmd.CommandText += " ORDER BY DatumProdaje DESC";
+                            break;
+                        case SortBy.DatumProdaje_Rastuce:
+                            cmd.CommandText += " ORDER BY DatumProdaje ASC";
+                            break;
+                        case SortBy.UkupnaCena_Opadajuce:
+                            cmd.CommandText += " ORDER BY UkupnaCena DESC";
+                            break;
+                        case SortBy.UkupnaCena_Rastuce:
+                            cmd.CommandText += " ORDER BY UkupnaCena ASC";
+                            break;
+                    }
 
-                foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
-                {
-                    var np = new ProdajaNamestaja();
-                    np.Id = (int)row["Id"];
-                    np.Kupac = row["Kupac"].ToString();
-                    np.BrRacuna = row["BrRacuna"].ToString();
-                    np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
-                    np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
-                    np.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "ProdajaNamestaja"); //izvrsavanje upita
 
-                    listaProdaja.Add(np);
+                    foreach (DataRow row in ds.Tables["ProdajaNamestaja"].Rows)
+                    {
+                        var np = new ProdajaNamestaja();
+                        np.Id = (int)row["Id"];
+                        np.Kupac = row["Kupac"].ToString();
+                        np.BrRacuna = row["BrRacuna"].ToString();
+                        np.DatumProdaje = DateTime.Parse(row["DatumProdaje"].ToString());
+                        np.UkupnaCena = double.Parse(row["UkupnaCena"].ToString());
+                        np.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaProdaja.Add(np);
+                    }
                 }
+                return listaProdaja;
             }
-            return listaProdaja;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodaje. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
     }
 }

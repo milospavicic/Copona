@@ -21,6 +21,7 @@ namespace POP_SF39_2016_GUI.gui
             InitializeComponent();
             tbUnos.DataContext = PopustNamestaja;
             tbUnos.Focus();
+            btnUnos.IsDefault = true;
         }
         private void Izadji(object sender, RoutedEventArgs e)
         {

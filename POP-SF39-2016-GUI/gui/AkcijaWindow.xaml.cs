@@ -40,6 +40,7 @@ namespace POP_SF39_2016_GUI.gui
             dpPocetniDatum.DataContext = akcija;
             dpKrajnjiDatum.DataContext = akcija;
             tbNaziv.DataContext = akcija;
+            tbNaziv.MaxLength = 100;
             ListaNamestajaZaDG1 = NamestajDAO.GetAllNamestajNotOnAction();
 
             if (operacija == Operacija.IZMENA)
@@ -66,6 +67,11 @@ namespace POP_SF39_2016_GUI.gui
         {
             if (ForceValidation() == true)
                 return;
+            if(dpPocetniDatum.SelectedDate == null || dpKrajnjiDatum.SelectedDate == null)
+            {
+                ErrorMessagePrint("Datumi moraju biti uneseni.", "Upozorenje");
+                return;
+            }
             if(ListaNAZaDG2.Count==0)
             {
                 ErrorMessagePrint("Akcija mora sadrzati bar jedan namestaj", "Upozorenje");

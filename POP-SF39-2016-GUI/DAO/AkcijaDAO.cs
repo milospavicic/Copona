@@ -5,6 +5,7 @@ using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
+using System.Windows;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -23,271 +24,278 @@ namespace POP_SF39_2016_GUI.DAO
 
         public static ObservableCollection<Akcija> GetAll()
         {
-            var listaAkcija = new ObservableCollection<Akcija>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Akcija"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                var listaAkcija = new ObservableCollection<Akcija>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var a = new Akcija();
-                    a.Id = (int)row["IdAkcije"];
-                    a.Naziv = row["Naziv"].ToString();
-                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
-                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
-                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    listaAkcija.Add(a);
+
+                    cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0";
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Akcija"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                    {
+                        var a = new Akcija();
+                        a.Id = (int)row["IdAkcije"];
+                        a.Naziv = row["Naziv"].ToString();
+                        a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
+                        a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
+                        a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaAkcija.Add(a);
+                    }
                 }
+                return listaAkcija;
             }
-            return listaAkcija;
-        }
-        public static ObservableCollection<Akcija> Search(string parametarS, DateTime parametarDT, GlavniWindow.DoSearch doSearch)
-        {
-            var listaAkcija = new ObservableCollection<Akcija>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            catch(TypeInitializationException ex)
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-                switch (doSearch)
-                {
-                    case GlavniWindow.DoSearch.Other:
-                        cmd.CommandText = "SELECT * FROM AKCIJA WHERE (IdAkcije IN (SELECT IdAkcije FROM NaAkciji WHERE Obrisan=0 AND IdNamestaja IN (SELECT Id FROM NAMESTAJ WHERE Naziv LIKE @parametarS)) OR Naziv LIKE @parametarS) AND Obrisan=0";
-                        cmd.Parameters.AddWithValue("parametarS", "%" + parametarS.Trim() + "%");
-                        break;
-                    case GlavniWindow.DoSearch.Date:
-                        cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND (@parametarDT BETWEEN DatumPocetak AND DatumKraj)";
-                        cmd.Parameters.AddWithValue("parametarDT", parametarDT);
-                        break;
-                }
-
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Akcija"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Akcija"].Rows)
-                {
-                    var a = new Akcija();
-                    a.Id = (int)row["IdAkcije"];
-                    a.Naziv = row["Naziv"].ToString();
-                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
-                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
-                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaAkcija.Add(a);
-                }
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji akcija. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
             }
-            return listaAkcija;
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message + "\nPokusajte ponovo pokrenuti program za koji trenutak.", "Upozorenje", MessageBoxButton.OK);
+                Environment.Exit(0);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static Akcija Create(Akcija nn)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO Akcija(Naziv,DatumPocetak,DatumKraj,Obrisan) VALUES (@Naziv,@DatumPocetak,@DatumKraj,@Obrisan)";
-                cmd.CommandText += " Select SCOPE_IDENTITY();";
-                cmd.Parameters.AddWithValue("Naziv", nn.Naziv);
-                cmd.Parameters.AddWithValue("DatumPocetak", nn.PocetakAkcije);
-                cmd.Parameters.AddWithValue("DatumKraj", nn.KrajAkcije);
-                cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
+                    cmd.CommandText = "INSERT INTO Akcija(Naziv,DatumPocetak,DatumKraj,Obrisan) VALUES (@Naziv,@DatumPocetak,@DatumKraj,@Obrisan)";
+                    cmd.CommandText += " Select SCOPE_IDENTITY();";
+                    cmd.Parameters.AddWithValue("Naziv", nn.Naziv);
+                    cmd.Parameters.AddWithValue("DatumPocetak", nn.PocetakAkcije);
+                    cmd.Parameters.AddWithValue("DatumKraj", nn.KrajAkcije);
+                    cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
 
-                nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                    nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                }
+                Projekat.Instance.Akcija.Add(nn);
+                return nn;
             }
-            Projekat.Instance.Akcija.Add(nn);
-            return nn;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji akcije. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static void Update(Akcija azu)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "UPDATE Akcija SET Naziv=@Naziv,DatumPocetak=@DatumPocetak,DatumKraj=@DatumKraj,Obrisan=@Obrisan WHERE IdAkcije = @IdAkcije";
-                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
-
-                cmd.Parameters.AddWithValue("IdAkcije", azu.Id);
-                cmd.Parameters.AddWithValue("Naziv", azu.Naziv);
-                cmd.Parameters.AddWithValue("DatumPocetak", azu.PocetakAkcije);
-                cmd.Parameters.AddWithValue("DatumKraj", azu.KrajAkcije);
-                cmd.Parameters.AddWithValue("Obrisan", azu.Obrisan);
-
-                cmd.ExecuteNonQuery();
-            }
-            foreach (var akcija in Projekat.Instance.Akcija)
-            {
-                if (akcija.Id == azu.Id)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    akcija.Naziv = azu.Naziv;
-                    akcija.PocetakAkcije = azu.PocetakAkcije;
-                    akcija.KrajAkcije = azu.KrajAkcije;
-                    akcija.Obrisan = azu.Obrisan;
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+                    DataSet ds = new DataSet();
+
+
+                    cmd.CommandText = "UPDATE Akcija SET Naziv=@Naziv,DatumPocetak=@DatumPocetak,DatumKraj=@DatumKraj,Obrisan=@Obrisan WHERE IdAkcije = @IdAkcije";
+                    cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                    cmd.Parameters.AddWithValue("IdAkcije", azu.Id);
+                    cmd.Parameters.AddWithValue("Naziv", azu.Naziv);
+                    cmd.Parameters.AddWithValue("DatumPocetak", azu.PocetakAkcije);
+                    cmd.Parameters.AddWithValue("DatumKraj", azu.KrajAkcije);
+                    cmd.Parameters.AddWithValue("Obrisan", azu.Obrisan);
+
+                    cmd.ExecuteNonQuery();
+                }
+                foreach (var akcija in Projekat.Instance.Akcija)
+                {
+                    if (akcija.Id == azu.Id)
+                    {
+                        akcija.Naziv = azu.Naziv;
+                        akcija.PocetakAkcije = azu.PocetakAkcije;
+                        akcija.KrajAkcije = azu.KrajAkcije;
+                        akcija.Obrisan = azu.Obrisan;
+                    }
                 }
             }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji akcija. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
         }
-
         public static void Delete(Akcija akcija)
         {
-            akcija.Obrisan = true;
-            Update(akcija);
-        }
-        public static ObservableCollection<Akcija> Sort(SortBy sortBy)
-        {
-            var listaAkcija = new ObservableCollection<Akcija>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            if (akcija != null)
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0";
-                switch (sortBy)
-                {
-                    case SortBy.Naziv_Opadajuce:
-                        cmd.CommandText += " ORDER BY Naziv DESC";
-                        break;
-                    case SortBy.Naziv_Rastuce:
-                        cmd.CommandText += " ORDER BY Naziv ASC";
-                        break;
-                    case SortBy.PocetakAkcije_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumPocetak DESC";
-                        break;
-                    case SortBy.PocetakAkcije_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumPocetak ASC";
-                        break;
-                    case SortBy.KrajAkcije_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumKraj DESC";
-                        break;
-                    case SortBy.KrajAkcije_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumKraj ASC";
-                        break;
-                }
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Akcija"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Akcija"].Rows)
-                {
-                    var a = new Akcija();
-                    a.Id = (int)row["IdAkcije"];
-                    a.Naziv = row["Naziv"].ToString();
-                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
-                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
-                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaAkcija.Add(a);
-                }
+                akcija.Obrisan = true;
+                Update(akcija);
             }
-            return listaAkcija;
         }
         public static ObservableCollection<Akcija> SearchAndOrSort(GlavniWindow.DoSearch doSearch, string parametarS, DateTime parametarDT, SortBy sortBy)
         {
-            var listaAkcija = new ObservableCollection<Akcija>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                switch (doSearch)
+                var listaAkcija = new ObservableCollection<Akcija>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    case GlavniWindow.DoSearch.Other:
-                        cmd.CommandText = "SELECT * FROM AKCIJA WHERE (IdAkcije IN (SELECT IdAkcije FROM NaAkciji WHERE Obrisan=0 AND IdNamestaja IN (SELECT Id FROM NAMESTAJ WHERE Naziv LIKE @parametarS)) OR Naziv LIKE @parametarS) AND Obrisan=0";
-                        cmd.Parameters.AddWithValue("parametarS", "%" + parametarS.Trim() + "%");
-                        break;
-                    case GlavniWindow.DoSearch.Date:
-                        cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND (@parametarDT BETWEEN DatumPocetak AND DatumKraj)";
-                        cmd.Parameters.AddWithValue("parametarDT", parametarDT);
-                        break;
-                    case GlavniWindow.DoSearch.No:
-                        cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0";
-                        break;
-                }
-                switch (sortBy)
-                {
-                    case SortBy.Naziv_Opadajuce:
-                        cmd.CommandText += " ORDER BY Naziv DESC";
-                        break;
-                    case SortBy.Naziv_Rastuce:
-                        cmd.CommandText += " ORDER BY Naziv ASC";
-                        break;
-                    case SortBy.PocetakAkcije_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumPocetak DESC";
-                        break;
-                    case SortBy.PocetakAkcije_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumPocetak ASC";
-                        break;
-                    case SortBy.KrajAkcije_Opadajuce:
-                        cmd.CommandText += " ORDER BY DatumKraj DESC";
-                        break;
-                    case SortBy.KrajAkcije_Rastuce:
-                        cmd.CommandText += " ORDER BY DatumKraj ASC";
-                        break;
-                }
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Akcija"); //izvrsavanje upita
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                foreach (DataRow row in ds.Tables["Akcija"].Rows)
-                {
-                    var a = new Akcija();
-                    a.Id = (int)row["IdAkcije"];
-                    a.Naziv = row["Naziv"].ToString();
-                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
-                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
-                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    switch (doSearch)
+                    {
+                        case GlavniWindow.DoSearch.Other:
+                            cmd.CommandText = "SELECT * FROM AKCIJA WHERE (IdAkcije IN (SELECT IdAkcije FROM NaAkciji WHERE Obrisan=0 AND IdNamestaja IN (SELECT Id FROM NAMESTAJ WHERE Naziv LIKE @parametarS)) OR Naziv LIKE @parametarS) AND Obrisan=0";
+                            cmd.Parameters.AddWithValue("parametarS", "%" + parametarS.Trim() + "%");
+                            break;
+                        case GlavniWindow.DoSearch.Date:
+                            cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND (@parametarDT BETWEEN DatumPocetak AND DatumKraj)";
+                            cmd.Parameters.AddWithValue("parametarDT", parametarDT);
+                            break;
+                        case GlavniWindow.DoSearch.No:
+                            cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0";
+                            break;
+                    }
+                    switch (sortBy)
+                    {
+                        case SortBy.Naziv_Opadajuce:
+                            cmd.CommandText += " ORDER BY Naziv DESC";
+                            break;
+                        case SortBy.Naziv_Rastuce:
+                            cmd.CommandText += " ORDER BY Naziv ASC";
+                            break;
+                        case SortBy.PocetakAkcije_Opadajuce:
+                            cmd.CommandText += " ORDER BY DatumPocetak DESC";
+                            break;
+                        case SortBy.PocetakAkcije_Rastuce:
+                            cmd.CommandText += " ORDER BY DatumPocetak ASC";
+                            break;
+                        case SortBy.KrajAkcije_Opadajuce:
+                            cmd.CommandText += " ORDER BY DatumKraj DESC";
+                            break;
+                        case SortBy.KrajAkcije_Rastuce:
+                            cmd.CommandText += " ORDER BY DatumKraj ASC";
+                            break;
+                    }
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Akcija"); //izvrsavanje upita
 
-                    listaAkcija.Add(a);
+                    foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                    {
+                        var a = new Akcija();
+                        a.Id = (int)row["IdAkcije"];
+                        a.Naziv = row["Naziv"].ToString();
+                        a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
+                        a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
+                        a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaAkcija.Add(a);
+                    }
                 }
+                return listaAkcija;
             }
-            return listaAkcija;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji akcija. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static void StillActiveButPastEndDate()
         {
-            var listaAkcija = new ObservableCollection<Akcija>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND DatumKraj < @DatumKraj";
-                cmd.Parameters.AddWithValue("DatumKraj",DateTime.Now);
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Akcija"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                var listaAkcija = new ObservableCollection<Akcija>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var a = new Akcija();
-                    a.Id = (int)row["IdAkcije"];
-                    a.Naziv = row["Naziv"].ToString();
-                    a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
-                    a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
-                    a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    listaAkcija.Add(a);
+
+                    cmd.CommandText = "SELECT * FROM Akcija WHERE Obrisan=0 AND DatumKraj < @DatumKraj";
+                    cmd.Parameters.AddWithValue("DatumKraj", DateTime.Today);
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Akcija"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Akcija"].Rows)
+                    {
+                        var a = new Akcija();
+                        a.Id = (int)row["IdAkcije"];
+                        a.Naziv = row["Naziv"].ToString();
+                        a.PocetakAkcije = DateTime.Parse(row["DatumPocetak"].ToString());
+                        a.KrajAkcije = DateTime.Parse(row["DatumKraj"].ToString());
+                        a.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaAkcija.Add(a);
+                    }
+                }
+                if (listaAkcija.Count != 0)
+                {
+                    foreach (var akcijaZaBrisanje in listaAkcija)
+                    {
+                        foreach (var tempNa in NaAkcijiDAO.GetAllNAForActionId(akcijaZaBrisanje.Id))
+                            NaAkcijiDAO.Delete(tempNa);
+                        AkcijaDAO.Delete(akcijaZaBrisanje);
+                    }
                 }
             }
-            if (listaAkcija.Count != 0)
+            catch (TypeInitializationException ex)
             {
-                foreach (var akcijaZaBrisanje in listaAkcija)
-                {
-                    foreach (var tempNa in NaAkcijiDAO.GetAllNAForActionId(akcijaZaBrisanje.Id))
-                        NaAkcijiDAO.Delete(tempNa);
-                    AkcijaDAO.Delete(akcijaZaBrisanje);
-                }
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji akcija. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return ;
             }
         }
     }

@@ -13,10 +13,12 @@ namespace POP_SF39_2016_GUI
         public MainWindow()
         {
             InitializeComponent();
+            tbKorisnickoIme.Focus();
+            btnPrijava.IsDefault = true;
         }
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult poruka = MessageBox.Show("Da li ste sigurni?", "Izlazak", MessageBoxButton.YesNo);
+            MessageBoxResult poruka = MessageBox.Show("Da li ste sigurni da zelite da izadjete iz programa?", "Izlazak", MessageBoxButton.YesNo);
             if (poruka == MessageBoxResult.Yes)
             {
                 Environment.Exit(0);
@@ -41,6 +43,8 @@ namespace POP_SF39_2016_GUI
                     break;
                 }
             }
+            ErrorMessagePrint("Korisnik nije pronadjen. ", "Upozorenje");
+            return;
         }
         public async void ErrorMessagePrint(string message,string title)
         {

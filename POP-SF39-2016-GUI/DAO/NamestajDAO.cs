@@ -1,14 +1,11 @@
 ﻿using POP_SF39_2016.model;
 using POP_SF39_2016_GUI.gui;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Configuration;
 using System.Data;
 using System.Data.SqlClient;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -28,379 +25,409 @@ namespace POP_SF39_2016_GUI.DAO
             BrKomada_Rastuce,
             Nesortirano
         }
-
         public static ObservableCollection<Namestaj> GetAll()
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                var listaNamestaja = new ObservableCollection<Namestaj>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    listaNamestaja.Add(n);
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0";
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                    {
+                        var n = new Namestaj();
+                        n.Id = (int)row["Id"];
+                        n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                        n.Naziv = row["Naziv"].ToString();
+                        n.Sifra = row["Sifra"].ToString();
+                        n.Cena = double.Parse(row["Cena"].ToString());
+                        n.BrKomada = (int)row["Kolicina"];
+
+                        n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaNamestaja.Add(n);
+                    }
                 }
+                return listaNamestaja;
             }
-            return listaNamestaja;
-        }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message + "\nPokusajte ponovo pokrenuti program za koji trenutak.", "Upozorenje", MessageBoxButton.OK);
+                Environment.Exit(0);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
 
+        }
         public static Namestaj GetById(int Id)
         {
-            var namestaj = new Namestaj();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Id = @Id";
-                cmd.Parameters.AddWithValue("Id", Id);
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                var namestaj = new Namestaj();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    namestaj = n;
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Id = @Id";
+                    cmd.Parameters.AddWithValue("Id", Id);
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                    {
+                        var n = new Namestaj();
+                        n.Id = (int)row["Id"];
+                        n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                        n.Naziv = row["Naziv"].ToString();
+                        n.Sifra = row["Sifra"].ToString();
+                        n.Cena = double.Parse(row["Cena"].ToString());
+                        n.BrKomada = (int)row["Kolicina"];
+
+                        n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        namestaj = n;
+                    }
                 }
+                return namestaj;
             }
-            return namestaj;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+
         }
         public static ObservableCollection<Namestaj> GetAllForTipId(int TipId)
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0 AND TipNamestajaId = @TipNamestajaId";
-                cmd.Parameters.AddWithValue("TipNamestajaId", TipId);
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                var listaNamestaja = new ObservableCollection<Namestaj>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    listaNamestaja.Add(n);
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Obrisan=0 AND TipNamestajaId = @TipNamestajaId";
+                    cmd.Parameters.AddWithValue("TipNamestajaId", TipId);
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                    {
+                        var n = new Namestaj();
+                        n.Id = (int)row["Id"];
+                        n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                        n.Naziv = row["Naziv"].ToString();
+                        n.Sifra = row["Sifra"].ToString();
+                        n.Cena = double.Parse(row["Cena"].ToString());
+                        n.BrKomada = (int)row["Kolicina"];
+
+                        n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaNamestaja.Add(n);
+                    }
                 }
+                return listaNamestaja;
             }
-            return listaNamestaja;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
-
         public static Namestaj Create(Namestaj nn)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO Namestaj(TipNamestajaId,Naziv,Sifra,Kolicina,Cena,Obrisan) VALUES (@TipNamestajaId,@Naziv,@Sifra,@Kolicina,@Cena,@Obrisan)";
-                cmd.CommandText += " Select SCOPE_IDENTITY();";
+                    cmd.CommandText = "INSERT INTO Namestaj(TipNamestajaId,Naziv,Sifra,Kolicina,Cena,Obrisan) VALUES (@TipNamestajaId,@Naziv,@Sifra,@Kolicina,@Cena,@Obrisan)";
+                    cmd.CommandText += " Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("TipNamestajaId", nn.TipNamestajaId);
-                cmd.Parameters.AddWithValue("Naziv", nn.Naziv);
-                cmd.Parameters.AddWithValue("Sifra", nn.Sifra);
-                cmd.Parameters.AddWithValue("Kolicina", nn.BrKomada);
-                cmd.Parameters.AddWithValue("Cena", nn.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
+                    cmd.Parameters.AddWithValue("TipNamestajaId", nn.TipNamestajaId);
+                    cmd.Parameters.AddWithValue("Naziv", nn.Naziv);
+                    cmd.Parameters.AddWithValue("Sifra", nn.Sifra);
+                    cmd.Parameters.AddWithValue("Kolicina", nn.BrKomada);
+                    cmd.Parameters.AddWithValue("Cena", nn.Cena);
+                    cmd.Parameters.AddWithValue("Obrisan", nn.Obrisan);
 
-                nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                    nn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                }
+                Projekat.Instance.Namestaji.Add(nn);
+                return nn;
             }
-            Projekat.Instance.Namestaji.Add(nn);
-            return nn;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
-
         public static void Update(Namestaj nzu)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "UPDATE Namestaj SET TipNamestajaId=@TipNamestajaId,Naziv=@Naziv,Sifra=@Sifra,Kolicina=@Kolicina,Cena=@Cena,Obrisan=@Obrisan WHERE Id = @Id";
-                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
-
-                cmd.Parameters.AddWithValue("Id", nzu.Id);
-                cmd.Parameters.AddWithValue("TipNamestajaId", nzu.TipNamestajaId);
-                cmd.Parameters.AddWithValue("Naziv", nzu.Naziv);
-                cmd.Parameters.AddWithValue("Sifra", nzu.Sifra);
-                cmd.Parameters.AddWithValue("Kolicina", nzu.BrKomada);
-                cmd.Parameters.AddWithValue("Cena", nzu.Cena);
-                cmd.Parameters.AddWithValue("Obrisan", nzu.Obrisan);
-
-                cmd.ExecuteNonQuery();
-            }
-            foreach (var namestaj in Projekat.Instance.Namestaji)
-            {
-                if (namestaj.Id == nzu.Id)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    namestaj.TipNamestajaId = nzu.TipNamestajaId;
-                    namestaj.TipNamestaja = TipNamestaja.GetById(nzu.TipNamestajaId);
-                    namestaj.Naziv = nzu.Naziv;
-                    namestaj.Sifra = nzu.Sifra;
-                    namestaj.Cena = nzu.Cena;
-                    namestaj.BrKomada = nzu.BrKomada;
-                    namestaj.Obrisan = nzu.Obrisan;
-                    return;
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+                    DataSet ds = new DataSet();
+
+
+                    cmd.CommandText = "UPDATE Namestaj SET TipNamestajaId=@TipNamestajaId,Naziv=@Naziv,Sifra=@Sifra,Kolicina=@Kolicina,Cena=@Cena,Obrisan=@Obrisan WHERE Id = @Id";
+                    cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                    cmd.Parameters.AddWithValue("Id", nzu.Id);
+                    cmd.Parameters.AddWithValue("TipNamestajaId", nzu.TipNamestajaId);
+                    cmd.Parameters.AddWithValue("Naziv", nzu.Naziv);
+                    cmd.Parameters.AddWithValue("Sifra", nzu.Sifra);
+                    cmd.Parameters.AddWithValue("Kolicina", nzu.BrKomada);
+                    cmd.Parameters.AddWithValue("Cena", nzu.Cena);
+                    cmd.Parameters.AddWithValue("Obrisan", nzu.Obrisan);
+
+                    cmd.ExecuteNonQuery();
+                }
+                foreach (var namestaj in Projekat.Instance.Namestaji)
+                {
+                    if (namestaj.Id == nzu.Id)
+                    {
+                        namestaj.TipNamestajaId = nzu.TipNamestajaId;
+                        namestaj.TipNamestaja = TipNamestaja.GetById(nzu.TipNamestajaId);
+                        namestaj.Naziv = nzu.Naziv;
+                        namestaj.Sifra = nzu.Sifra;
+                        namestaj.Cena = nzu.Cena;
+                        namestaj.BrKomada = nzu.BrKomada;
+                        namestaj.Obrisan = nzu.Obrisan;
+                        return;
+                    }
                 }
             }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return;
+            }
         }
-
         public static void Delete(Namestaj namestaj)
         {
-            namestaj.Obrisan = true;
-            Update(namestaj);
+            if (namestaj != null)
+            {
+                namestaj.Obrisan = true;
+                Update(namestaj);
+            }
         }
-
         public static ObservableCollection<Namestaj> GetAllNamestajNotOnAction()
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Namestaj WHERE Id not in (SELECT IdNamestaja FROM NaAkciji WHERE obrisan=0) AND Obrisan =0";
-                cmd.CommandText += " Select SCOPE_IDENTITY();";
-
-                da.SelectCommand = cmd;
-
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                var listaNamestaja = new ObservableCollection<Namestaj>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
 
-                    listaNamestaja.Add(n);
+                    cmd.CommandText = "SELECT * FROM Namestaj WHERE Id not in (SELECT IdNamestaja FROM NaAkciji WHERE obrisan=0) AND Obrisan =0";
+                    cmd.CommandText += " Select SCOPE_IDENTITY();";
+
+                    da.SelectCommand = cmd;
+
+                    da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                    {
+                        var n = new Namestaj();
+                        n.Id = (int)row["Id"];
+                        n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                        n.Naziv = row["Naziv"].ToString();
+                        n.Sifra = row["Sifra"].ToString();
+                        n.Cena = double.Parse(row["Cena"].ToString());
+                        n.BrKomada = (int)row["Kolicina"];
+
+                        n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaNamestaja.Add(n);
+                    }
                 }
+                return listaNamestaja;
             }
-            return listaNamestaja;
-        }
-        public static ObservableCollection<Namestaj> Search(string parametar)
-        {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            catch (TypeInitializationException ex)
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn ON n.TipNamestajaId = tn.Id WHERE n.Obrisan=0 AND (n.Naziv LIKE @parametar OR Sifra LIKE @parametar or tn.Naziv LIKE @parametar)";
-                cmd.Parameters.AddWithValue("parametar", "%" + parametar.Trim() + "%");
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
-                {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
-
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaNamestaja.Add(n);
-                }
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
             }
-            return listaNamestaja;
-        }
-        public static ObservableCollection<Namestaj> Sort(SortBy sortBy)
-        {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            catch (SqlException ex)
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn on n.TipNamestajaId=tn.Id  WHERE n.Obrisan=0";
-                switch (sortBy)
-                {
-                    case SortBy.Naziv_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Naziv DESC";
-                        break;
-                    case SortBy.Naziv_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Naziv ASC";
-                        break;
-                    case SortBy.Sifra_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Sifra DESC";
-                        break;
-                    case SortBy.Sifra_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Sifra ASC";
-                        break;
-                    case SortBy.Cena_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Cena DESC";
-                        break;
-                    case SortBy.Cena_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Cena ASC";
-                        break;
-                    case SortBy.TipNamestaja_Opadajuce:
-                        cmd.CommandText += " ORDER BY tn.Naziv DESC";
-                        break;
-                    case SortBy.TipNamestaja_Rastuce:
-                        cmd.CommandText += " ORDER BY tn.Naziv ASC";
-                        break;
-                    case SortBy.BrKomada_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Kolicina DESC";
-                        break;
-                    case SortBy.BrKomada_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Kolicina ASC";
-                        break;
-                }
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
-                {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
-
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaNamestaja.Add(n);
-                }
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
             }
-            return listaNamestaja;
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static ObservableCollection<Namestaj> SearchAndOrSort(GlavniWindow.DoSearch doSearch, string parametar, SortBy sortBy)
         {
-            var listaNamestaja = new ObservableCollection<Namestaj>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                switch (doSearch)
+                var listaNamestaja = new ObservableCollection<Namestaj>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    case GlavniWindow.DoSearch.Other:
-                        cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn ON n.TipNamestajaId = tn.Id WHERE n.Obrisan=0 AND (n.Naziv LIKE @parametar OR Sifra LIKE @parametar or tn.Naziv LIKE @parametar)";
-                        cmd.Parameters.AddWithValue("parametar", "%" + parametar.Trim() + "%");
-                        break;
-                    case GlavniWindow.DoSearch.No:
-                        cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn on n.TipNamestajaId=tn.Id  WHERE n.Obrisan=0";
-                        break;
-                }
-                switch (sortBy)
-                {
-                    case SortBy.Naziv_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Naziv DESC";
-                        break;
-                    case SortBy.Naziv_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Naziv ASC";
-                        break;
-                    case SortBy.Sifra_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Sifra DESC";
-                        break;
-                    case SortBy.Sifra_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Sifra ASC";
-                        break;
-                    case SortBy.Cena_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Cena DESC";
-                        break;
-                    case SortBy.Cena_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Cena ASC";
-                        break;
-                    case SortBy.TipNamestaja_Opadajuce:
-                        cmd.CommandText += " ORDER BY tn.Naziv DESC";
-                        break;
-                    case SortBy.TipNamestaja_Rastuce:
-                        cmd.CommandText += " ORDER BY tn.Naziv ASC";
-                        break;
-                    case SortBy.BrKomada_Opadajuce:
-                        cmd.CommandText += " ORDER BY n.Kolicina DESC";
-                        break;
-                    case SortBy.BrKomada_Rastuce:
-                        cmd.CommandText += " ORDER BY n.Kolicina ASC";
-                        break;
-                }
-                switch (doSearch)
-                {
-                    case GlavniWindow.DoSearch.Other:
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                        break;
+                    switch (doSearch)
+                    {
+                        case GlavniWindow.DoSearch.Other:
+                            cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn ON n.TipNamestajaId = tn.Id WHERE n.Obrisan=0 AND (n.Naziv LIKE @parametar OR Sifra LIKE @parametar or tn.Naziv LIKE @parametar)";
+                            cmd.Parameters.AddWithValue("parametar", "%" + parametar.Trim() + "%");
+                            break;
+                        case GlavniWindow.DoSearch.No:
+                            cmd.CommandText = "SELECT * FROM Namestaj n INNER JOIN TipNamestaja tn on n.TipNamestajaId=tn.Id  WHERE n.Obrisan=0";
+                            break;
+                    }
+                    switch (sortBy)
+                    {
+                        case SortBy.Naziv_Opadajuce:
+                            cmd.CommandText += " ORDER BY n.Naziv DESC";
+                            break;
+                        case SortBy.Naziv_Rastuce:
+                            cmd.CommandText += " ORDER BY n.Naziv ASC";
+                            break;
+                        case SortBy.Sifra_Opadajuce:
+                            cmd.CommandText += " ORDER BY n.Sifra DESC";
+                            break;
+                        case SortBy.Sifra_Rastuce:
+                            cmd.CommandText += " ORDER BY n.Sifra ASC";
+                            break;
+                        case SortBy.Cena_Opadajuce:
+                            cmd.CommandText += " ORDER BY n.Cena DESC";
+                            break;
+                        case SortBy.Cena_Rastuce:
+                            cmd.CommandText += " ORDER BY n.Cena ASC";
+                            break;
+                        case SortBy.TipNamestaja_Opadajuce:
+                            cmd.CommandText += " ORDER BY tn.Naziv DESC";
+                            break;
+                        case SortBy.TipNamestaja_Rastuce:
+                            cmd.CommandText += " ORDER BY tn.Naziv ASC";
+                            break;
+                        case SortBy.BrKomada_Opadajuce:
+                            cmd.CommandText += " ORDER BY n.Kolicina DESC";
+                            break;
+                        case SortBy.BrKomada_Rastuce:
+                            cmd.CommandText += " ORDER BY n.Kolicina ASC";
+                            break;
+                    }
+                    switch (doSearch)
+                    {
+                        case GlavniWindow.DoSearch.Other:
+
+                            break;
+                    }
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Namestaj"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Namestaj"].Rows)
+                    {
+                        var n = new Namestaj();
+                        n.Id = (int)row["Id"];
+                        n.TipNamestajaId = (int?)row["TipNamestajaId"];
+                        n.Naziv = row["Naziv"].ToString();
+                        n.Sifra = row["Sifra"].ToString();
+                        n.Cena = double.Parse(row["Cena"].ToString());
+                        n.BrKomada = (int)row["Kolicina"];
+
+                        n.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        listaNamestaja.Add(n);
+                    }
                 }
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Namestaj"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Namestaj"].Rows)
-                {
-                    var n = new Namestaj();
-                    n.Id = (int)row["Id"];
-                    n.TipNamestajaId = (int?)row["TipNamestajaId"];
-                    n.Naziv = row["Naziv"].ToString();
-                    n.Sifra = row["Sifra"].ToString();
-                    n.Cena = double.Parse(row["Cena"].ToString());
-                    n.BrKomada = (int)row["Kolicina"];
-
-                    n.Obrisan = bool.Parse(row["Obrisan"].ToString());
-
-                    listaNamestaja.Add(n);
-                }
+                return listaNamestaja;
             }
-            return listaNamestaja;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji namestaja. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
-
     }
 }

@@ -9,6 +9,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -16,112 +17,188 @@ namespace POP_SF39_2016_GUI.DAO
     {
         public static ObservableCollection<ProdataDU> GetAll()
         {
-            var dodatneUsluge = new ObservableCollection<ProdataDU>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE Obrisan=0";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["ProdataDodatnaUsluga"].Rows)
+                var dodatneUsluge = new ObservableCollection<ProdataDU>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var du = new ProdataDU();
-                    du.Id = (int)row["Id"];
-                    du.ProdajaId = (int)row["ProdajaId"];
-                    du.DodatnaUslugaId = (int)row["DodatnaUslugaId"];
-                    du.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    dodatneUsluge.Add(du);
+
+                    cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE Obrisan=0";
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["ProdataDodatnaUsluga"].Rows)
+                    {
+                        var du = new ProdataDU();
+                        du.Id = (int)row["Id"];
+                        du.ProdajaId = (int)row["ProdajaId"];
+                        du.DodatnaUslugaId = (int)row["DodatnaUslugaId"];
+                        du.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        dodatneUsluge.Add(du);
+                    }
                 }
+                return dodatneUsluge;
             }
-            return dodatneUsluge;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodatih dodatnih usluga. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message + "\nPokusajte ponovo pokrenuti program za koji trenutak.", "Upozorenje", MessageBoxButton.OK);
+                Environment.Exit(0);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static ObservableCollection<ProdataDU> GetAllForId(int Id)
         {
-            var dodatneUsluge = new ObservableCollection<ProdataDU>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-                cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE ProdajaId=@ProdajaId";
-                cmd.Parameters.AddWithValue("ProdajaId", Id);
-                da.SelectCommand = cmd;
-                da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["ProdataDodatnaUsluga"].Rows)
+                var dodatneUsluge = new ObservableCollection<ProdataDU>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var du = new ProdataDU();
-                    du.Id = (int)row["Id"];
-                    du.ProdajaId = (int)row["ProdajaId"];
-                    du.DodatnaUslugaId = (int)row["DodatnaUslugaId"];
-                    du.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    dodatneUsluge.Add(du);
+                    cmd.CommandText = "SELECT * FROM ProdataDodatnaUsluga WHERE ProdajaId=@ProdajaId";
+                    cmd.Parameters.AddWithValue("ProdajaId", Id);
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "ProdataDodatnaUsluga"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["ProdataDodatnaUsluga"].Rows)
+                    {
+                        var du = new ProdataDU();
+                        du.Id = (int)row["Id"];
+                        du.ProdajaId = (int)row["ProdajaId"];
+                        du.DodatnaUslugaId = (int)row["DodatnaUslugaId"];
+                        du.Obrisan = bool.Parse(row["Obrisan"].ToString());
+
+                        dodatneUsluge.Add(du);
+                    }
+
                 }
-
+                return dodatneUsluge;
             }
-            return dodatneUsluge;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodatih dodatnih usluga. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static ProdataDU Create(ProdataDU tn)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+                {
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
 
 
-                cmd.CommandText = "INSERT INTO ProdataDodatnaUsluga(ProdajaId,DodatnaUslugaId,Obrisan) VALUES (@ProdajaId,@DodatnaUslugaId,@Obrisan)";
-                cmd.CommandText += "Select SCOPE_IDENTITY();";
+                    cmd.CommandText = "INSERT INTO ProdataDodatnaUsluga(ProdajaId,DodatnaUslugaId,Obrisan) VALUES (@ProdajaId,@DodatnaUslugaId,@Obrisan)";
+                    cmd.CommandText += "Select SCOPE_IDENTITY();";
 
-                cmd.Parameters.AddWithValue("ProdajaId", tn.ProdajaId);
-                cmd.Parameters.AddWithValue("DodatnaUslugaId", tn.DodatnaUslugaId);
-                cmd.Parameters.AddWithValue("Obrisan", tn.Obrisan);
+                    cmd.Parameters.AddWithValue("ProdajaId", tn.ProdajaId);
+                    cmd.Parameters.AddWithValue("DodatnaUslugaId", tn.DodatnaUslugaId);
+                    cmd.Parameters.AddWithValue("Obrisan", tn.Obrisan);
 
-                tn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                    tn.Id = int.Parse(cmd.ExecuteScalar().ToString()); //ExecuteScalar izvrsava upit
+                }
+                Projekat.Instance.ProdateDU.Add(tn);
+                return tn;
             }
-            Projekat.Instance.ProdateDU.Add(tn);
-            return tn;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodatih dodatnih usluga. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static void Update(ProdataDU jp)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "UPDATE ProdataDodatnaUsluga SET DodatnaUslugaId=@DodatnaUslugaId,ProdajaId=@ProdajaId,Obrisan=@Obrisan WHERE Id = @Id";
-                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
-
-                cmd.Parameters.AddWithValue("Id", jp.Id);
-                cmd.Parameters.AddWithValue("DodatnaUslugaId", jp.DodatnaUslugaId);
-                cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId); ;
-                cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
-
-                cmd.ExecuteNonQuery();
-            }
-            foreach (var prodataDU in Projekat.Instance.ProdateDU)
-            {
-                if (prodataDU.Id == jp.Id)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    prodataDU.DodatnaUslugaId = jp.DodatnaUslugaId;
-                    prodataDU.ProdajaId = jp.ProdajaId;
-                    prodataDU.Obrisan = jp.Obrisan;
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+                    DataSet ds = new DataSet();
+
+
+                    cmd.CommandText = "UPDATE ProdataDodatnaUsluga SET DodatnaUslugaId=@DodatnaUslugaId,ProdajaId=@ProdajaId,Obrisan=@Obrisan WHERE Id = @Id";
+                    cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                    cmd.Parameters.AddWithValue("Id", jp.Id);
+                    cmd.Parameters.AddWithValue("DodatnaUslugaId", jp.DodatnaUslugaId);
+                    cmd.Parameters.AddWithValue("ProdajaId", jp.ProdajaId); ;
+                    cmd.Parameters.AddWithValue("Obrisan", jp.Obrisan);
+
+                    cmd.ExecuteNonQuery();
                 }
+                foreach (var prodataDU in Projekat.Instance.ProdateDU)
+                {
+                    if (prodataDU.Id == jp.Id)
+                    {
+                        prodataDU.DodatnaUslugaId = jp.DodatnaUslugaId;
+                        prodataDU.ProdajaId = jp.ProdajaId;
+                        prodataDU.Obrisan = jp.Obrisan;
+                    }
+                }
+            }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji prodatih dodatnih usluga. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return ;
             }
         }
         public static void Delete(ProdataDU du)
         {
-            du.Obrisan = true;
-            Update(du);
+            if (du != null)
+            {
+                du.Obrisan = true;
+                Update(du);
+            }
         }
     }
 }

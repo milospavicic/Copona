@@ -8,6 +8,7 @@ using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace POP_SF39_2016_GUI.DAO
 {
@@ -15,78 +16,114 @@ namespace POP_SF39_2016_GUI.DAO
     {
         public static ObservableCollection<Salon> GetAll()
         {
-            var tempSalonList = new ObservableCollection<Salon>();
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                SqlCommand cmd = con.CreateCommand();
-                SqlDataAdapter da = new SqlDataAdapter();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "SELECT * FROM Salon WHERE Obrisan=0";
-                da.SelectCommand = cmd;
-                da.Fill(ds, "Salon"); //izvrsavanje upita
-
-                foreach (DataRow row in ds.Tables["Salon"].Rows)
+                var tempSalonList = new ObservableCollection<Salon>();
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    var tempSalon = new Salon();
-                    tempSalon.Id = (int)row["IdSalona"];
-                    tempSalon.Naziv = row["Naziv"].ToString();
-                    tempSalon.Adresa = row["Adresa"].ToString();
-                    tempSalon.BrojTelefona = row["BrojTelefona"].ToString();
-                    tempSalon.Email = row["Email"].ToString();
-                    tempSalon.WebAdresa = row["WebAdresa"].ToString();
-                    tempSalon.BrRacuna = row["BrRacuna"].ToString();
-                    tempSalon.Pib = (int)row["Pib"];
-                    tempSalon.MaticniBr = (int)row["MaticniBr"];
+                    SqlCommand cmd = con.CreateCommand();
+                    SqlDataAdapter da = new SqlDataAdapter();
+                    DataSet ds = new DataSet();
 
-                    tempSalon.Obrisan = bool.Parse(row["Obrisan"].ToString());
-                    tempSalonList.Add(tempSalon);
+
+                    cmd.CommandText = "SELECT * FROM Salon WHERE Obrisan=0";
+                    da.SelectCommand = cmd;
+                    da.Fill(ds, "Salon"); //izvrsavanje upita
+
+                    foreach (DataRow row in ds.Tables["Salon"].Rows)
+                    {
+                        var tempSalon = new Salon();
+                        tempSalon.Id = (int)row["IdSalona"];
+                        tempSalon.Naziv = row["Naziv"].ToString();
+                        tempSalon.Adresa = row["Adresa"].ToString();
+                        tempSalon.BrojTelefona = row["BrojTelefona"].ToString();
+                        tempSalon.Email = row["Email"].ToString();
+                        tempSalon.WebAdresa = row["WebAdresa"].ToString();
+                        tempSalon.BrRacuna = row["BrRacuna"].ToString();
+                        tempSalon.Pib = (int)row["Pib"];
+                        tempSalon.MaticniBr = (int)row["MaticniBr"];
+
+                        tempSalon.Obrisan = bool.Parse(row["Obrisan"].ToString());
+                        tempSalonList.Add(tempSalon);
+                    }
                 }
+                return tempSalonList;
             }
-            return tempSalonList;
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji salona. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message + "\nPokusajte ponovo pokrenuti program za koji trenutak.", "Upozorenje", MessageBoxButton.OK);
+                Environment.Exit(0);
+                return null;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return null;
+            }
         }
         public static void Update(Salon szu)
         {
-            using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
+            try
             {
-                con.Open();
-                SqlCommand cmd = con.CreateCommand();
-                DataSet ds = new DataSet();
-
-
-                cmd.CommandText = "UPDATE Salon SET Naziv=@Naziv,Adresa=@Adresa,BrojTelefona=@BrojTelefona,Email=@Email,WebAdresa=@WebAdresa,BrRacuna=@BrRacuna,Pib=@Pib,MaticniBr=@MaticniBr,Obrisan=@Obrisan WHERE IdSalona = @IdSalona";
-                cmd.CommandText += " SELECT SCOPE_IDENTITY();";
-
-                cmd.Parameters.AddWithValue("IdSalona", szu.Id);
-                cmd.Parameters.AddWithValue("Naziv", szu.Naziv);
-                cmd.Parameters.AddWithValue("Adresa", szu.Adresa);
-                cmd.Parameters.AddWithValue("BrojTelefona", szu.BrojTelefona);
-                cmd.Parameters.AddWithValue("Email", szu.Email);
-                cmd.Parameters.AddWithValue("WebAdresa", szu.WebAdresa);
-                cmd.Parameters.AddWithValue("BrRacuna", szu.BrRacuna);
-                cmd.Parameters.AddWithValue("Pib", szu.Pib);
-                cmd.Parameters.AddWithValue("MaticniBr", szu.MaticniBr);
-                cmd.Parameters.AddWithValue("Obrisan", szu.Obrisan);
-
-                cmd.ExecuteNonQuery();
-            }
-            foreach (var salon in Projekat.Instance.Salon)
-            {
-                if (salon.Id == szu.Id)
+                using (var con = new SqlConnection(ConfigurationManager.ConnectionStrings["POP"].ConnectionString))
                 {
-                    salon.Naziv = szu.Naziv;
-                    salon.Adresa = szu.Adresa;
-                    salon.BrojTelefona = szu.BrojTelefona;
-                    salon.Email = szu.Email;
-                    salon.WebAdresa = szu.WebAdresa;
-                    salon.BrRacuna = szu.BrRacuna;
-                    salon.Pib = szu.Pib;
-                    salon.MaticniBr = szu.MaticniBr;
-                    salon.Obrisan = szu.Obrisan;
+                    con.Open();
+                    SqlCommand cmd = con.CreateCommand();
+                    DataSet ds = new DataSet();
+
+
+                    cmd.CommandText = "UPDATE Salon SET Naziv=@Naziv,Adresa=@Adresa,BrojTelefona=@BrojTelefona,Email=@Email,WebAdresa=@WebAdresa,BrRacuna=@BrRacuna,Pib=@Pib,MaticniBr=@MaticniBr,Obrisan=@Obrisan WHERE IdSalona = @IdSalona";
+                    cmd.CommandText += " SELECT SCOPE_IDENTITY();";
+
+                    cmd.Parameters.AddWithValue("IdSalona", szu.Id);
+                    cmd.Parameters.AddWithValue("Naziv", szu.Naziv);
+                    cmd.Parameters.AddWithValue("Adresa", szu.Adresa);
+                    cmd.Parameters.AddWithValue("BrojTelefona", szu.BrojTelefona);
+                    cmd.Parameters.AddWithValue("Email", szu.Email);
+                    cmd.Parameters.AddWithValue("WebAdresa", szu.WebAdresa);
+                    cmd.Parameters.AddWithValue("BrRacuna", szu.BrRacuna);
+                    cmd.Parameters.AddWithValue("Pib", szu.Pib);
+                    cmd.Parameters.AddWithValue("MaticniBr", szu.MaticniBr);
+                    cmd.Parameters.AddWithValue("Obrisan", szu.Obrisan);
+
+                    cmd.ExecuteNonQuery();
+                }
+                foreach (var salon in Projekat.Instance.Salon)
+                {
+                    if (salon.Id == szu.Id)
+                    {
+                        salon.Naziv = szu.Naziv;
+                        salon.Adresa = szu.Adresa;
+                        salon.BrojTelefona = szu.BrojTelefona;
+                        salon.Email = szu.Email;
+                        salon.WebAdresa = szu.WebAdresa;
+                        salon.BrRacuna = szu.BrRacuna;
+                        salon.Pib = szu.Pib;
+                        salon.MaticniBr = szu.MaticniBr;
+                        salon.Obrisan = szu.Obrisan;
+                    }
                 }
             }
+            catch (TypeInitializationException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri inicijalizaciji salona. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch (SqlException ex)
+            {
+                MessageBoxResult poruka = MessageBox.Show("Isteklo je vreme za povezivanje sa bazom. " + ex.Message, "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
+            catch
+            {
+                MessageBoxResult poruka = MessageBox.Show("Doslo je do greske pri citanju iz baze. ", "Upozorenje", MessageBoxButton.OK);
+                return ;
+            }
         }
-        
     }
 }

@@ -7,16 +7,6 @@
         xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
         Title="Unos kolicine namestaja." Height="170" Width="330" ResizeMode="NoResize"  WindowStartupLocation="CenterScreen" Name="_this">
-    <Window.Resources>
-        <ControlTemplate x:Key="validationError">
-            <DockPanel >
-                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" VerticalAlignment="Center" ToolTip="Ovo polje mora biti popunjeno" Margin="3,0,0,2">*</TextBlock>
-                <Border BorderBrush="Red" BorderThickness="0.5" Margin="0,0,0,10">
-                    <AdornedElementPlaceholder/>
-                </Border>
-            </DockPanel>
-        </ControlTemplate>
-    </Window.Resources>
     <Grid>
         <Border BorderBrush="#68c0e8" BorderThickness="1">
             <Grid>
@@ -30,7 +20,7 @@
                     <RowDefinition Height="125*"/>
                 </Grid.RowDefinitions>
                 <TextBlock Name="tbPoruka" Text="Molimo vas unesite kolicinu izabranog namestaja." Grid.Column="0" Grid.ColumnSpan="2" Grid.Row="0" VerticalAlignment="Center" HorizontalAlignment="Center"/>
-                <TextBox Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="100,0" Name="tbUnos" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center">
+                <TextBox Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Margin="100,0" Name="tbUnos" HorizontalContentAlignment="Center" HorizontalAlignment="Stretch" VerticalAlignment="Center">
                     <TextBox.Text>
                         <Binding ElementName="_this" Path="Kolicina" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>
@@ -39,7 +29,7 @@
                         </Binding>
                     </TextBox.Text>
                 </TextBox>
-                <Button Content="Unesi" Grid.Column="0" Grid.Row="2" Width="75" Height="23"  Margin="35,0,0,0" Click="UnesiKolicinu" >
+                <Button Name="btnUnesi" Content="Unesi" Grid.Column="0" Grid.Row="2" Width="75" Height="23"  Margin="35,0,0,0" Click="UnesiKolicinu" >
                     <Button.Style>
                         <Style TargetType="Button" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>

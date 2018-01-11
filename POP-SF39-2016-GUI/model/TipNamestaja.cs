@@ -46,14 +46,6 @@ namespace POP_SF39_2016.model
                 OnPropertyChanged("Obrisan");
             }
         }
-        /***
-        public int Id { get; set; }
-
-        public string Naziv { get; set; }
-
-        public bool Obrisan { get; set; }
-        ***/
-
 
         public override string ToString()
         {

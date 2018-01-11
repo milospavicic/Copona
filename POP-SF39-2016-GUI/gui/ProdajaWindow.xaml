@@ -7,16 +7,6 @@
         xmlns:local="clr-namespace:POP_SF39_2016_GUI"
         mc:Ignorable="d"
         Title="Prodaja" Height="800" Width="1200" ResizeMode="NoResize" WindowStartupLocation="CenterScreen" WindowState="Maximized" Closed="Window_Closed" ShowTitleBar="False">
-    <Window.Resources>
-        <ControlTemplate x:Key="validationError">
-            <DockPanel >
-                <TextBlock Foreground="Red" FontSize="20" DockPanel.Dock="Right" HorizontalAlignment="Center" ToolTip="Ovo polje mora biti popunjeno" Margin="0,11,0,0">!</TextBlock>
-                <Border BorderBrush="Red" BorderThickness="0.5" Margin="0,0,0,10">
-                    <AdornedElementPlaceholder/>
-                </Border>
-            </DockPanel>
-        </ControlTemplate>
-    </Window.Resources>
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -93,7 +83,7 @@
                 <Label Content="Datum kupovine" Grid.Column="0" Grid.Row="1" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
                 <Label Content="Ukupna cena" Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
                 <Label Content="Ukupna cena sa PDV-om" Grid.Column="0" Grid.Row="3" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="50,0,0,0" FontSize="14"/>
-                <TextBox Name="tbKupac" Validation.ErrorTemplate="{StaticResource ResourceKey=validationError}" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,40,10" FontSize="14">
+                <TextBox Name="tbKupac" Grid.Column="1" Grid.Row="0" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Margin="0,10,40,10" FontSize="14">
                     <TextBox.Text>
                         <Binding Path="Kupac" UpdateSourceTrigger="PropertyChanged">
                             <Binding.ValidationRules>

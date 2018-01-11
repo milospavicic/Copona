@@ -28,6 +28,7 @@ namespace POP_SF39_2016_GUI.gui
         public void PopunjavanjePolja(TipNamestaja tipNamestaja)
         {
             tbNaziv.DataContext = tipNamestaja;
+            tbNaziv.MaxLength = 100;
             if (operacija == Operacija.DODAVANJE)
                 this.Title += " - Dodavanje";
             else

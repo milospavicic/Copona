@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace POP_SF39_2016.model
 {
-    public class Salon
+    public class Salon :ICloneable
     {
         public int Id { get; set; }
 
@@ -28,5 +28,21 @@ namespace POP_SF39_2016.model
 
         public bool Obrisan { get; set; }
 
+        public object Clone()
+        {
+            return new Salon
+            {
+                Id = Id,
+                Naziv = Naziv,
+                Adresa = Adresa,
+                BrojTelefona = BrojTelefona,
+                WebAdresa = WebAdresa,
+                Email = Email,
+                BrRacuna = BrRacuna,
+                MaticniBr = MaticniBr,
+                Pib = Pib,
+                Obrisan = Obrisan,
+            };
+        }
     }
 }

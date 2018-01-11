@@ -3,7 +3,6 @@ using POP_SF39_2016_GUI.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Windows;
 using System.Windows.Input;
 using MahApps.Metro.Controls;
 using System.Windows.Controls;

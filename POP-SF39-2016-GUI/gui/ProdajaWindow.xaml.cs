@@ -80,6 +80,7 @@ namespace POP_SF39_2016_GUI.gui
             tbUkupnaCena.DataContext = prodajaNamestaja;
             tbDatum.DataContext = prodajaNamestaja;
             tbKupac.DataContext = prodajaNamestaja;
+            tbKupac.MaxLength = 30;
             dgRacun.ItemsSource = Korpa;
             switch (operacija)
             {
