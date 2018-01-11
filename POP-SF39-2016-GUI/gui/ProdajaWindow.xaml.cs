@@ -375,7 +375,7 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         itemSaRacuna.Kolicina = itemSaRacuna.Kolicina - tempKolicina;
                     }
-                    var tempCenaJP = (tempKolicina * itemSaRacuna.Namestaj.Cena);
+                    var tempCenaJP = (tempKolicina * itemSaRacuna.Namestaj.AkcijskaCena);
                     prodajaNamestaja.UkupnaCena -= tempCenaJP;
                     prodajaNamestaja.UkupnaCenaPdv -= tempCenaJP + tempCenaJP * ProdajaNamestaja.PDV;
                     foreach(var item in Projekat.Instance.Namestaji)
