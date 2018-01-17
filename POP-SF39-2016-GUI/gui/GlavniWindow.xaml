@@ -40,7 +40,8 @@
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="40*"/>
-                    <RowDefinition Height="250*"/>
+                    <RowDefinition Height="120*"/>
+                    <RowDefinition Height="130*"/>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="40*"/>
                     <RowDefinition Height="40*"/>
@@ -110,25 +111,25 @@
                     </Button.Style>
                 </Button>
                 <Button Name="btnProdaje" Content="Prodaje" Grid.Row="3" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazProdaja" >
-                <Button.Style>
+                    <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#a3e3ff"/>
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type Button}">
-                                    <Border Background="{TemplateBinding Background}">
-                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                                    </Border>
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                        <Style.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="{x:Type Button}">
+                                        <Border Background="{TemplateBinding Background}">
+                                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                        </Border>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                            <Style.Triggers>
+                                <Trigger Property="IsMouseOver" Value="True">
                                     <Setter Property="Background" Value="#68c0e8"/>
-                            </Trigger>
-                        </Style.Triggers>
-                    </Style>
-                </Button.Style>
+                                </Trigger>
+                            </Style.Triggers>
+                        </Style>
+                    </Button.Style>
                 </Button>
                 <Button Name="btnAkcije" Content="Akcije" Grid.Row="4" Grid.Column="1" Margin="7,7,7,7" Visibility="Hidden" Click="PrikazAkcija">
                     <Button.Style>
@@ -237,7 +238,7 @@
                 </Button>
 
                 <!-- / ADMIN OPCIJE-->
-                <Button Content="Izmena naloga" Grid.Row="11" Grid.Column="1" Click="IzmenaPodataka" Margin="1">
+                <Button Content="Izmena naloga" Grid.Row="12" Grid.Column="1" Click="IzmenaPodataka" Margin="1">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
@@ -258,7 +259,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Logout " Grid.Row="12" Grid.Column="1" Click="Logout" Margin="1">
+                <Button Content="Logout " Grid.Row="13" Grid.Column="1" Click="Logout" Margin="1">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
@@ -279,7 +280,7 @@
                         </Style>
                     </Button.Style>
                 </Button>
-                <Button Content="Izlaz" Grid.Row="13" Grid.Column="1" Click="Izlaz" Margin="1">
+                <Button Content="Izlaz" Grid.Row="14" Grid.Column="1" Click="Izlaz" Margin="1">
                     <Button.Style>
                         <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">
                             <Setter Property="Background" Value="#68c0e8"/>
@@ -302,7 +303,7 @@
                 </Button>
             </Grid>
         </Border>
-        <Border Name="glavniBorder" BorderBrush="Black" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#eff5f9">
+        <Border Name="glavniBorder" BorderBrush="#68c0e8" BorderThickness="1" Grid.Column="2" Grid.Row="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" Background="#eff5f9">
             <Grid>
                 <!-- glavna tabela-->
                 <Grid.ColumnDefinitions>
@@ -317,7 +318,7 @@
 
                 </Grid.RowDefinitions>
                 <DataGrid Name="dgTabela" AutoGeneratingColumn="dgTabela_AutoGeneratingColumn" VerticalAlignment="Stretch" HorizontalAlignment="Stretch" Grid.Column="0" Grid.ColumnSpan="3" Grid.RowSpan="3" Grid.Row="0" FontSize="15" Visibility="Hidden" SelectionMode="Single" LoadingRow="Indexiranje"/>
-                <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Visibility="Hidden" Background="#ceeeff">
+                <Border Name="borderAddEditDelItem" BorderBrush="Black" BorderThickness="1" Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="3" Background="#ceeeff" Visibility="Hidden">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="235*"/>
@@ -332,12 +333,14 @@
                             <RowDefinition Height="50*"/>
                             <RowDefinition Height="50*"/>
                         </Grid.RowDefinitions>
-                        <Border Grid.ColumnSpan="6" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Grid.Column="0" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1" Grid.ColumnSpan="3"/>
-                        <Border Grid.Column="4" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Grid.Column="5" Grid.RowSpan="3" BorderBrush="Black" BorderThickness="1"/>
-                        <Border Grid.Column="4" Grid.RowSpan="1" BorderBrush="Black" BorderThickness="1"/>
+
+                        <Border Grid.Column="0" Grid.RowSpan="3" BorderBrush="#68c0e8" BorderThickness="1"/>
+                        <Border Grid.Column="1" Grid.RowSpan="3" BorderBrush="#68c0e8" BorderThickness="1" Grid.ColumnSpan="3"/>
+                        <Border Grid.Column="4" Grid.RowSpan="3" BorderBrush="#68c0e8" BorderThickness="1"/>
+                        <Border Grid.Column="5" Grid.RowSpan="3" BorderBrush="#68c0e8" BorderThickness="1">
+                            <Image Source="/POP-SF39-2016-GUI;component/images/logo400x400.png" RenderOptions.BitmapScalingMode="Fant" HorizontalAlignment="Center" Stretch="Fill" Width="188" Margin="29,-15,16,-17"/>
+                        </Border>
+                        <Border Grid.Column="4" Grid.RowSpan="1" BorderBrush="#68c0e8" BorderThickness="1"/>
 
                         <Button Name="btnDodaj" Content="Dodaj" Grid.Row="0" Grid.Column="0" Margin="35,5,35,5" Click="DodajItem">
                             <Button.Style>

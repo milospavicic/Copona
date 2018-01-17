@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:Controls="clr-namespace:MahApps.Metro.Controls;assembly=MahApps.Metro"
         mc:Ignorable="d"
-        Title="Prijava" Height="260" Width="330"
+        Title="Prijava" Height="300" Width="270"
         ResizeMode="NoResize"
         WindowStartupLocation="CenterScreen">
     <Grid>
@@ -15,19 +15,18 @@
             <ColumnDefinition Width="0.5*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="1*"/>
-            <RowDefinition Height="1*"/>
+            <RowDefinition Height="2.5*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
             <RowDefinition Height="1*"/>
         </Grid.RowDefinitions>
         <Border BorderBrush="#68c0e8" Grid.ColumnSpan="3" Grid.RowSpan="6" BorderThickness="1"/>
-        <Label Content="~ SALON NAMESTAJA ~" HorizontalAlignment="Stretch"  VerticalAlignment="Top" HorizontalContentAlignment="Center" Grid.ColumnSpan="3" FontSize="20"/>
-        <Label Content="Korisnicko ime:" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="2"/>
-        <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" Margin="0,0,35,0"/>
-        <Label Content="Lozinka:" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="3"/>
-        <PasswordBox Name="passboxSifra" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="3" Margin="0,0,35,0"/>
+        <Image Grid.ColumnSpan="2" Source="/images/mainLogo400x400.png" Stretch="Fill" Margin="2,-23,14,20" Grid.RowSpan="2" RenderOptions.BitmapScalingMode="Fant" Grid.Column="1"/>
+        <Label Content="Korisnicko ime:" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="1"/>
+        <TextBox Name="tbKorisnickoIme" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="1" Margin="0,0,35,0"/>
+        <Label Content="Lozinka:" HorizontalAlignment="Left" VerticalAlignment="Center" HorizontalContentAlignment="Center" Grid.Column="1" Grid.Row="2"/>
+        <PasswordBox Name="passboxSifra" HorizontalAlignment="Stretch" VerticalAlignment="Center" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" Grid.Column="2" Grid.Row="2" Margin="0,0,35,0"/>
         <Button Name="btnPrijava" Content="Prijavi se" Grid.Row="5" Grid.ColumnSpan="2" Width="75" Height="23" Margin="35,0,0,10" Click="Button_Click_1">
             <Button.Style>
                 <Style TargetType="{x:Type Button}" BasedOn="{StaticResource MetroButton}">

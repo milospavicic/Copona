@@ -214,6 +214,10 @@
   <ItemGroup>
     <Content Include="DB-scripts\crebas.sql" />
     <Content Include="DB-scripts\seed.sql" />
+    <Resource Include="images\mainLogo400x400.png" />
+    <Resource Include="images\logo400x400.png" />
+    <Resource Include="images\logo.png" />
+    <Resource Include="images\mainLogo.png" />
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

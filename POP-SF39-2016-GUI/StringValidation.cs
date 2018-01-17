@@ -23,7 +23,7 @@ namespace POP_SF39_2016_GUI
 
             var tempLength = strValue.Length;
             if(tempLength!=strValue.Trim().Length)
-                return new ValidationResult(false, "Ovo polje ne sme imati razmake na pocetku i kraju");
+                return new ValidationResult(false, "Ovo polje ne sme imati razmake na pocetku i kraju.");
             else
                 return new ValidationResult(true, null);
         }

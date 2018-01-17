@@ -411,6 +411,18 @@ namespace POP_SF39_2016_GUI.gui
                     {
                         e.Cancel = true;
                     }
+                    if ((string)e.Column.Header == "TipNamestaja")
+                    {
+                        e.Column.Header = "Tip Namestaja";
+                    }
+                    if ((string)e.Column.Header == "AkcijskaCena")
+                    {
+                        e.Column.Header = "Akcijska Cena";
+                    }
+                    if ((string)e.Column.Header == "BrKomada")
+                    {
+                        e.Column.Header = "Kolicina";
+                    }
                     break;
                 case Opcija.KORISNIK:
                     if ((string)e.Column.Header == "Lozinka")

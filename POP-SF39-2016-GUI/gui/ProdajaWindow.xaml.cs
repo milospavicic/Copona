@@ -135,6 +135,18 @@ namespace POP_SF39_2016_GUI.gui
             {
                 e.Column.Header = "Cena";
             }
+            if ((string)e.Column.Header == "TipNamestaja")
+            {
+                e.Column.Header = "Tip Namestaja";
+            }
+            if ((string)e.Column.Header == "BrKomada")
+            {
+                e.Column.Header = "Kolicina";
+            }
+            if ((string)e.Column.Header == "CenaSaPdv")
+            {
+                e.Column.Header = "Cena + PDV";
+            }
         }
         private void dgProdajaDU_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
@@ -376,8 +388,9 @@ namespace POP_SF39_2016_GUI.gui
                         itemSaRacuna.Kolicina = itemSaRacuna.Kolicina - tempKolicina;
                     }
                     var tempCenaJP = (tempKolicina * itemSaRacuna.Namestaj.AkcijskaCena);
+                    var tempCenaJPPdv = (tempKolicina * itemSaRacuna.CenaSaPdv);
                     prodajaNamestaja.UkupnaCena -= tempCenaJP;
-                    prodajaNamestaja.UkupnaCenaPdv -= tempCenaJP + tempCenaJP * ProdajaNamestaja.PDV;
+                    prodajaNamestaja.UkupnaCenaPdv -= tempCenaJPPdv;
                     foreach(var item in Projekat.Instance.Namestaji)
                         if(itemSaRacuna.NamestajId == item.Id)
                             item.BrKomada += tempKolicina;
